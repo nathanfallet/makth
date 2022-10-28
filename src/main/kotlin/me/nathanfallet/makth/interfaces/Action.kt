@@ -19,7 +19,7 @@ interface Action {
         val variables: List<Variable>
     ) : ExecutionException(
         action, context,
-        "Unknown variables: ${variables.joinToString(", ") { it.toString() }}"
+        "Unknown variable(s): ${variables.joinToString(", ") { it.name }}"
     )
 
     open class NotABooleanException(
