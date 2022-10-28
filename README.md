@@ -20,7 +20,7 @@ Add the following to your `pom.xml` file;
 <dependency>
     <groupId>me.nathanfallet.makth</groupId>
     <artifactId>makth</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
@@ -34,7 +34,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'me.nathanfallet.makth:makth:1.0.0'
+    implementation 'me.nathanfallet.makth:makth:1.0.1'
 }
 ```
 

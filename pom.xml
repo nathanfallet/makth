@@ -6,7 +6,7 @@
 
   <groupId>me.nathanfallet.makth</groupId>
   <artifactId>makth</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
 
   <name>makth</name>
   <description>A Kotlin library for algebra</description>
@@ -61,12 +61,6 @@
       <artifactId>junit</artifactId>
       <version>${junit.version}</version>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jacoco</groupId>
-      <artifactId>jacoco-maven-plugin</artifactId>
-      <version>${jacoco.version}</version>
-      <type>maven-plugin</type>
     </dependency>
   </dependencies>
 
