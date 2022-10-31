@@ -144,7 +144,7 @@ class AlgorithmLexer(private var content: String) {
                         '(' -> count++
                         ')' -> count--
                         ',' -> {
-                            argument.deleteCharAt(argument.count() - 1) // Remove ','
+                            argument.deleteAt(argument.count() - 1) // Remove ','
                             arguments.add(MathLexer(argument.toString().trim()).execute(Context()))
                             argument.clear()
                         }
