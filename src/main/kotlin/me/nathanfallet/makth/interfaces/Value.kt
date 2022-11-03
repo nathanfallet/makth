@@ -3,7 +3,7 @@ package me.nathanfallet.makth.interfaces
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable
 
-interface Value {
+interface Value: Output {
 
     fun toAlgorithmString(): String {
         return toRawString()

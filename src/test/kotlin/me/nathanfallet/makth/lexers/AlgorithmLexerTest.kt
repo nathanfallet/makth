@@ -133,7 +133,7 @@ class AlgorithmLexerTest {
                     Pair("x", Integer.instantiate(10))
                 ),
                 listOf(
-                    "x = 10"
+                    StringValue("x = "), Integer.instantiate(10), StringValue("\n")
                 )
             ),
             Context().execute(actions)

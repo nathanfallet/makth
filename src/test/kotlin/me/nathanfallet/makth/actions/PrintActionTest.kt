@@ -15,7 +15,7 @@ class PrintActionTest {
     private val contextWithString = Context(
         hashMapOf(),
         listOf(
-            "Hello world!"
+            StringValue("Hello world!"), StringValue("\n")
         )
     )
 
@@ -30,7 +30,7 @@ class PrintActionTest {
             Pair("x", Integer.instantiate(2))
         ),
         listOf(
-            "x = 2"
+            StringValue("x = "), Integer.instantiate(2), StringValue("\n")
         )
     )
 

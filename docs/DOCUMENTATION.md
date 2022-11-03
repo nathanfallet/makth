@@ -67,7 +67,7 @@ Context(
         Pair("x", Integer.instantiate(10)) // The value of x
     ),
     listOf(
-        "x = 10" // What we printed
+        StringValue("x = "), Integer.instantiate(10), StringValue("\n") // What we printed
     )
 )
 ```
