@@ -16,7 +16,7 @@ interface Action {
     open class UnknownVariablesException(
         action: Action,
         context: Context,
-        val variables: List<Variable>
+        val variables: Set<Variable>
     ) : ExecutionException(
         action, context,
         "Unknown variable(s): ${variables.joinToString(", ") { it.name }}"

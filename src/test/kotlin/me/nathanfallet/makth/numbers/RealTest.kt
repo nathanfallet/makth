@@ -17,6 +17,14 @@ class RealTest {
     }
 
     @Test
+    fun absoluteValue() {
+        assertEquals(
+            Real.instantiate(1.23456789),
+            Real.instantiate(-1.23456789).absoluteValue()
+        )
+    }
+
+    @Test
     fun sumCorrectNatural() {
         // pi + 1 = 1 + pi
         assertEquals(
@@ -122,6 +130,24 @@ class RealTest {
             Integer.instantiate(1),
             Real.pi.divide(Real.pi)
         )
+    }
+
+    @Test
+    fun instantiatePi() {
+        assertEquals(
+            Real.pi,
+            Real.instantiate(PI)
+        )
+    }
+
+    @Test
+    fun piToRawString() {
+        assertEquals("\u03C0", Real.pi.toRawString())
+    }
+
+    @Test
+    fun piToLaTeXString() {
+        assertEquals("\\pi", Real.pi.toLaTeXString())
     }
 
 }

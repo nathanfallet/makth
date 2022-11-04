@@ -14,6 +14,6 @@ interface Value: Output {
     fun toRawString(): String
     fun toLaTeXString(): String
 
-    fun extractVariables(): List<Variable>
+    fun extractVariables(): Set<Variable>
 
 }

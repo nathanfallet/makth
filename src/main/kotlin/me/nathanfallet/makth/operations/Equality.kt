@@ -68,7 +68,7 @@ data class Equality(
         return "${left.toLaTeXString()} ${operator.toLaTeXString()} ${right.toLaTeXString()}"
     }
 
-    override fun extractVariables(): List<Variable> {
+    override fun extractVariables(): Set<Variable> {
         return left.extractVariables() + right.extractVariables()
     }
 

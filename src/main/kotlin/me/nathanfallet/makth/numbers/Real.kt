@@ -62,8 +62,8 @@ interface Real : Value, Summable<Real, Real>,
         return this
     }
 
-    override fun extractVariables(): List<Variable> {
-        return listOf()
+    override fun extractVariables(): Set<Variable> {
+        return setOf()
     }
 
     // Operations

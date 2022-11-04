@@ -22,8 +22,8 @@ data class StringValue(val value: String) : Value {
         return "\\text{$value}"
     }
 
-    override fun extractVariables(): List<Variable> {
-        return listOf()
+    override fun extractVariables(): Set<Variable> {
+        return setOf()
     }
 
 }

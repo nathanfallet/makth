@@ -16,8 +16,8 @@ data class Variable(val name: String) : Value {
         return name
     }
 
-    override fun extractVariables(): List<Variable> {
-        return listOf(this)
+    override fun extractVariables(): Set<Variable> {
+        return setOf(this)
     }
 
 }

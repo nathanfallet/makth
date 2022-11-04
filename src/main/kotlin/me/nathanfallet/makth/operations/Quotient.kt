@@ -29,7 +29,7 @@ data class Quotient(
         return "\\frac{${left.toLaTeXString()}}{${right.toLaTeXString()}}"
     }
 
-    override fun extractVariables(): List<Variable> {
+    override fun extractVariables(): Set<Variable> {
         return left.extractVariables() + right.extractVariables()
     }
 

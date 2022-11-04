@@ -15,6 +15,22 @@ class IntegerTest {
     fun toLaTeXString() {
         assertEquals("-1", Integer.instantiate(-1).toLaTeXString())
     }
+    
+    @Test
+    fun correctNumerator() {
+        assertEquals(
+            Integer.instantiate(-2),
+            Integer.instantiate(-2).getNumerator()
+        )
+    }
+    
+    @Test
+    fun correctDenominator() {
+        assertEquals(
+            Integer.instantiate(1),
+            Integer.instantiate(-2).getDenominator()
+        )
+    }
 
     @Test
     fun sumCorrectNatural() {

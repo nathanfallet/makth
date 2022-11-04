@@ -1,6 +1,7 @@
 package me.nathanfallet.makth.numbers
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThrows
 import org.junit.Test
 import kotlin.math.PI
 
@@ -14,6 +15,13 @@ class RationalTest {
     @Test
     fun toLaTeXString() {
         assertEquals("\\frac{-1}{2}", Rational.instantiate(-1, 2).toLaTeXString())
+    }
+    
+    @Test
+    fun nullDenominatorThrows() {
+        assertThrows(IllegalArgumentException::class.java) {
+            Rational.instantiate(1, 0)
+        }
     }
 
     @Test
@@ -31,6 +39,14 @@ class RationalTest {
         assertEquals(
             Integer.instantiate(2),
             Rational.instantiate(4, 2)
+        )
+    }
+
+    @Test
+    fun absoluteValue() {
+        assertEquals(
+            Rational.instantiate(1, 2),
+            Rational.instantiate(-1, 2).absoluteValue()
         )
     }
 

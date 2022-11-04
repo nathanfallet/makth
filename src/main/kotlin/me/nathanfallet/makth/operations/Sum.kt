@@ -29,7 +29,7 @@ data class Sum(
         return "${left.toLaTeXString()} + ${right.toLaTeXString()}"
     }
 
-    override fun extractVariables(): List<Variable> {
+    override fun extractVariables(): Set<Variable> {
         return left.extractVariables() + right.extractVariables()
     }
 

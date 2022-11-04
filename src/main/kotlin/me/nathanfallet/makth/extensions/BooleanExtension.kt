@@ -18,8 +18,8 @@ data class BooleanValue(val value: Boolean) : Value {
         return if (value) "\\text{true}" else "\\text{false}"
     }
 
-    override fun extractVariables(): List<Variable> {
-        return listOf()
+    override fun extractVariables(): Set<Variable> {
+        return setOf()
     }
 
 }
