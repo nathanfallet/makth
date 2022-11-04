@@ -40,7 +40,7 @@ dependencies {
 
 ## Usage
 
-Read [documentation](docs/DOCUMENTATION.md)
+Read [documentation](docs/index.md)
 
 ## Donate to the developer
 
