@@ -22,7 +22,7 @@ data class SetAction(
 
         // Return the new context
         return Context(
-            context.data + hashMapOf(Pair(identifier, valueToSet)),
+            context.data + mapOf(identifier to valueToSet),
             context.outputs
         )
     }

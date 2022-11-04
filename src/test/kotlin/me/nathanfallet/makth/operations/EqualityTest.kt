@@ -12,8 +12,8 @@ class EqualityTest {
     private val context = Context()
 
     private val contextWithX = Context(
-        hashMapOf(
-            Pair("x", Integer.instantiate(2))
+        mapOf(
+            "x" to Integer.instantiate(2)
         )
     )
 

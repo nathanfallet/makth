@@ -15,15 +15,15 @@ class IfActionTest {
     private val context = Context()
 
     private val contextWithX = Context(
-        hashMapOf(
-            Pair("x", Integer.instantiate(2))
+        mapOf(
+            "x" to Integer.instantiate(2)
         )
     )
 
     private val contextWithXAndY = Context(
-        hashMapOf(
-            Pair("x", Integer.instantiate(2)),
-            Pair("y", Integer.instantiate(4))
+        mapOf(
+            "x" to Integer.instantiate(2),
+            "y" to Integer.instantiate(4)
         )
     )
 

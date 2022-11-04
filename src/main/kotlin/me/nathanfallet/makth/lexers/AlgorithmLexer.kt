@@ -56,6 +56,51 @@ class AlgorithmLexer(private var content: String) {
     private var i = 0
     private var actions = ArrayList<Action>()
 
+    // Keyword handlers
+
+    private var keywordHandlers: Map<String, (List<Value>) -> Action> = mapOf(
+        "print" to { args ->
+            PrintAction(args.toList())
+        },
+        "set" to { args ->
+            if (args.count() != 2) {
+                throw IncorrectArgumentCountException("set", arguments.count(), 2)
+            }
+            val identifier = when (val identifierValue = args[0]) {
+                is Variable -> identifierValue.name
+                is StringValue -> identifierValue.value
+                else -> throw IncorrectArgumentTypeException(
+                    "set",
+                    identifierValue,
+                    Variable::class
+                )
+            }
+            SetAction(identifier, args[1])
+        },
+        "if" to { args ->
+            if (args.count() != 1) {
+                throw IncorrectArgumentCountException("if", arguments.count(), 1)
+            }
+            IfAction(args[0], listOf())
+        },
+        "while" to { args ->
+            if (args.count() != 1) {
+                throw IncorrectArgumentCountException("while", arguments.count(), 1)
+            }
+            WhileAction(args[0], listOf())
+        }
+    )
+
+    fun registerKeyword(keyword: String, handler: (List<Value>) -> Action): AlgorithmLexer {
+        keywordHandlers += mapOf(keyword to handler)
+        return this
+    }
+
+    fun registerKeywords(keywords: Map<String, (List<Value>) -> Action>): AlgorithmLexer {
+        keywordHandlers += keywords
+        return this
+    }
+
     // Parse an algorithm
 
     @Throws(SyntaxException::class)
@@ -91,9 +136,9 @@ class AlgorithmLexer(private var content: String) {
                 }
 
                 // Parse block
-                val block = AlgorithmLexer(
-                    subContent.toString()
-                ).execute()
+                val block = AlgorithmLexer(subContent.toString())
+                    .registerKeywords(keywordHandlers)
+                    .execute()
 
                 // Get last action
                 when (val lastAction = actions.removeLastOrNull()) {
@@ -195,32 +240,9 @@ class AlgorithmLexer(private var content: String) {
 
     private fun createAction(): Action {
         // Check for the keyword
-        val result = when (lastKeyword) {
-            "if" -> {
-                assertArgumentCount(1)
-                IfAction(arguments[0], listOf())
-            }
-            "print" -> PrintAction(arguments.toList())
-            "set" -> {
-                assertArgumentCount(2)
-                val identifier = when (val identifierValue = arguments[0]) {
-                    is Variable -> identifierValue.name
-                    is StringValue -> identifierValue.value
-                    else -> throw IncorrectArgumentTypeException(
-                        lastKeyword ?: "none",
-                        identifierValue,
-                        Variable::class
-                    )
-                }
-                SetAction(identifier, arguments[1])
-            }
-            "while" -> {
-                assertArgumentCount(1)
-                WhileAction(arguments[0], listOf())
-            }
-            null -> throw UnexpectedBraceException("(")
-            else -> throw UnknownKeywordException(lastKeyword ?: "none")
-        }
+        val result = keywordHandlers[lastKeyword ?: "none"]?.invoke(arguments) ?: throw
+            if (lastKeyword != null) UnknownKeywordException(lastKeyword ?: "none")
+            else UnexpectedBraceException("(")
 
         // Clear storage
         arguments.clear()
@@ -228,16 +250,6 @@ class AlgorithmLexer(private var content: String) {
 
         // Return the result action
         return result
-    }
-
-    private fun assertArgumentCount(expected: Int) {
-        if (arguments.count() != expected) {
-            throw IncorrectArgumentCountException(
-                lastKeyword ?: "none",
-                arguments.count(),
-                expected
-            )
-        }
     }
 
 }

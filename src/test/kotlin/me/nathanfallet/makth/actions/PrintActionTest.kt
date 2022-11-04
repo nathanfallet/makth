@@ -13,21 +13,21 @@ class PrintActionTest {
     private val context = Context()
 
     private val contextWithString = Context(
-        hashMapOf(),
+        mapOf(),
         listOf(
             StringValue("Hello world!"), StringValue("\n")
         )
     )
 
     private val contextWithX = Context(
-        hashMapOf(
-            Pair("x", Integer.instantiate(2))
+        mapOf(
+            "x" to Integer.instantiate(2)
         )
     )
 
     private val contextWithXAndString = Context(
-        hashMapOf(
-            Pair("x", Integer.instantiate(2))
+        mapOf(
+            "x" to Integer.instantiate(2)
         ),
         listOf(
             StringValue("x = "), Integer.instantiate(2), StringValue("\n")

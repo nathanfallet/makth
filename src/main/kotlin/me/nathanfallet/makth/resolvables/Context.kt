@@ -5,7 +5,7 @@ import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.interfaces.Output
 
 data class Context(
-    val data: Map<String, Value> = hashMapOf(),
+    val data: Map<String, Value> = mapOf(),
     val outputs: List<Output> = listOf()
 ) {
 

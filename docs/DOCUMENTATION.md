@@ -39,8 +39,8 @@ val result = MathLexer("1 + 2").execute(context) // 3
 Thanks to the context, you can pass variables:
 
 ```kotlin
-val context = Context(hashMapOf(
-    Pair("x", Integer.instantiate(2))
+val context = Context(mapOf(
+    "x" to Integer.instantiate(2)
 ))
 val result = MathLexer("x + 3").execute(context) // 5
 ```
@@ -63,8 +63,8 @@ val result = Context().execute(listOf(
 
 ```kotlin
 Context(
-    hashMapOf(
-        Pair("x", Integer.instantiate(10)) // The value of x
+    mapOf(
+        "x" to Integer.instantiate(10) // The value of x
     ),
     listOf(
         StringValue("x = "), Integer.instantiate(10), StringValue("\n") // What we printed

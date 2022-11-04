@@ -129,8 +129,8 @@ class AlgorithmLexerTest {
         val actions = AlgorithmLexer(raw).execute()
         Assert.assertEquals(
             Context(
-                hashMapOf(
-                    Pair("x", Integer.instantiate(10))
+                mapOf(
+                    "x" to Integer.instantiate(10)
                 ),
                 listOf(
                     StringValue("x = "), Integer.instantiate(10), StringValue("\n")
