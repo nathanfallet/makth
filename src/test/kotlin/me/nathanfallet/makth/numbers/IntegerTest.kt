@@ -15,7 +15,7 @@ class IntegerTest {
     fun toLaTeXString() {
         assertEquals("-1", Integer.instantiate(-1).toLaTeXString())
     }
-    
+
     @Test
     fun correctNumerator() {
         assertEquals(
@@ -23,7 +23,7 @@ class IntegerTest {
             Integer.instantiate(-2).getNumerator()
         )
     }
-    
+
     @Test
     fun correctDenominator() {
         assertEquals(

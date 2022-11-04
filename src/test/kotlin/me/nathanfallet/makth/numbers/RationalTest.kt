@@ -16,7 +16,7 @@ class RationalTest {
     fun toLaTeXString() {
         assertEquals("\\frac{-1}{2}", Rational.instantiate(-1, 2).toLaTeXString())
     }
-    
+
     @Test
     fun nullDenominatorThrows() {
         assertThrows(IllegalArgumentException::class.java) {
