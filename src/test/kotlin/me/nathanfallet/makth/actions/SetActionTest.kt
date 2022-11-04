@@ -5,7 +5,11 @@ import me.nathanfallet.makth.numbers.Integer
 import me.nathanfallet.makth.operations.Sum
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable
-import org.junit.Assert
+import me.nathanfallet.makth.lexers.AlgorithmLexer.IncorrectArgumentCountException
+import me.nathanfallet.makth.lexers.AlgorithmLexer.IncorrectArgumentTypeException
+import me.nathanfallet.makth.extensions.StringValue
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThrows
 import org.junit.Test
 
 class SetActionTest {
@@ -27,15 +31,45 @@ class SetActionTest {
 
     @Test
     fun toRawString() {
-        Assert.assertEquals(
+        assertEquals(
             "set(x, 2)",
             SetAction("x", Integer.instantiate(2)).toAlgorithmString()
         )
     }
 
     @Test
+    fun handlerWithVariable() {
+        assertEquals(
+            SetAction("x", Integer.instantiate(2)),
+            SetAction.handler(listOf(Variable("x"), Integer.instantiate(2)))
+        )
+    }
+
+    @Test
+    fun handlerWithString() {
+        assertEquals(
+            SetAction("x", Integer.instantiate(2)),
+            SetAction.handler(listOf(StringValue("x"), Integer.instantiate(2)))
+        )
+    }
+
+    @Test
+    fun handlerWithWrongArgsCount() {
+        assertThrows(IncorrectArgumentCountException::class.java) {
+            SetAction.handler(listOf())
+        }
+    }
+
+    @Test
+    fun handlerWithWrongArgType() {
+        assertThrows(IncorrectArgumentTypeException::class.java) {
+            SetAction.handler(listOf(Integer.instantiate(1), Integer.instantiate(2)))
+        }
+    }
+
+    @Test
     fun setInteger() {
-        Assert.assertEquals(
+        assertEquals(
             contextWithX,
             context.execute(SetAction("x", Integer.instantiate(2)))
         )
@@ -43,7 +77,7 @@ class SetActionTest {
 
     @Test
     fun setIntegerWithVariable() {
-        Assert.assertEquals(
+        assertEquals(
             contextWithXAndY,
             contextWithX.execute(SetAction("y", Sum(Variable("x"), Integer.instantiate(2))))
         )
@@ -51,7 +85,7 @@ class SetActionTest {
 
     @Test
     fun setIntegerWithVariableWithoutContext() {
-        Assert.assertThrows(Action.UnknownVariablesException::class.java) {
+        assertThrows(Action.UnknownVariablesException::class.java) {
             context.execute(SetAction("y", Sum(Variable("x"), Integer.instantiate(2))))
         }
     }

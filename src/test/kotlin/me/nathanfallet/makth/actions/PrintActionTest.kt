@@ -5,7 +5,8 @@ import me.nathanfallet.makth.interfaces.Action
 import me.nathanfallet.makth.numbers.Integer
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable
-import org.junit.Assert
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThrows
 import org.junit.Test
 
 class PrintActionTest {
@@ -36,7 +37,7 @@ class PrintActionTest {
 
     @Test
     fun toRawString() {
-        Assert.assertEquals(
+        assertEquals(
             "print(\"x = \", x)",
             PrintAction(listOf(StringValue("x = "), Variable("x"))).toAlgorithmString()
         )
@@ -44,7 +45,7 @@ class PrintActionTest {
 
     @Test
     fun printString() {
-        Assert.assertEquals(
+        assertEquals(
             contextWithString,
             context.execute(PrintAction(listOf(StringValue("Hello world!"))))
         )
@@ -52,7 +53,7 @@ class PrintActionTest {
 
     @Test
     fun printStringWithVariable() {
-        Assert.assertEquals(
+        assertEquals(
             contextWithXAndString,
             contextWithX.execute(PrintAction(listOf(StringValue("x = "), Variable("x"))))
         )
@@ -60,7 +61,7 @@ class PrintActionTest {
 
     @Test
     fun printStringWithVariableWithoutContext() {
-        Assert.assertThrows(Action.UnknownVariablesException::class.java) {
+        assertThrows(Action.UnknownVariablesException::class.java) {
             context.execute(PrintAction(listOf(StringValue("x = "), Variable("x"))))
         }
     }

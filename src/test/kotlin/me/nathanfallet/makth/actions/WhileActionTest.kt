@@ -6,7 +6,9 @@ import me.nathanfallet.makth.operations.Equality
 import me.nathanfallet.makth.operations.Sum
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable
-import org.junit.Assert
+import me.nathanfallet.makth.lexers.AlgorithmLexer.IncorrectArgumentCountException
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThrows
 import org.junit.Test
 
 class WhileActionTest {
@@ -27,7 +29,7 @@ class WhileActionTest {
 
     @Test
     fun toRawString() {
-        Assert.assertEquals(
+        assertEquals(
             "while (x < 10) {\n}",
             WhileAction(
                 Equality(
@@ -41,7 +43,7 @@ class WhileActionTest {
 
     @Test
     fun toRawStringWithChild() {
-        Assert.assertEquals(
+        assertEquals(
             "while (x < 10) {\n    set(x, x + 1)\n}",
             WhileAction(
                 Equality(Variable("x"), Integer.instantiate(10), Equality.Operator.LessThan),
@@ -51,8 +53,26 @@ class WhileActionTest {
     }
 
     @Test
+    fun handler() {
+        assertEquals(
+            WhileAction(
+                Equality(Variable("x"), Integer.instantiate(2)),
+                listOf()
+            ),
+            WhileAction.handler(listOf(Equality(Variable("x"), Integer.instantiate(2))))
+        )
+    }
+
+    @Test
+    fun handlerWithWrongArgsCount() {
+        assertThrows(IncorrectArgumentCountException::class.java) {
+            WhileAction.handler(listOf())
+        }
+    }
+
+    @Test
     fun whileWithVariable() {
-        Assert.assertEquals(
+        assertEquals(
             contextWithXIncremented,
             contextWithX.execute(
                 WhileAction(
@@ -65,7 +85,7 @@ class WhileActionTest {
 
     @Test
     fun whileWithVariableWithoutContext() {
-        Assert.assertThrows(Action.UnknownVariablesException::class.java) {
+        assertThrows(Action.UnknownVariablesException::class.java) {
             context.execute(
                 WhileAction(
                     Equality(Variable("x"), Integer.instantiate(2)),
@@ -77,7 +97,7 @@ class WhileActionTest {
 
     @Test
     fun whileWhenNotABoolean() {
-        Assert.assertThrows(Action.NotABooleanException::class.java) {
+        assertThrows(Action.NotABooleanException::class.java) {
             contextWithX.execute(
                 WhileAction(
                     Variable("x"),

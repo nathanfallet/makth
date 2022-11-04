@@ -4,7 +4,7 @@ import me.nathanfallet.makth.extensions.BooleanValue
 import me.nathanfallet.makth.numbers.Integer
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable
-import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class EqualityTest {
@@ -19,7 +19,7 @@ class EqualityTest {
 
     @Test
     fun testEqualsTrue() {
-        Assert.assertEquals(
+        assertEquals(
             BooleanValue(true),
             Equality(
                 Integer.instantiate(1),
@@ -31,7 +31,7 @@ class EqualityTest {
 
     @Test
     fun testEqualsFalse() {
-        Assert.assertEquals(
+        assertEquals(
             BooleanValue(false),
             Equality(
                 Integer.instantiate(1),
@@ -43,7 +43,7 @@ class EqualityTest {
 
     @Test
     fun testEqualsTrueWithVariable() {
-        Assert.assertEquals(
+        assertEquals(
             BooleanValue(true),
             Equality(Variable("x"), Integer.instantiate(2), Equality.Operator.Equals).compute(
                 contextWithX
@@ -52,8 +52,24 @@ class EqualityTest {
     }
 
     @Test
+    fun equalsToRawString() {
+        assertEquals(
+            "1 = 2",
+            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.Equals).toRawString()
+        )
+    }
+
+    @Test
+    fun equalsToLaTeXString() {
+        assertEquals(
+            "1 \\eq 2",
+            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.Equals).toLaTeXString()
+        )
+    }
+
+    @Test
     fun testNotEqualsTrue() {
-        Assert.assertEquals(
+        assertEquals(
             BooleanValue(true),
             Equality(
                 Integer.instantiate(1),
@@ -65,7 +81,7 @@ class EqualityTest {
 
     @Test
     fun testNotEqualsFalse() {
-        Assert.assertEquals(
+        assertEquals(
             BooleanValue(false),
             Equality(
                 Integer.instantiate(1),
@@ -76,8 +92,24 @@ class EqualityTest {
     }
 
     @Test
+    fun notEqualsToRawString() {
+        assertEquals(
+            "1 != 2",
+            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.NotEquals).toRawString()
+        )
+    }
+
+    @Test
+    fun notEqualsToLaTeXString() {
+        assertEquals(
+            "1 \\ne 2",
+            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.NotEquals).toLaTeXString()
+        )
+    }
+
+    @Test
     fun testLessThanTrue() {
-        Assert.assertEquals(
+        assertEquals(
             BooleanValue(true),
             Equality(
                 Integer.instantiate(1),
@@ -89,7 +121,7 @@ class EqualityTest {
 
     @Test
     fun testLessThanFalse() {
-        Assert.assertEquals(
+        assertEquals(
             BooleanValue(false),
             Equality(
                 Integer.instantiate(2),
@@ -100,8 +132,24 @@ class EqualityTest {
     }
 
     @Test
+    fun lessThanToRawString() {
+        assertEquals(
+            "1 < 2",
+            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.LessThan).toRawString()
+        )
+    }
+
+    @Test
+    fun lessThanToLaTeXString() {
+        assertEquals(
+            "1 \\lt 2",
+            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.LessThan).toLaTeXString()
+        )
+    }
+
+    @Test
     fun testGreaterThanTrue() {
-        Assert.assertEquals(
+        assertEquals(
             BooleanValue(true),
             Equality(
                 Integer.instantiate(2),
@@ -113,7 +161,7 @@ class EqualityTest {
 
     @Test
     fun testGreaterThanFalse() {
-        Assert.assertEquals(
+        assertEquals(
             BooleanValue(false),
             Equality(
                 Integer.instantiate(1),
@@ -124,8 +172,24 @@ class EqualityTest {
     }
 
     @Test
+    fun greaterThanToRawString() {
+        assertEquals(
+            "1 > 2",
+            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.GreaterThan).toRawString()
+        )
+    }
+
+    @Test
+    fun greaterThanToLaTeXString() {
+        assertEquals(
+            "1 \\gt 2",
+            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.GreaterThan).toLaTeXString()
+        )
+    }
+
+    @Test
     fun testLessThanOrEqualsTrue() {
-        Assert.assertEquals(
+        assertEquals(
             BooleanValue(true),
             Equality(
                 Integer.instantiate(1),
@@ -137,7 +201,7 @@ class EqualityTest {
 
     @Test
     fun testLessThanOrEqualsFalse() {
-        Assert.assertEquals(
+        assertEquals(
             BooleanValue(false),
             Equality(
                 Integer.instantiate(2),
@@ -148,8 +212,24 @@ class EqualityTest {
     }
 
     @Test
+    fun lessThanOrEqualsToRawString() {
+        assertEquals(
+            "1 <= 2",
+            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.LessThanOrEquals).toRawString()
+        )
+    }
+
+    @Test
+    fun lessThanOrEqualsToLaTeXString() {
+        assertEquals(
+            "1 \\le 2",
+            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.LessThanOrEquals).toLaTeXString()
+        )
+    }
+
+    @Test
     fun testGreaterThanOrEqualsTrue() {
-        Assert.assertEquals(
+        assertEquals(
             BooleanValue(true),
             Equality(
                 Integer.instantiate(1),
@@ -161,13 +241,29 @@ class EqualityTest {
 
     @Test
     fun testGreaterThanOrEqualsFalse() {
-        Assert.assertEquals(
+        assertEquals(
             BooleanValue(false),
             Equality(
                 Integer.instantiate(1),
                 Integer.instantiate(2),
                 Equality.Operator.GreaterThanOrEquals
             ).compute(context)
+        )
+    }
+
+    @Test
+    fun greaterThanOrEqualsToRawString() {
+        assertEquals(
+            "1 >= 2",
+            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.GreaterThanOrEquals).toRawString()
+        )
+    }
+
+    @Test
+    fun greaterThanOrEqualsToLaTeXString() {
+        assertEquals(
+            "1 \\ge 2",
+            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.GreaterThanOrEquals).toLaTeXString()
         )
     }
 

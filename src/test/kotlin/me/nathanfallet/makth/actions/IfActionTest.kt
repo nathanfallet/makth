@@ -7,7 +7,9 @@ import me.nathanfallet.makth.numbers.Integer
 import me.nathanfallet.makth.operations.Equality
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable
-import org.junit.Assert
+import me.nathanfallet.makth.lexers.AlgorithmLexer.IncorrectArgumentCountException
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThrows
 import org.junit.Test
 
 class IfActionTest {
@@ -29,7 +31,7 @@ class IfActionTest {
 
     @Test
     fun toRawString() {
-        Assert.assertEquals(
+        assertEquals(
             "if (x = 2) {\n}",
             IfAction(Equality(Variable("x"), Integer.instantiate(2)), listOf()).toAlgorithmString()
         )
@@ -37,7 +39,7 @@ class IfActionTest {
 
     @Test
     fun toRawStringWithChild() {
-        Assert.assertEquals(
+        assertEquals(
             "if (x = 2) {\n    print(\"Test\")\n}",
             IfAction(
                 Equality(Variable("x"), Integer.instantiate(2)),
@@ -48,7 +50,7 @@ class IfActionTest {
 
     @Test
     fun toRawStringWithChildren() {
-        Assert.assertEquals(
+        assertEquals(
             "if (x = 2) {\n    print(\"Test\")\n} else {\n    print(\"Test2\")\n}",
             IfAction(
                 Equality(Variable("x"), Integer.instantiate(2)),
@@ -59,8 +61,27 @@ class IfActionTest {
     }
 
     @Test
+    fun handler() {
+        assertEquals(
+            IfAction(
+                Equality(Variable("x"), Integer.instantiate(2)),
+                listOf(),
+                listOf()
+            ),
+            IfAction.handler(listOf(Equality(Variable("x"), Integer.instantiate(2))))
+        )
+    }
+
+    @Test
+    fun handlerWithWrongArgsCount() {
+        assertThrows(IncorrectArgumentCountException::class.java) {
+            IfAction.handler(listOf())
+        }
+    }
+
+    @Test
     fun ifWithBoolean() {
-        Assert.assertEquals(
+        assertEquals(
             contextWithX,
             context.execute(
                 IfAction(
@@ -74,7 +95,7 @@ class IfActionTest {
 
     @Test
     fun elseWithBoolean() {
-        Assert.assertEquals(
+        assertEquals(
             contextWithX,
             context.execute(
                 IfAction(
@@ -88,7 +109,7 @@ class IfActionTest {
 
     @Test
     fun ifWithVariable() {
-        Assert.assertEquals(
+        assertEquals(
             contextWithXAndY,
             contextWithX.execute(
                 IfAction(
@@ -102,7 +123,7 @@ class IfActionTest {
 
     @Test
     fun ifWithVariableWithoutContext() {
-        Assert.assertThrows(Action.UnknownVariablesException::class.java) {
+        assertThrows(Action.UnknownVariablesException::class.java) {
             context.execute(
                 IfAction(
                     Equality(Variable("x"), Integer.instantiate(2)),
@@ -115,7 +136,7 @@ class IfActionTest {
 
     @Test
     fun ifWhenNotABoolean() {
-        Assert.assertThrows(Action.NotABooleanException::class.java) {
+        assertThrows(Action.NotABooleanException::class.java) {
             contextWithX.execute(
                 IfAction(
                     Variable("x"),

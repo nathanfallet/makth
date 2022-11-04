@@ -10,14 +10,14 @@ import me.nathanfallet.makth.operations.Equality
 import me.nathanfallet.makth.operations.Sum
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable
-import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class AlgorithmLexerTest {
 
     @Test
     fun parseIfAction() {
-        Assert.assertEquals(
+        assertEquals(
             listOf(
                 IfAction(Equality(Variable("x"), Integer.instantiate(2)), listOf())
             ),
@@ -27,7 +27,7 @@ class AlgorithmLexerTest {
 
     @Test
     fun parseIfActionWithChild() {
-        Assert.assertEquals(
+        assertEquals(
             listOf(
                 IfAction(
                     Equality(Variable("x"), Integer.instantiate(2)),
@@ -42,7 +42,7 @@ class AlgorithmLexerTest {
 
     @Test
     fun parseIfActionWithElse() {
-        Assert.assertEquals(
+        assertEquals(
             listOf(
                 IfAction(
                     Equality(Variable("x"), Integer.instantiate(2)),
@@ -60,7 +60,7 @@ class AlgorithmLexerTest {
 
     @Test
     fun parsePrintAction() {
-        Assert.assertEquals(
+        assertEquals(
             listOf(
                 PrintAction(listOf(Integer.instantiate(2)))
             ),
@@ -70,7 +70,7 @@ class AlgorithmLexerTest {
 
     @Test
     fun parsePrintActionWithTwoArguments() {
-        Assert.assertEquals(
+        assertEquals(
             listOf(
                 PrintAction(listOf(StringValue("x = "), Variable("x")))
             ),
@@ -80,7 +80,7 @@ class AlgorithmLexerTest {
 
     @Test
     fun parseSetAction() {
-        Assert.assertEquals(
+        assertEquals(
             listOf(
                 SetAction("x", Integer.instantiate(2))
             ),
@@ -90,7 +90,7 @@ class AlgorithmLexerTest {
 
     @Test
     fun parseWhileAction() {
-        Assert.assertEquals(
+        assertEquals(
             listOf(
                 WhileAction(
                     Equality(
@@ -106,7 +106,7 @@ class AlgorithmLexerTest {
 
     @Test
     fun parseWhileActionWithChild() {
-        Assert.assertEquals(
+        assertEquals(
             listOf(
                 WhileAction(
                     Equality(Variable("x"), Integer.instantiate(10), Equality.Operator.LessThan),
@@ -119,15 +119,9 @@ class AlgorithmLexerTest {
 
     @Test
     fun parseAndExecuteExampleAlgorithm() {
-        val raw = """
-        set(x, 2)
-        while (x < 10) {
-            set(x, x + 1)
-        }
-        print("x = ", x)
-        """
+        val raw = "set(x, 2)\nwhile (x < 10) {\n    set(x, x + 1)\n}\nprint(\"x = \", x)"
         val actions = AlgorithmLexer(raw).execute()
-        Assert.assertEquals(
+        assertEquals(
             Context(
                 mapOf(
                     "x" to Integer.instantiate(10)
@@ -138,6 +132,7 @@ class AlgorithmLexerTest {
             ),
             Context().execute(actions)
         )
+        assertEquals(raw, actions.joinToString("\n") { it.toAlgorithmString() })
     }
 
 }
