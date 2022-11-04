@@ -4,12 +4,20 @@ import me.nathanfallet.makth.extensions.BooleanValue
 import me.nathanfallet.makth.extensions.indentLines
 import me.nathanfallet.makth.interfaces.Action
 import me.nathanfallet.makth.interfaces.Value
+import me.nathanfallet.makth.lexers.AlgorithmLexer.IncorrectArgumentCountException
 import me.nathanfallet.makth.resolvables.Context
 
-data class WhileAction(
-    val condition: Value,
-    val actions: List<Action>
-) : Action {
+data class WhileAction(val condition: Value, val actions: List<Action>) : Action {
+
+    companion object {
+
+        fun handler(args: List<Value>): Action {
+            if (args.count() != 1) {
+                throw IncorrectArgumentCountException("while", args.count(), 1)
+            }
+            return WhileAction(args[0], listOf())
+        }
+    }
 
     @Throws(Action.ExecutionException::class)
     override fun execute(context: Context): Context {
@@ -47,5 +55,4 @@ data class WhileAction(
         builder.append("\n}")
         return builder.toString()
     }
-
 }
