@@ -11,6 +11,7 @@ import me.nathanfallet.makth.operations.Sum
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThrows
 import org.junit.Test
 
 class AlgorithmLexerTest {
@@ -37,6 +38,26 @@ class AlgorithmLexerTest {
                 )
             ),
             AlgorithmLexer("if (x = 2) { print(\"Test\") }").execute()
+        )
+    }
+
+    @Test
+    fun parseIfActionWithIfChild() {
+        assertEquals(
+            listOf(
+                IfAction(
+                    Equality(Variable("x"), Integer.instantiate(2)),
+                    listOf(
+                        IfAction(
+                            Equality(Variable("y"), Integer.instantiate(3)),
+                            listOf(
+                                PrintAction(listOf(StringValue("Test")))
+                            )
+                        )
+                    )
+                )
+            ),
+            AlgorithmLexer("if (x = 2) { if (y = 3) { print(\"Test\") }}").execute()
         )
     }
 
@@ -133,6 +154,41 @@ class AlgorithmLexerTest {
             Context().execute(actions)
         )
         assertEquals(raw, actions.joinToString("\n") { it.toAlgorithmString() })
+    }
+
+    @Test
+    fun unknownKeyword() {
+        assertThrows(AlgorithmLexer.UnknownKeywordException::class.java) {
+            AlgorithmLexer("unknown()").execute()
+        }
+    }
+
+    @Test
+    fun unexpectedKeyword() {
+        assertThrows(AlgorithmLexer.UnexpectedKeywordException::class.java) {
+            AlgorithmLexer("print unexpected()").execute()
+        }
+    }
+
+    @Test
+    fun unexpectedKeywordInsteadOfElse() {
+        assertThrows(AlgorithmLexer.UnexpectedKeywordException::class.java) {
+            AlgorithmLexer("if (x = 1) {} unexpected {}").execute()
+        }
+    }
+
+    @Test
+    fun unexpectedBrace() {
+        assertThrows(AlgorithmLexer.UnexpectedBraceException::class.java) {
+            AlgorithmLexer("()").execute()
+        }
+    }
+
+    @Test
+    fun unexpectedBraceBlock() {
+        assertThrows(AlgorithmLexer.UnexpectedBraceException::class.java) {
+            AlgorithmLexer("print() {}").execute()
+        }
     }
 
 }
