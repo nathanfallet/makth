@@ -40,7 +40,7 @@ dependencies {
 
 ## Usage
 
-Read [documentation](docs/index.md)
+Read [documentation](https://docs.makth.org)
 
 ## Donate to the developer
 
