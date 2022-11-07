@@ -4,6 +4,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThrows
 import org.junit.Test
 import kotlin.math.PI
+import kotlin.math.pow
 
 class NaturalTest {
 
@@ -123,6 +124,42 @@ class NaturalTest {
         assertEquals(
             Real.instantiate(2 / PI),
             Integer.instantiate(2).divide(Real.pi)
+        )
+    }
+
+    @Test
+    fun raiseCorrectNatural() {
+        // 2 ^ 3 = 8
+        assertEquals(
+            Integer.instantiate(8),
+            Integer.instantiate(2).raise(Integer.instantiate(3))
+        )
+    }
+
+    @Test
+    fun raiseCorrectInteger() {
+        // 2 ^ -3 = 1/8
+        assertEquals(
+            Rational.instantiate(1, 8),
+            Integer.instantiate(2).raise(Integer.instantiate(-3))
+        )
+    }
+
+    @Test
+    fun raiseCorrectRational() {
+        // 64 ^ (2/3) = 16
+        assertEquals(
+            Integer.instantiate(16),
+            Integer.instantiate(64).raise(Rational.instantiate(2, 3))
+        )
+    }
+
+    @Test
+    fun raiseCorrectReal() {
+        // 2 ^ pi = 2^pi
+        assertEquals(
+            Real.instantiate(2.0.pow(PI)),
+            Integer.instantiate(2).raise(Real.pi)
         )
     }
 

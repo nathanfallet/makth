@@ -15,6 +15,7 @@ interface Operation : Value {
                 "-" -> Sum(left, Product(Integer.instantiate(-1), right))
                 "*" -> Product(left, right)
                 "/" -> Quotient(left, right)
+                "^" -> Exponentiation(left, right)
                 "=" -> Equality(left, right)
                 "!=" -> Equality(left, right, Equality.Operator.NotEquals)
                 "<" -> Equality(left, right, Equality.Operator.LessThan)
@@ -27,8 +28,9 @@ interface Operation : Value {
 
         fun getPrecedence(operation: String): Int {
             return when (operation) {
-                "+", "-" -> 1
+                "^" -> 3
                 "*", "/" -> 2
+                "+", "-" -> 1
                 else -> 0
             }
         }

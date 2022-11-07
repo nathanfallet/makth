@@ -17,6 +17,13 @@ class OperationsTest {
     }
 
     @Test
+    fun precedenceExponentiateOverMultiply() {
+        assertTrue(
+            Operation.Utils.getPrecedence("^") > Operation.Utils.getPrecedence("*")
+        )
+    }
+
+    @Test
     fun precedenceMultiplyOverSum() {
         assertTrue(
             Operation.Utils.getPrecedence("*") > Operation.Utils.getPrecedence("+")

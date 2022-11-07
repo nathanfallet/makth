@@ -8,6 +8,7 @@ import me.nathanfallet.makth.operations.Equality
 import me.nathanfallet.makth.operations.Product
 import me.nathanfallet.makth.operations.Quotient
 import me.nathanfallet.makth.operations.Sum
+import me.nathanfallet.makth.operations.Exponentiation
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable
 import org.junit.Assert.assertEquals
@@ -39,8 +40,23 @@ class MathLexerTest {
     }
 
     @Test
+    fun parseInteger2() {
+        assertEquals(Integer.instantiate(-2), MathLexer("-2").execute(context))
+    }
+
+    @Test
+    fun parseInteger3() {
+        assertEquals(Integer.instantiate(-2), MathLexer("(-2)").execute(context))
+    }
+
+    @Test
     fun parseSum() {
         assertEquals(Integer.instantiate(3), MathLexer("1 + 2").execute(context))
+    }
+
+    @Test
+    fun parseSum2() {
+        assertEquals(Integer.instantiate(-1), MathLexer("1 + (-2)").execute(context))
     }
 
     @Test
@@ -121,6 +137,32 @@ class MathLexerTest {
         assertEquals(
             Quotient(Integer.instantiate(2), Variable("x")),
             MathLexer("2 / x").execute(context)
+        )
+    }
+    
+    @Test
+    fun parseExponentiate() {
+        assertEquals(Integer.instantiate(8), MathLexer("2 ^ 3").execute(context))
+    }
+
+    @Test
+    fun parseExponentiate2() {
+        assertEquals(Rational.instantiate(1, 8), MathLexer("2 ^ (-3)").execute(context))
+    }
+
+    @Test
+    fun parseExponentiateWithVariable() {
+        assertEquals(
+            Exponentiation(Integer.instantiate(2), Variable("x")),
+            MathLexer("2 ^ x").execute(context)
+        )
+    }
+
+    @Test
+    fun parseExponentiateWithVariableAndContext() {
+        assertEquals(
+            Integer.instantiate(4),
+            MathLexer("2 ^ x").execute(contextWithX)
         )
     }
 

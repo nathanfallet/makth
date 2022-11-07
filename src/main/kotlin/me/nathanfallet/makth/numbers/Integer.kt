@@ -1,6 +1,9 @@
 package me.nathanfallet.makth.numbers
 
 import kotlin.math.abs
+import kotlin.math.pow
+import me.nathanfallet.makth.extensions.pow
+import me.nathanfallet.makth.extensions.nthRoot
 
 interface Integer : Rational {
 
@@ -97,6 +100,40 @@ interface Integer : Rational {
             }
         }
         return RealImpl(getDoubleValue()).divide(right)
+    }
+
+    override fun raise(right: Real): Real {
+        if (right is Integer) {
+            return if (right.getLongValue() < 0) {
+                Rational.instantiate(
+                    instantiate(1),
+                    instantiate(getLongValue().pow(-right.getLongValue()).toLong())
+                )
+            } else {
+                instantiate(getLongValue().pow(right.getLongValue()).toLong())
+            }
+        }
+        if (right is Rational) {
+            val firstRaised = raise(right.getNumerator())
+            if (firstRaised is Integer) {
+                return if (firstRaised.getDoubleValue() < 0) {
+                    // In case of negative number, we need to take the oppposite
+                    // and check if the denominator is even (to avoid complex case).
+                    if (right.getDenominator().getLongValue() % 2 == 0L) {
+                        Real.instantiate(Double.NaN)
+                    } else {
+                        Real.instantiate(
+                            -(-firstRaised.getLongValue())
+                            .nthRoot(right.getDenominator().getLongValue())
+                        )
+                    }
+                } else {
+                    Real.instantiate(firstRaised.getLongValue().nthRoot(right.getDenominator().getLongValue()))
+                }
+            }
+        }
+
+        return RealImpl(getDoubleValue()).raise(right)
     }
 
 }

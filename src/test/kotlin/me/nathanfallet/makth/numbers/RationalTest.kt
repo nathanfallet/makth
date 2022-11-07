@@ -4,6 +4,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThrows
 import org.junit.Test
 import kotlin.math.PI
+import kotlin.math.pow
 
 class RationalTest {
 
@@ -155,6 +156,42 @@ class RationalTest {
         assertEquals(
             Real.instantiate(0.5 / PI),
             Rational.instantiate(1, 2).divide(Real.pi)
+        )
+    }
+
+    @Test
+    fun raiseCorrectNatural() {
+        // 2/3 ^ 2 = 4/9
+        assertEquals(
+            Rational.instantiate(4, 9),
+            Rational.instantiate(2, 3).raise(Integer.instantiate(2))
+        )
+    }
+
+    @Test
+    fun raiseCorrectInteger() {
+        // 2/3 ^ -2 = 9/4
+        assertEquals(
+            Rational.instantiate(9, 4),
+            Rational.instantiate(2, 3).raise(Integer.instantiate(-2))
+        )
+    }
+
+    @Test
+    fun raiseCorrectRational() {
+        // 4/9 ^ 1/2 = 2/3
+        assertEquals(
+            Rational.instantiate(2, 3),
+            Rational.instantiate(4, 9).raise(Rational.instantiate(1, 2))
+        )
+    }
+
+    @Test
+    fun raiseCorrectReal() {
+        // 1/2 ^ pi = 1/(2^pi)
+        assertEquals(
+            Real.instantiate(1.0 / 2.0.pow(PI)),
+            Rational.instantiate(1, 2).raise(Real.pi)
         )
     }
 

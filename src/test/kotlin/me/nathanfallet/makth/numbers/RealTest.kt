@@ -3,6 +3,8 @@ package me.nathanfallet.makth.numbers
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import kotlin.math.PI
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 class RealTest {
 
@@ -129,6 +131,42 @@ class RealTest {
         assertEquals(
             Integer.instantiate(1),
             Real.pi.divide(Real.pi)
+        )
+    }
+
+    @Test
+    fun raiseCorrectNatural() {
+        // pi ^ 2 = pi^2
+        assertEquals(
+            Real.instantiate(PI * PI),
+            Real.pi.raise(Integer.instantiate(2))
+        )
+    }
+
+    @Test
+    fun raiseCorrectInteger() {
+        // pi ^ -2 = 1/(pi^2)
+        assertEquals(
+            Real.instantiate(1/(PI * PI)),
+            Real.pi.raise(Integer.instantiate(-2))
+        )
+    }
+
+    @Test
+    fun raiseCorrectRational() {
+        // pi ^ 1/2 = sqrt(pi)
+        assertEquals(
+            Real.instantiate(sqrt(PI)),
+            Real.pi.raise(Rational.instantiate(1, 2))
+        )
+    }
+
+    @Test
+    fun raiseCorrectReal() {
+        // pi ^ pi = pi^pi
+        assertEquals(
+            Real.instantiate(PI.pow(PI)),
+            Real.pi.raise(Real.pi)
         )
     }
 

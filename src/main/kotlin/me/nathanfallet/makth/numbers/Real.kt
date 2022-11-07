@@ -1,16 +1,22 @@
 package me.nathanfallet.makth.numbers
 
+import kotlin.math.abs
+import kotlin.math.floor
+import kotlin.math.pow
 import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.operations.Divisible
+import me.nathanfallet.makth.operations.Exponentiable
 import me.nathanfallet.makth.operations.Multipliable
 import me.nathanfallet.makth.operations.Summable
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable
-import kotlin.math.abs
-import kotlin.math.floor
 
-interface Real : Value, Summable<Real, Real>,
-    Multipliable<Real, Real>, Divisible<Real, Real> {
+interface Real :
+        Value,
+        Summable<Real, Real>,
+        Multipliable<Real, Real>,
+        Divisible<Real, Real>,
+        Exponentiable<Real, Real> {
 
     // Instantiate
 
@@ -18,9 +24,7 @@ interface Real : Value, Summable<Real, Real>,
 
         val pi: Real = RealImplPi()
 
-        fun instantiate(
-            value: Double
-        ): Real {
+        fun instantiate(value: Double): Real {
             // Check if value is an integer
             if (floor(value) == value) {
                 return Integer.instantiate(value.toLong())
@@ -78,6 +82,10 @@ interface Real : Value, Summable<Real, Real>,
 
     override fun divide(right: Real): Real {
         return instantiate(getDoubleValue() / right.getDoubleValue())
+    }
+
+    override fun raise(right: Real): Real {
+        return instantiate(getDoubleValue().pow(right.getDoubleValue()))
     }
 
 }

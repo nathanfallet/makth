@@ -138,4 +138,10 @@ interface Rational : Real {
         return RealImpl(getDoubleValue()).divide(right)
     }
 
+    override fun raise(right: Real): Real {
+        val newNumerator = getNumerator().raise(right)
+        val newDenominator = getDenominator().raise(right)
+        return newNumerator.divide(newDenominator)
+    }
+
 }
