@@ -174,7 +174,7 @@ class MathLexerTest {
             MathLexer("2 % x").execute(contextWithX)
         )
     }
-    
+
     @Test
     fun parseExponentiate() {
         assertEquals(Integer.instantiate(8), MathLexer("2 ^ 3").execute(context))

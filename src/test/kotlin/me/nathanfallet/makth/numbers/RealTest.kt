@@ -133,7 +133,7 @@ class RealTest {
             Real.pi.divide(Real.pi)
         )
     }
-    
+
     @Test
     fun remainderCorrectNatural() {
         // pi % 3 = pi%3

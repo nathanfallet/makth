@@ -134,7 +134,7 @@ class IntegerTest {
             Integer.instantiate(-2).divide(Real.pi)
         )
     }
-    
+
     @Test
     fun remainderCorrectNatural() {
         // -5 % 3 = -2
