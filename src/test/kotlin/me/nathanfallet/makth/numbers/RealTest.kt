@@ -133,6 +133,42 @@ class RealTest {
             Real.pi.divide(Real.pi)
         )
     }
+    
+    @Test
+    fun remainderCorrectNatural() {
+        // pi % 3 = pi%3
+        assertEquals(
+            Real.instantiate(PI % 3),
+            Real.pi.remainder(Integer.instantiate(3))
+        )
+    }
+
+    @Test
+    fun remainderCorrectInteger() {
+        // pi % -3 = pi%(-3)
+        assertEquals(
+            Real.instantiate(PI % -3),
+            Real.pi.remainder(Integer.instantiate(-3))
+        )
+    }
+
+    @Test
+    fun remainderCorrectRational() {
+        // pi % 1/2 = pi%1/2
+        assertEquals(
+            Real.instantiate(PI % 0.5),
+            Real.pi.remainder(Rational.instantiate(1, 2))
+        )
+    }
+
+    @Test
+    fun remainderCorrectReal() {
+        // pi % pi = 0
+        assertEquals(
+            Integer.instantiate(0),
+            Real.pi.remainder(Real.pi)
+        )
+    }
 
     @Test
     fun raiseCorrectNatural() {

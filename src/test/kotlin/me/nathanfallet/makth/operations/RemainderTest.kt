@@ -6,23 +6,23 @@ import me.nathanfallet.makth.resolvables.Variable
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class ExponentiateTest {
+class RemainderTest {
 
     private val context = Context()
 
     @Test
     fun toRawString() {
         assertEquals(
-            "1 ^ 2",
-            Exponentiation(Integer.instantiate(1), Integer.instantiate(2)).toRawString()
+            "1 % 2",
+            Remainder(Integer.instantiate(1), Integer.instantiate(2)).toRawString()
         )
     }
 
     @Test
     fun toLaTeXString() {
         assertEquals(
-            "1^{2}",
-            Exponentiation(Integer.instantiate(1), Integer.instantiate(2)).toLaTeXString()
+            "1 % 2",
+            Remainder(Integer.instantiate(1), Integer.instantiate(2)).toLaTeXString()
         )
     }
 
@@ -30,16 +30,16 @@ class ExponentiateTest {
     fun extractVariables() {
         assertEquals(
             setOf(Variable("x"), Variable("y")),
-            Exponentiation(Variable("x"), Variable("y")).extractVariables()
+            Remainder(Variable("x"), Variable("y")).extractVariables()
         )
     }
 
     @Test
-    fun exponentiateNaturals() {
-        // Check that an exponentiation is computed correctly
+    fun divideNaturals() {
+        // Check that a remainder is computed correctly
         assertEquals(
-            Integer.instantiate(8),
-            Exponentiation(Integer.instantiate(2), Integer.instantiate(3)).compute(context)
+            Integer.instantiate(1),
+            Remainder(Integer.instantiate(3), Integer.instantiate(2)).compute(context)
         )
     }
 

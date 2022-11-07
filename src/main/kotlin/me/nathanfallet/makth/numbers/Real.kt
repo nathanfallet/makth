@@ -84,6 +84,10 @@ interface Real :
         return instantiate(getDoubleValue() / right.getDoubleValue())
     }
 
+    override fun remainder(right: Real): Real {
+        return instantiate(getDoubleValue() % right.getDoubleValue())
+    }
+
     override fun raise(right: Real): Real {
         return instantiate(getDoubleValue().pow(right.getDoubleValue()))
     }

@@ -138,6 +138,30 @@ interface Rational : Real {
         return RealImpl(getDoubleValue()).divide(right)
     }
 
+    override fun remainder(right: Real): Real {
+        if (right is Integer) {
+            val newRight = getDenominator().multiply(right)
+            val newNumerator = getNumerator().remainder(newRight)
+            if (newRight is Integer && newNumerator is Integer) {
+                return instantiate(
+                    newNumerator,
+                    getDenominator()
+                )
+            }
+        }
+        if (right is Rational) {
+            val newNumerator = getNumerator().multiply(right.getDenominator()).remainder(right.getNumerator().multiply(getDenominator()))
+            val newDenominator = getDenominator().multiply(right.getDenominator())
+            if (newNumerator is Integer && newDenominator is Integer) {
+                return instantiate(
+                    newNumerator,
+                    newDenominator
+                )
+            }
+        }
+        return RealImpl(getDoubleValue()).remainder(right)
+    }
+
     override fun raise(right: Real): Real {
         val newNumerator = getNumerator().raise(right)
         val newDenominator = getDenominator().raise(right)

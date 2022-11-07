@@ -160,6 +160,42 @@ class RationalTest {
     }
 
     @Test
+    fun remainderCorrectNatural() {
+        // 5/2 % 2 = 1/2
+        assertEquals(
+            Rational.instantiate(1, 2),
+            Rational.instantiate(5, 2).remainder(Integer.instantiate(2))
+        )
+    }
+
+    @Test
+    fun remainderCorrectInteger() {
+        // 5/2 % -2 = 1/2
+        assertEquals(
+            Rational.instantiate(1, 2),
+            Rational.instantiate(5, 2).remainder(Integer.instantiate(-2))
+        )
+    }
+
+    @Test
+    fun remainderCorrectRational() {
+        // 5/2 % 1/3 = 1/6
+        assertEquals(
+            Rational.instantiate(1, 6),
+            Rational.instantiate(5, 2).remainder(Rational.instantiate(1, 3))
+        )
+    }
+
+    @Test
+    fun remainderCorrectReal() {
+        // 7/2 % pi = 7/2%pi
+        assertEquals(
+            Real.instantiate(3.5 % PI),
+            Rational.instantiate(7, 2).remainder(Real.pi)
+        )
+    }
+
+    @Test
     fun raiseCorrectNatural() {
         // 2/3 ^ 2 = 4/9
         assertEquals(

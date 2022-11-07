@@ -126,6 +126,42 @@ class NaturalTest {
             Integer.instantiate(2).divide(Real.pi)
         )
     }
+    
+    @Test
+    fun remainderCorrectNatural() {
+        // 5 % 3 = 2
+        assertEquals(
+            Integer.instantiate(2),
+            Integer.instantiate(5).remainder(Integer.instantiate(3))
+        )
+    }
+
+    @Test
+    fun remainderCorrectInteger() {
+        // 5 % -3 = 2
+        assertEquals(
+            Integer.instantiate(2),
+            Integer.instantiate(5).remainder(Integer.instantiate(-3))
+        )
+    }
+
+    @Test
+    fun remainderCorrectRational() {
+        // 2 % (3/2) = 1/2
+        assertEquals(
+            Rational.instantiate(1, 2),
+            Integer.instantiate(2).remainder(Rational.instantiate(3, 2))
+        )
+    }
+
+    @Test
+    fun remainderCorrectReal() {
+        // 4 % pi = 4%pi
+        assertEquals(
+            Real.instantiate(4 % PI),
+            Integer.instantiate(4).remainder(Real.pi)
+        )
+    }
 
     @Test
     fun raiseCorrectNatural() {

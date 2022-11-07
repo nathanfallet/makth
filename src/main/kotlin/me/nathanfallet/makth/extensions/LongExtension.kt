@@ -35,7 +35,7 @@ fun Long.pow(power: Long): Long {
     var exponent = power
 
     while (exponent > 0) {
-        if (exponent % 2L == 1L) {
+        if (exponent and 1L == 1L) {
             result *= base
         }
         exponent /= 2L

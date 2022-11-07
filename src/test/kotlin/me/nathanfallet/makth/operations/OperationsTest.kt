@@ -52,6 +52,13 @@ class OperationsTest {
     }
 
     @Test
+    fun precedenceMultiplySameAsRemainder() {
+        assertTrue(
+            Operation.Utils.getPrecedence("*") == Operation.Utils.getPrecedence("%")
+        )
+    }
+
+    @Test
     fun precedenceNotEqualsSameAsEquals() {
         assertTrue(
             Operation.Utils.getPrecedence("!=") == Operation.Utils.getPrecedence("=")

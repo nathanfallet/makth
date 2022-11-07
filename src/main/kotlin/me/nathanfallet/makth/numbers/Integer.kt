@@ -102,6 +102,22 @@ interface Integer : Rational {
         return RealImpl(getDoubleValue()).divide(right)
     }
 
+    override fun remainder(right: Real): Real {
+        if (right is Integer) {
+            return instantiate(getLongValue() % right.getLongValue())
+        }
+        if (right is Rational) {
+            val newNumerator = getNumerator().multiply(right.getDenominator()).remainder(right.getNumerator())
+            if (newNumerator is Integer) {
+                return Rational.instantiate(
+                    newNumerator,
+                    right.getDenominator()
+                )
+            }
+        }
+        return RealImpl(getDoubleValue()).remainder(right)
+    }
+
     override fun raise(right: Real): Real {
         if (right is Integer) {
             return if (right.getLongValue() < 0) {
@@ -119,7 +135,7 @@ interface Integer : Rational {
                 return if (firstRaised.getDoubleValue() < 0) {
                     // In case of negative number, we need to take the oppposite
                     // and check if the denominator is even (to avoid complex case).
-                    if (right.getDenominator().getLongValue() % 2 == 0L) {
+                    if (right.getDenominator().getLongValue() and 1 == 0L) {
                         Real.instantiate(Double.NaN)
                     } else {
                         Real.instantiate(
