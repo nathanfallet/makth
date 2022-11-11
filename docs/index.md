@@ -1,5 +1,9 @@
 # Makth documentation
 
+## Get started
+
+- [Installation](getstarted/install.md)
+
 ## Numbers
 
 - [Instantiate numbers](numbers/instantiate.md)

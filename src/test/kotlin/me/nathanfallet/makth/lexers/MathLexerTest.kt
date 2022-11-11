@@ -31,6 +31,31 @@ class MathLexerTest {
     }
 
     @Test
+    fun parseStringWithEscape() {
+        assertEquals(StringValue("Hello \"world\"!"), MathLexer("\"Hello \\\"world\\\"!\"").execute(context))
+    }
+
+    @Test
+    fun parseLaTeXString() {
+        assertEquals(StringValue("x ^ 2", true), MathLexer("\$x ^ 2\$").execute(context))
+    }
+
+    @Test
+    fun parseLaTeXStringWithEscape() {
+        assertEquals(StringValue("x \$ 2", true), MathLexer("\$x \\\$ 2\$").execute(context))
+    }
+
+    @Test
+    fun parseBooleanTrue() {
+        assertEquals(BooleanValue(true), MathLexer("true").execute(context))
+    }
+
+    @Test
+    fun parseBooleanFalse() {
+        assertEquals(BooleanValue(false), MathLexer("false").execute(context))
+    }
+
+    @Test
     fun parseVariable() {
         assertEquals(Variable("x"), MathLexer("x").execute(context))
     }

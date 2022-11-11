@@ -1,6 +1,6 @@
 package me.nathanfallet.makth.operations
 
-import me.nathanfallet.makth.extensions.getValue
+import me.nathanfallet.makth.extensions.BooleanValue
 import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.numbers.Real
 import me.nathanfallet.makth.resolvables.Context
@@ -47,14 +47,14 @@ data class Equality(
         if (left is Real && right is Real) {
             val leftDouble = left.getDoubleValue()
             val rightDouble = right.getDoubleValue()
-            return when (operator) {
+            return BooleanValue(when (operator) {
                 Operator.Equals -> leftDouble == rightDouble
                 Operator.NotEquals -> leftDouble != rightDouble
                 Operator.LessThan -> leftDouble < rightDouble
                 Operator.GreaterThan -> leftDouble > rightDouble
                 Operator.LessThanOrEquals -> leftDouble <= rightDouble
                 Operator.GreaterThanOrEquals -> leftDouble >= rightDouble
-            }.getValue()
+            })
         }
 
         return Equality(left, right, operator)

@@ -6,7 +6,7 @@
 
   <groupId>me.nathanfallet.makth</groupId>
   <artifactId>makth</artifactId>
-  <version>1.0.1</version>
+  <version>1.1.0</version>
 
   <name>makth</name>
   <description>A Kotlin library for algebra</description>

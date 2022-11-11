@@ -23,7 +23,3 @@ data class BooleanValue(val value: Boolean) : Value {
     }
 
 }
-
-fun Boolean.getValue(): BooleanValue {
-    return BooleanValue(this)
-}

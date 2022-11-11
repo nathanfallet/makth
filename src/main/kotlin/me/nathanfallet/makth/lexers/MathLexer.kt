@@ -1,6 +1,7 @@
 package me.nathanfallet.makth.lexers
 
 import me.nathanfallet.makth.extensions.StringValue
+import me.nathanfallet.makth.extensions.BooleanValue
 import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.numbers.Integer
 import me.nathanfallet.makth.operations.Operation
@@ -36,7 +37,8 @@ class MathLexer(private var content: String) {
             // Do something with current character
             when (content[i]) {
                 ' ' -> {}
-                '"' -> parseString()
+                '"' -> parseString('"')
+                '$' -> parseString('$')
                 '(' -> parseBlock()
                 in Constants.NUMBERS -> parseNumber()
                 in Constants.VARIABLES -> parseVariable()
@@ -67,12 +69,12 @@ class MathLexer(private var content: String) {
 
     // Parse something
 
-    private fun parseString() {
+    private fun parseString(delimiter: Char) {
         val string = StringBuilder()
         i++
 
         // Get all the characters
-        while (i < content.count() && content[i] != '"') {
+        while (i < content.count() && content[i] != delimiter) {
             // Check for \
             if (content[i] == '\\' && i < content.count() - 1) {
                 // Skip it and get next character
@@ -85,7 +87,7 @@ class MathLexer(private var content: String) {
         }
 
         // Insert the value
-        insertValue(StringValue(string.toString()))
+        insertValue(StringValue(string.toString(), delimiter == '$'))
     }
 
     private fun parseBlock() {
@@ -160,7 +162,11 @@ class MathLexer(private var content: String) {
         }
 
         // Insert into values
-        insertValue(Variable(name.toString()))
+        when (val finalName = name.toString()) {
+            "true" -> insertValue(BooleanValue(true))
+            "false" -> insertValue(BooleanValue(false))
+            else -> insertValue(Variable(finalName))
+        }
     }
 
     // Utils for parsing
