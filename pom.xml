@@ -29,9 +29,9 @@
   </developers>
 
   <scm>
-    <connection>scm:git:git://github.com/GroupeMINASTE/Makth.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com/GroupeMINASTE/Makth.git</developerConnection>
-    <url>https://github.com/GroupeMINASTE/Makth.git</url>
+    <connection>scm:git:git://github.com/NathanFallet/Makth.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/NathanFallet/Makth.git</developerConnection>
+    <url>https://github.com/NathanFallet/Makth.git</url>
   </scm>
 
   <properties>
