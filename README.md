@@ -6,7 +6,7 @@
 [![Code Size](https://img.shields.io/github/languages/code-size/NathanFallet/Makth)]()
 [![codecov](https://codecov.io/github/NathanFallet/Makth/branch/main/graph/badge.svg?token=F7K641TYFZ)](https://codecov.io/github/NathanFallet/Makth)
 [![CodeFactor](https://www.codefactor.io/repository/github/NathanFallet/makth/badge)](https://www.codefactor.io/repository/github/NathanFallet/makth)
-[![Open Source Helpers](https://www.codetriage.com/NathanFallet/makth/badges/users.svg)](https://www.codetriage.com/NathanFallet/makth)
+[![Open Source Helpers](https://www.codetriage.com/nathanfallet/makth/badges/users.svg)](https://www.codetriage.com/nathanfallet/makth)
 
 A Kotlin library for algebra
 
