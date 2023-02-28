@@ -9,6 +9,7 @@ data class PrintAction(val values: List<Value>) : Action {
 
     companion object {
 
+        @JvmStatic
         fun handler(args: List<Value>): Action {
             return PrintAction(args.toList())
         }

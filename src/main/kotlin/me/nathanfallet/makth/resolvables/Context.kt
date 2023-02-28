@@ -4,7 +4,7 @@ import me.nathanfallet.makth.interfaces.Action
 import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.interfaces.Output
 
-data class Context(
+data class Context @JvmOverloads constructor(
     val data: Map<String, Value> = mapOf(),
     val outputs: List<Output> = listOf()
 ) {

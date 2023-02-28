@@ -12,6 +12,7 @@ data class SetAction(val identifier: String, val value: Value) : Action {
 
     companion object {
 
+        @JvmStatic
         fun handler(args: List<Value>): Action {
             if (args.count() != 2) {
                 throw IncorrectArgumentCountException("set", args.count(), 2)

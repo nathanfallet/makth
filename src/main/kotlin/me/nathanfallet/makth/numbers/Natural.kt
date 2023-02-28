@@ -6,6 +6,7 @@ interface Natural : Integer {
 
     companion object {
 
+        @JvmStatic
         fun instantiate(value: Long): Natural {
             return NaturalImpl(value)
         }
