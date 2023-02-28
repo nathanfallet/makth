@@ -11,6 +11,7 @@ data class WhileAction(val condition: Value, val actions: List<Action>) : Action
 
     companion object {
 
+        @JvmStatic
         fun handler(args: List<Value>): Action {
             if (args.count() != 1) {
                 throw IncorrectArgumentCountException("while", args.count(), 1)

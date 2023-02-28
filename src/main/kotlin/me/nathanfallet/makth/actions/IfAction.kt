@@ -7,7 +7,7 @@ import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.lexers.AlgorithmLexer.IncorrectArgumentCountException
 import me.nathanfallet.makth.resolvables.Context
 
-data class IfAction(
+data class IfAction @JvmOverloads constructor(
         val condition: Value,
         val actions: List<Action>,
         val elseActions: List<Action> = listOf()
@@ -15,6 +15,7 @@ data class IfAction(
 
     companion object {
 
+        @JvmStatic
         fun handler(args: List<Value>): Action {
             if (args.count() != 1) {
                 throw IncorrectArgumentCountException("if", args.count(), 1)

@@ -22,8 +22,10 @@ interface Real :
 
     companion object {
 
+        @JvmStatic
         val pi: Real = RealImplPi()
 
+        @JvmStatic
         fun instantiate(value: Double): Real {
             // Check if value is an integer
             if (floor(value) == value) {

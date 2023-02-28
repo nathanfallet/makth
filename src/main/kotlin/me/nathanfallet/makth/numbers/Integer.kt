@@ -11,6 +11,7 @@ interface Integer : Rational {
 
     companion object {
 
+        @JvmStatic
         fun instantiate(value: Long): Integer {
             return if (value < 0) IntegerImpl(value) else Natural.instantiate(value)
         }

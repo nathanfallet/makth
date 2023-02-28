@@ -8,6 +8,7 @@ interface Rational : Real {
 
     companion object {
 
+        @JvmStatic
         fun instantiate(
             numerator: Integer,
             denominator: Natural
@@ -30,6 +31,7 @@ interface Rational : Real {
             }
         }
 
+        @JvmStatic
         fun instantiate(
             numerator: Integer,
             denominator: Integer
@@ -44,6 +46,7 @@ interface Rational : Real {
             }
         }
 
+        @JvmStatic
         fun instantiate(
             numerator: Long,
             denominator: Long
