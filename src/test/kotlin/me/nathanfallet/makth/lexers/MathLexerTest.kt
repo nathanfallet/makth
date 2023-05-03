@@ -2,6 +2,7 @@ package me.nathanfallet.makth.lexers
 
 import me.nathanfallet.makth.extensions.BooleanValue
 import me.nathanfallet.makth.extensions.StringValue
+import me.nathanfallet.makth.lexers.MathLexer.SyntaxException
 import me.nathanfallet.makth.numbers.Integer
 import me.nathanfallet.makth.numbers.Rational
 import me.nathanfallet.makth.operations.Equality
@@ -13,6 +14,7 @@ import me.nathanfallet.makth.operations.Remainder
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThrows
 import org.junit.Test
 
 class MathLexerTest {
@@ -227,6 +229,14 @@ class MathLexerTest {
     }
 
     @Test
+    fun parseExpressionWithParentheses() {
+        assertEquals(
+            Integer.instantiate(9),
+            MathLexer("(1 + 2) * (9 / (1 + 2))").execute(context)
+        )
+    }
+
+    @Test
     fun parseEquality() {
         assertEquals(
             Equality(Variable("x"), Integer.instantiate(2)),
@@ -280,6 +290,19 @@ class MathLexerTest {
             Equality(Variable("x"), Integer.instantiate(2), Equality.Operator.GreaterThanOrEquals),
             MathLexer("x >= 2").execute(context)
         )
+    }
+
+    @Test
+    fun parseSyntaxException() {
+        assertThrows(SyntaxException::class.java) {
+            MathLexer("1 +").execute(context)
+        }
+        assertThrows(SyntaxException::class.java) {
+            MathLexer("3 * 1 + 2)").execute(context)
+        }
+        assertThrows(SyntaxException::class.java) {
+            MathLexer("* 2").execute(context)
+        }
     }
 
 }
