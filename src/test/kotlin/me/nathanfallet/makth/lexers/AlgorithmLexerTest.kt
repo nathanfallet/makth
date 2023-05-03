@@ -17,6 +17,28 @@ import org.junit.Test
 class AlgorithmLexerTest {
 
     @Test
+    fun parseSingleLineComment() {
+        assertEquals(
+            listOf(
+                PrintAction(listOf(Integer.instantiate(2))),
+                PrintAction(listOf(Integer.instantiate(3)))
+            ),
+            AlgorithmLexer("print(2) // Prints 2\nprint(3)").execute()
+        )
+    }
+
+    @Test
+    fun parseMultiLineComment() {
+        assertEquals(
+            listOf(
+                PrintAction(listOf(Integer.instantiate(2))),
+                PrintAction(listOf(Integer.instantiate(3)))
+            ),
+            AlgorithmLexer("print(2) /* Prints 2 */ print(3)").execute()
+        )
+    }
+
+    @Test
     fun parseIfAction() {
         assertEquals(
             listOf(
@@ -188,6 +210,13 @@ class AlgorithmLexerTest {
     fun unexpectedBraceBlock() {
         assertThrows(AlgorithmLexer.UnexpectedBraceException::class.java) {
             AlgorithmLexer("print() {}").execute()
+        }
+    }
+
+    @Test
+    fun unexpectedSlash() {
+        assertThrows(AlgorithmLexer.UnexpectedSlashException::class.java) {
+            AlgorithmLexer("print() /").execute()
         }
     }
 
