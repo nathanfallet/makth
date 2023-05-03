@@ -101,9 +101,10 @@ class MathLexer(private var content: String) {
             // Add current
             subContent.append(content[i])
 
-            // Check for another opening brace
-            if (content[i] == '(') {
-                count++
+            // Check for another opening/closing brace
+            when (content[i]) {
+                '(' -> count++
+                ')' -> count--
             }
 
             // Increment i

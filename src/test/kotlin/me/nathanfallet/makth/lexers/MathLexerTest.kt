@@ -227,6 +227,14 @@ class MathLexerTest {
     }
 
     @Test
+    fun parseExpressionWithParentheses() {
+        assertEquals(
+            Integer.instantiate(9),
+            MathLexer("(1 + 2) * (9 / (1 + 2))").execute(context)
+        )
+    }
+
+    @Test
     fun parseEquality() {
         assertEquals(
             Equality(Variable("x"), Integer.instantiate(2)),
