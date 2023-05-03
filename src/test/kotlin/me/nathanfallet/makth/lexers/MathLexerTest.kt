@@ -303,6 +303,12 @@ class MathLexerTest {
         assertThrows(SyntaxException::class.java) {
             MathLexer("* 2").execute(context)
         }
+        assertThrows(SyntaxException::class.java) {
+            MathLexer("1 2").execute(context)
+        }
+        assertThrows(SyntaxException::class.java) {
+            MathLexer("()").execute(context)
+        }
     }
 
 }
