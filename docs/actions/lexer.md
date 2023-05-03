@@ -28,6 +28,9 @@ data class CustomAction(val value: Value): Action {
 
         @JvmStatic
         fun handler(args: List<Value>): Action {
+            if (args.count() != 1) {
+                throw IncorrectArgumentCountException("custom", args.count(), 1)
+            }
             return CustomAction(args[0])
         }
     }

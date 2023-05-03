@@ -5,6 +5,7 @@ import me.nathanfallet.makth.actions.PrintAction
 import me.nathanfallet.makth.actions.SetAction
 import me.nathanfallet.makth.actions.WhileAction
 import me.nathanfallet.makth.extensions.StringValue
+import me.nathanfallet.makth.lexers.AlgorithmLexer.IncorrectArgumentCountException
 import me.nathanfallet.makth.numbers.Integer
 import me.nathanfallet.makth.operations.Equality
 import me.nathanfallet.makth.operations.Sum
@@ -238,6 +239,9 @@ class AlgorithmLexerTest {
 
             @JvmStatic
             fun handler(args: List<Value>): Action {
+                if (args.count() != 1) {
+                    throw IncorrectArgumentCountException("custom", args.count(), 1)
+                }
                 return CustomAction(args[0])
             }
         }
