@@ -10,6 +10,8 @@ import me.nathanfallet.makth.operations.Equality
 import me.nathanfallet.makth.operations.Sum
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable
+import me.nathanfallet.makth.interfaces.Action
+import me.nathanfallet.makth.interfaces.Value
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThrows
 import org.junit.Test
@@ -23,7 +25,7 @@ class AlgorithmLexerTest {
                 PrintAction(listOf(Integer.instantiate(2))),
                 PrintAction(listOf(Integer.instantiate(3)))
             ),
-            AlgorithmLexer("print(2) // Prints 2\nprint(3)").execute()
+            AlgorithmLexer("print(2) // Prints 2\nprint(3) // Prints 3").execute()
         )
     }
 
@@ -34,7 +36,7 @@ class AlgorithmLexerTest {
                 PrintAction(listOf(Integer.instantiate(2))),
                 PrintAction(listOf(Integer.instantiate(3)))
             ),
-            AlgorithmLexer("print(2) /* Prints 2 */ print(3)").execute()
+            AlgorithmLexer("print(2) /* Prints 2 */ print(3) /* Prints 3 */").execute()
         )
     }
 
@@ -179,6 +181,16 @@ class AlgorithmLexerTest {
     }
 
     @Test
+    fun registerAndParseCustomAction() {
+        assertEquals(
+            listOf(
+                CustomAction(Integer.instantiate(2))
+            ),
+            AlgorithmLexer("custom(2)").registerKeyword("custom", CustomAction::handler).execute()
+        )
+    }
+
+    @Test
     fun unknownKeyword() {
         assertThrows(AlgorithmLexer.UnknownKeywordException::class.java) {
             AlgorithmLexer("unknown()").execute()
@@ -218,6 +230,26 @@ class AlgorithmLexerTest {
         assertThrows(AlgorithmLexer.UnexpectedSlashException::class.java) {
             AlgorithmLexer("print() /").execute()
         }
+    }
+
+    data class CustomAction(val value: Value): Action {
+
+        companion object {
+
+            @JvmStatic
+            fun handler(args: List<Value>): Action {
+                return CustomAction(args[0])
+            }
+        }
+
+        override fun execute(context: Context): Context {
+            return context
+        }
+
+        override fun toAlgorithmString(): String {
+            return "custom(" + value.toAlgorithmString() + ")"
+        }
+        
     }
 
 }
