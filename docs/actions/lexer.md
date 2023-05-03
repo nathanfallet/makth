@@ -1,5 +1,7 @@
 # Algorithm Lexer
 
+## Basic Usage
+
 A set of actions can be obtained using the algorithm lexer:
 
 ```kotlin
@@ -13,4 +15,38 @@ print("x = ", x)
 """
 val actions = AlgorithmLexer(raw).execute()
 val result = Context().execute(actions)
+```
+
+## Register custom actions
+
+You can define a custom action by implementing the `Action` interface:
+
+```kotlin
+data class CustomAction(val value: Value): Action {
+
+    companion object {
+
+        @JvmStatic
+        fun handler(args: List<Value>): Action {
+            return CustomAction(args[0])
+        }
+    }
+
+    override fun execute(context: Context): Context {
+        return context
+    }
+
+    override fun toAlgorithmString(): String {
+        return "custom(" + value.toAlgorithmString() + ")"
+    }
+        
+}
+```
+
+And then register it in your lexer instance to use it in your algorithm:
+
+```kotlin
+val actions = AlgorithmLexer("custom(2)")
+    .registerKeyword("custom", CustomAction::handler)
+    .execute()
 ```
