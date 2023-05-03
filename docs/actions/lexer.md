@@ -4,6 +4,7 @@ A set of actions can be obtained using the algorithm lexer:
 
 ```kotlin
 val raw = """
+// This is an example algorithm
 set(x, 2)
 while (x < 10) {
     set(x, x + 1)

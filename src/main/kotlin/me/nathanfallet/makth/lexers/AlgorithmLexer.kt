@@ -24,6 +24,9 @@ class AlgorithmLexer(private var content: String) {
     open class UnexpectedBraceException(val character: String) :
             SyntaxException("Unexpected brace: $character")
 
+    open class UnexpectedSlashException(val character: String) :
+            SyntaxException("Unexpected slash: $character")
+
     open class IncorrectArgumentCountException(
             val keyword: String,
             val count: Int,
@@ -82,6 +85,7 @@ class AlgorithmLexer(private var content: String) {
             when (content[i]) {
                 '{' -> parseBlock()
                 '(' -> parseArgs()
+                '/' -> parseComment()
                 in Constants.CHARACTERS -> parseKeyword()
             }
 
@@ -208,6 +212,25 @@ class AlgorithmLexer(private var content: String) {
 
         // Remove one, else current character is skipped
         i--
+    }
+
+    private fun parseComment() {
+        // Check if it's a line comment
+        if (i + 1 < content.length && content[i + 1] == '/') {
+            // Skip until the end of the line
+            while (i < content.length && content[i] != '\n') {
+                i++
+            }
+        } else if (i + 1 < content.length && content[i + 1] == '*') {
+            // Skip until the end of the comment
+            while (i + 1 < content.length && (content[i] != '*' || content[i + 1] != '/')) {
+                i++
+            }
+            i++ // Also skip the '*' (else '/' is not skipped)
+        } else {
+            // Syntax exception
+            throw UnexpectedSlashException("/")
+        }
     }
 
 }
