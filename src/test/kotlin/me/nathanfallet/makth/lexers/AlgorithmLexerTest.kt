@@ -249,7 +249,7 @@ class AlgorithmLexerTest {
         override fun toAlgorithmString(): String {
             return "custom(" + value.toAlgorithmString() + ")"
         }
-        
+
     }
 
 }
