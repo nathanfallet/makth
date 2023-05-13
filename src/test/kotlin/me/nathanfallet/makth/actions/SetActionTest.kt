@@ -41,7 +41,7 @@ class SetActionTest {
     fun handlerWithVariable() {
         assertEquals(
             SetAction("x", Integer.instantiate(2)),
-            SetAction.handler(listOf(Variable("x"), Integer.instantiate(2)))
+            SetAction.handler(listOf(Variable.instantiate("x"), Integer.instantiate(2)))
         )
     }
 
@@ -79,14 +79,14 @@ class SetActionTest {
     fun setIntegerWithVariable() {
         assertEquals(
             contextWithXAndY,
-            contextWithX.execute(SetAction("y", Sum(Variable("x"), Integer.instantiate(2))))
+            contextWithX.execute(SetAction("y", Sum(Variable.instantiate("x"), Integer.instantiate(2))))
         )
     }
 
     @Test
     fun setIntegerWithVariableWithoutContext() {
         assertThrows(Action.UnknownVariablesException::class.java) {
-            context.execute(SetAction("y", Sum(Variable("x"), Integer.instantiate(2))))
+            context.execute(SetAction("y", Sum(Variable.instantiate("x"), Integer.instantiate(2))))
         }
     }
 

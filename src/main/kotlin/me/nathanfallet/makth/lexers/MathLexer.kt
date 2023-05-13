@@ -163,11 +163,7 @@ class MathLexer(private var content: String) {
         }
 
         // Insert into values
-        when (val finalName = name.toString()) {
-            "true" -> insertValue(BooleanValue(true))
-            "false" -> insertValue(BooleanValue(false))
-            else -> insertValue(Variable(finalName))
-        }
+        insertValue(Variable.instantiate(name.toString()))
     }
 
     // Utils for parsing

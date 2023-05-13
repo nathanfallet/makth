@@ -45,7 +45,7 @@ class EqualityTest {
     fun testEqualsTrueWithVariable() {
         assertEquals(
             BooleanValue(true),
-            Equality(Variable("x"), Integer.instantiate(2), Equality.Operator.Equals).compute(
+            Equality(Variable.instantiate("x"), Integer.instantiate(2), Equality.Operator.Equals).compute(
                 contextWithX
             )
         )

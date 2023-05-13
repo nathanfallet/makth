@@ -45,8 +45,8 @@ class ExponentiationTest {
     @Test
     fun extractVariables() {
         assertEquals(
-            setOf(Variable("x"), Variable("y")),
-            Exponentiation(Variable("x"), Variable("y")).extractVariables()
+            setOf(Variable.instantiate("x"), Variable.instantiate("y")),
+            Exponentiation(Variable.instantiate("x"), Variable.instantiate("y")).extractVariables()
         )
     }
 

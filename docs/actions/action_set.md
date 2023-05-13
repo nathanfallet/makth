@@ -9,7 +9,7 @@ SetAction("name", value)
 Or
 
 ```kotlin
-SetAction(Variable("name"), value)
+SetAction(Variable.instantiate("name"), value)
 ```
 
 ## Makth lexer syntax

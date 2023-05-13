@@ -10,7 +10,7 @@ class VariableTest {
     fun variableResolvedCorrectly() {
         assertEquals(
             Integer.instantiate(2),
-            Variable("x").compute(Context(
+            Variable.instantiate("x").compute(Context(
                 mapOf("x" to Integer.instantiate(2))
             ))
         )
@@ -18,12 +18,12 @@ class VariableTest {
 
     @Test
     fun toRawString() {
-        assertEquals("x", Variable("x").toRawString())
+        assertEquals("x", Variable.instantiate("x").toRawString())
     }
 
     @Test
     fun toLaTeXString() {
-        assertEquals("x", Variable("x").toLaTeXString())
+        assertEquals("x", Variable.instantiate("x").toLaTeXString())
     }
 
 }
