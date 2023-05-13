@@ -5,10 +5,19 @@ import me.nathanfallet.makth.interfaces.Action
 import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.resolvables.Context
 
+/**
+ * Action that prints values
+ * @param values Values to print
+ */
 data class PrintAction(val values: List<Value>) : Action {
 
     companion object {
 
+        /**
+         * Handler for print action
+         * @param args Arguments of the action
+         * @return Action created from the arguments
+         */
         @JvmStatic
         fun handler(args: List<Value>): Action {
             return PrintAction(args.toList())

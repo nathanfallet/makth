@@ -5,6 +5,11 @@ import me.nathanfallet.makth.numbers.Real
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable
 
+/**
+ * Quotient operation.
+ * @param left Left value
+ * @param right Right value
+ */
 data class Quotient(
     val left: Value,
     val right: Value

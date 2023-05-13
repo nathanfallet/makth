@@ -5,12 +5,20 @@ import kotlin.math.pow
 import me.nathanfallet.makth.extensions.pow
 import me.nathanfallet.makth.extensions.nthRoot
 
+/**
+ * Integer representation
+ */
 interface Integer : Rational {
 
     // Instantiate
 
     companion object {
 
+        /**
+         * Instantiate an integer from a long value
+         * @param value Long value
+         * @return Integer
+         */
         @JvmStatic
         fun instantiate(value: Long): Integer {
             return if (value < 0) IntegerImpl(value) else Natural.instantiate(value)
@@ -20,9 +28,13 @@ interface Integer : Rational {
 
     // Integer interface
 
+    /**
+     * Get long value
+     * @return Long value
+     */
     fun getLongValue(): Long
 
-    // AbstractRational
+    // Rational
 
     override fun getNumerator(): Integer {
         return this
@@ -32,7 +44,7 @@ interface Integer : Rational {
         return Natural.instantiate(1)
     }
 
-    // AbstractReal
+    // Real
 
     override fun getDoubleValue(): Double {
         return getLongValue().toDouble()

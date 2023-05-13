@@ -2,15 +2,26 @@ package me.nathanfallet.makth.operations
 
 import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.lexers.MathLexer
+import me.nathanfallet.makth.lexers.AlgorithmLexer.SyntaxException
 import me.nathanfallet.makth.numbers.Integer
 
+/**
+ * Interface for all operations between values
+ */
 interface Operation : Value {
 
     object Utils {
 
-        @Throws(MathLexer.SyntaxException::class)
-        fun initialize(operation: String, left: Value, right: Value): Value {
-            return when (operation) {
+        /**
+         * Initialize an operation from an operator and two values
+         * @param operator Operator
+         * @param left Left value
+         * @param right Right value
+         * @return Operation
+         */
+        @Throws(SyntaxException::class)
+        fun initialize(operator: String, left: Value, right: Value): Value {
+            return when (operator) {
                 "+" -> Sum(left, right)
                 "-" -> Sum(left, Product(Integer.instantiate(-1), right))
                 "*" -> Product(left, right)
@@ -23,10 +34,15 @@ interface Operation : Value {
                 ">" -> Equality(left, right, Equality.Operator.GreaterThan)
                 "<=" -> Equality(left, right, Equality.Operator.LessThanOrEquals)
                 ">=" -> Equality(left, right, Equality.Operator.GreaterThanOrEquals)
-                else -> throw MathLexer.SyntaxException()
+                else -> throw MathLexer.UnknownOperatorException(operator)
             }
         }
 
+        /**
+         * Get the precedence of an operation
+         * @param operation Operation
+         * @return Precedence
+         */
         fun getPrecedence(operation: String): Int {
             return when (operation) {
                 "^" -> 3

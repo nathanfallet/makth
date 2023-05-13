@@ -3,16 +3,31 @@ package me.nathanfallet.makth.lexers
 import me.nathanfallet.makth.extensions.StringValue
 import me.nathanfallet.makth.extensions.BooleanValue
 import me.nathanfallet.makth.interfaces.Value
+import me.nathanfallet.makth.lexers.AlgorithmLexer.SyntaxException
 import me.nathanfallet.makth.numbers.Integer
 import me.nathanfallet.makth.operations.Operation
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable
 
+/**
+ * Lexer for math expressions
+ * @param content Content to parse
+ */
 class MathLexer(private var content: String) {
 
     // Errors
 
-    class SyntaxException : Exception()
+    /**
+     * Exception thrown when a value is expected but not found
+     */
+    open class NoValueFoundException : SyntaxException("No value found")
+
+    /**
+     * Exception thrown when an unknown operator is found
+     * @param operator Unknown operator
+     */
+    open class UnknownOperatorException(val operator: String) :
+            SyntaxException("Unknown operator: $operator")
 
     // Constants
 
@@ -30,6 +45,11 @@ class MathLexer(private var content: String) {
 
     // Parse an expression
 
+    /**
+     * Parse an expression
+     * @param content Content to parse
+     * @return Parsed value
+     */
     @Throws(SyntaxException::class)
     fun execute(context: Context): Value {
         // For each character of the string
@@ -64,7 +84,7 @@ class MathLexer(private var content: String) {
             return values[0].compute(context)
         }
 
-        throw SyntaxException()
+        throw NoValueFoundException()
     }
 
     // Parse something
@@ -150,7 +170,7 @@ class MathLexer(private var content: String) {
         i--
     }
 
-    fun parseVariable() {
+    private fun parseVariable() {
         // Check name
         var name = StringBuilder()
         name.append(content[i])
@@ -224,7 +244,7 @@ class MathLexer(private var content: String) {
         if (values.isNotEmpty()) {
             return values.removeAt(0)
         }
-        throw SyntaxException()
+        throw NoValueFoundException()
     }
 
     private fun getFirstOperationAndRemove(): String? {

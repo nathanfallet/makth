@@ -9,30 +9,66 @@ import me.nathanfallet.makth.interfaces.Action
 import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.resolvables.Context
 
+/**
+ * A lexer for algorithms
+ * @param content Content of the algorithm
+ */
 class AlgorithmLexer(private var content: String) {
 
     // Errors
 
+    /**
+     * Base class for all syntax errors
+     * @param message Error message
+     */
     open class SyntaxException(message: String) : Exception(message)
 
+    /**
+     * Exception thrown when an unknown keyword is found
+     * @param keyword Unknown keyword
+     */
     open class UnknownKeywordException(val keyword: String) :
             SyntaxException("Unknown keyword: $keyword")
 
+    /**
+     * Exception thrown when an unexpected keyword is found
+     * @param keyword Unexpected keyword
+     */
     open class UnexpectedKeywordException(val keyword: String) :
             SyntaxException("Unexpected keyword: $keyword")
 
+    /**
+     * Exception thrown when an unexpected brace is found
+     * @param character Unexpected brace
+     */
     open class UnexpectedBraceException(val character: String) :
             SyntaxException("Unexpected brace: $character")
 
+    /**
+     * Exception thrown when an unexpected slash is found
+     * @param character Unexpected slash
+     */
     open class UnexpectedSlashException(val character: String) :
             SyntaxException("Unexpected slash: $character")
 
+    /**
+     * Exception thrown when an incorrect argument count is found
+     * @param keyword Keyword
+     * @param count Argument count
+     * @param expected Expected argument count
+     */
     open class IncorrectArgumentCountException(
             val keyword: String,
             val count: Int,
             val expected: Int
     ) : SyntaxException("Incorrect argument count for $keyword, got $count, expected $expected")
 
+    /**
+     * Exception thrown when an incorrect argument type is found
+     * @param keyword Keyword
+     * @param value Argument value
+     * @param expected Expected argument type
+     */
     open class IncorrectArgumentTypeException(
             val keyword: String,
             val value: Value,
@@ -65,11 +101,22 @@ class AlgorithmLexer(private var content: String) {
                     "while" to WhileAction::handler
             )
 
+    /**
+     * Register a keyword handler
+     * @param keyword Keyword to register
+     * @param handler Handler to register
+     * @return This lexer, with the new handler registered
+     */
     fun registerKeyword(keyword: String, handler: (List<Value>) -> Action): AlgorithmLexer {
         keywordHandlers += mapOf(keyword to handler)
         return this
     }
 
+    /**
+     * Register multiple keyword handlers
+     * @param keywords Keywords to register
+     * @return This lexer, with the new handlers registered
+     */
     fun registerKeywords(keywords: Map<String, (List<Value>) -> Action>): AlgorithmLexer {
         keywordHandlers += keywords
         return this
@@ -77,6 +124,10 @@ class AlgorithmLexer(private var content: String) {
 
     // Parse an algorithm
 
+    /**
+     * Parse an algorithm, and return a list of actions
+     * @return List of actions
+     */
     @Throws(SyntaxException::class)
     fun execute(): List<Action> {
         // For each character of the string

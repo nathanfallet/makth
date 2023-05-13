@@ -11,6 +11,9 @@ import me.nathanfallet.makth.operations.Summable
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable
 
+/**
+ * Real representation
+ */
 interface Real :
         Value,
         Summable<Real, Real>,
@@ -22,9 +25,17 @@ interface Real :
 
     companion object {
 
+        /**
+         * Pi constant
+         */
         @JvmStatic
         val pi: Real = RealImplPi()
 
+        /**
+         * Instantiate a real from a double value
+         * @param value Double value
+         * @return Real
+         */
         @JvmStatic
         fun instantiate(value: Double): Real {
             // Check if value is an integer
@@ -48,8 +59,16 @@ interface Real :
 
     // Real interface
 
+    /**
+     * Get double value
+     * @return Double value
+     */
     fun getDoubleValue(): Double
 
+    /**
+     * Get the absolute value of this real
+     * @return Real
+     */
     fun absoluteValue(): Real {
         return instantiate(abs(getDoubleValue()))
     }

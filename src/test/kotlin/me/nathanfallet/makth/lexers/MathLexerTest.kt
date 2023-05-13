@@ -2,7 +2,7 @@ package me.nathanfallet.makth.lexers
 
 import me.nathanfallet.makth.extensions.BooleanValue
 import me.nathanfallet.makth.extensions.StringValue
-import me.nathanfallet.makth.lexers.MathLexer.SyntaxException
+import me.nathanfallet.makth.lexers.AlgorithmLexer.SyntaxException
 import me.nathanfallet.makth.numbers.Integer
 import me.nathanfallet.makth.numbers.Rational
 import me.nathanfallet.makth.numbers.Real

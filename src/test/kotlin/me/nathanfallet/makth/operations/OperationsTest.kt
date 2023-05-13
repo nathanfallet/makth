@@ -1,6 +1,6 @@
 package me.nathanfallet.makth.operations;
 
-import me.nathanfallet.makth.lexers.MathLexer.SyntaxException
+import me.nathanfallet.makth.lexers.AlgorithmLexer.SyntaxException
 import me.nathanfallet.makth.numbers.Integer
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThrows

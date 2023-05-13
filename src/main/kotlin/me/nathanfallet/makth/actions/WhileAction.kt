@@ -7,10 +7,20 @@ import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.lexers.AlgorithmLexer.IncorrectArgumentCountException
 import me.nathanfallet.makth.resolvables.Context
 
+/**
+ * Action that executes a list of actions while a condition is true.
+ * @param condition Condition to check
+ * @param actions Actions to execute while condition is true
+ */
 data class WhileAction(val condition: Value, val actions: List<Action>) : Action {
 
     companion object {
 
+        /**
+         * Handler for while action
+         * @param args List of arguments
+         * @return Action created from arguments
+         */
         @JvmStatic
         fun handler(args: List<Value>): Action {
             if (args.count() != 1) {

@@ -4,6 +4,10 @@ import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable
 
+/**
+ * String value
+ * @param value String value
+ */
 data class StringValue(val value: String, val latex: Boolean = false) : Value {
 
     override fun compute(context: Context): Value {
