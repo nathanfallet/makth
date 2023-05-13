@@ -22,15 +22,26 @@ data class Quotient(
     }
 
     override fun toRawString(): String {
-        return "${left.toRawString()} / ${right.toRawString()}"
+        val leftRawString = left.toRawString().let {
+            if (left.getMainPrecedence() < getMainPrecedence()) "($it)" else it
+        }
+        val rightRawString = right.toRawString().let {
+            if (right.getMainPrecedence() < getMainPrecedence()) "($it)" else it
+        }
+        return "$leftRawString / $rightRawString"
     }
 
     override fun toLaTeXString(): String {
+        // We don't need to add parentheses here because it's useless with '\frac{}{}'
         return "\\frac{${left.toLaTeXString()}}{${right.toLaTeXString()}}"
     }
 
     override fun extractVariables(): Set<Variable> {
         return left.extractVariables() + right.extractVariables()
+    }
+
+    override fun getMainPrecedence(): Int {
+        return Operation.Utils.getPrecedence("/")
     }
 
 }

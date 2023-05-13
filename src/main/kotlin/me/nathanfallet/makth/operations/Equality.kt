@@ -72,4 +72,8 @@ data class Equality(
         return left.extractVariables() + right.extractVariables()
     }
 
+    override fun getMainPrecedence(): Int {
+        return Operation.Utils.getPrecedence("=")
+    }
+
 }

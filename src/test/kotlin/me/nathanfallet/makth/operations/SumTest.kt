@@ -19,10 +19,28 @@ class SumTest {
     }
 
     @Test
+    fun toRawStringWithBraces() {
+        // This will technically never happen, but it's the only way to test it
+        assertEquals(
+            "(1 = 1) + (2 = 2)",
+            Sum(Equality(Integer.instantiate(1), Integer.instantiate(1)), Equality(Integer.instantiate(2), Integer.instantiate(2))).toRawString()
+        )
+    }
+
+    @Test
     fun toLaTeXString() {
         assertEquals(
             "1 + 2",
             Sum(Integer.instantiate(1), Integer.instantiate(2)).toLaTeXString()
+        )
+    }
+
+    @Test
+    fun toLaTeXStringWithBraces() {
+        // This will technically never happen, but it's the only way to test it
+        assertEquals(
+            "(1 \\eq 1) + (2 \\eq 2)",
+            Sum(Equality(Integer.instantiate(1), Integer.instantiate(1)), Equality(Integer.instantiate(2), Integer.instantiate(2))).toLaTeXString()
         )
     }
 
