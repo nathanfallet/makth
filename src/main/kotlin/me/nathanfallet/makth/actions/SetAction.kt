@@ -8,10 +8,20 @@ import me.nathanfallet.makth.lexers.AlgorithmLexer.IncorrectArgumentTypeExceptio
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable
 
+/**
+ * Action that sets a variable
+ * @param identifier Identifier of the variable to set
+ * @param value Value to set
+ */
 data class SetAction(val identifier: String, val value: Value) : Action {
 
     companion object {
 
+        /**
+         * Handler for set action
+         * @param args Arguments of the action
+         * @return Action created from the arguments
+         */
         @JvmStatic
         fun handler(args: List<Value>): Action {
             if (args.count() != 2) {

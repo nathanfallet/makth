@@ -2,12 +2,21 @@ package me.nathanfallet.makth.numbers
 
 import me.nathanfallet.makth.extensions.gcd
 
+/**
+ * Rational representation
+ */
 interface Rational : Real {
 
     // Instantiate
 
     companion object {
 
+        /**
+         * Instantiate a rational from a numerator and a denominator
+         * @param numerator Numerator
+         * @param denominator Denominator
+         * @return Rational
+         */
         @JvmStatic
         fun instantiate(
             numerator: Integer,
@@ -31,6 +40,12 @@ interface Rational : Real {
             }
         }
 
+        /**
+         * Instantiate a rational from a numerator and a denominator
+         * @param numerator Numerator
+         * @param denominator Denominator
+         * @return Rational
+         */
         @JvmStatic
         fun instantiate(
             numerator: Integer,
@@ -46,6 +61,12 @@ interface Rational : Real {
             }
         }
 
+        /**
+         * Instantiate a rational from a numerator and a denominator
+         * @param numerator Numerator
+         * @param denominator Denominator
+         * @return Rational
+         */
         @JvmStatic
         fun instantiate(
             numerator: Long,
@@ -58,10 +79,19 @@ interface Rational : Real {
 
     // Rational interface
 
+    /**
+     * Get numerator
+     * @return Numerator
+     */
     fun getNumerator(): Integer
+
+    /**
+     * Get denominator
+     * @return Denominator
+     */
     fun getDenominator(): Natural
 
-    // AbstractReal
+    // Real
 
     override fun getDoubleValue(): Double {
         return getNumerator().getDoubleValue() / getDenominator().getDoubleValue()

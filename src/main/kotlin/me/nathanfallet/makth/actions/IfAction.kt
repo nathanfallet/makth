@@ -7,6 +7,13 @@ import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.lexers.AlgorithmLexer.IncorrectArgumentCountException
 import me.nathanfallet.makth.resolvables.Context
 
+/**
+ * Action that executes a list of actions if a condition is true,
+ * or another list of actions otherwise.
+ * @param condition Condition to check
+ * @param actions Actions to execute if condition is true
+ * @param elseActions Actions to execute if condition is false
+ */
 data class IfAction @JvmOverloads constructor(
         val condition: Value,
         val actions: List<Action>,
@@ -15,6 +22,11 @@ data class IfAction @JvmOverloads constructor(
 
     companion object {
 
+        /**
+         * Handler for if action
+         * @param args List of arguments
+         * @return Action created from arguments
+         */
         @JvmStatic
         fun handler(args: List<Value>): Action {
             if (args.count() != 1) {

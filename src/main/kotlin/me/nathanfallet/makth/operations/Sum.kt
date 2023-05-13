@@ -5,6 +5,11 @@ import me.nathanfallet.makth.numbers.Real
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable
 
+/**
+ * Sum operation.
+ * @param left Left value
+ * @param right Right value
+ */
 data class Sum(
     val left: Value,
     val right: Value

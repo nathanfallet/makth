@@ -4,6 +4,10 @@ import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable
 
+/**
+ * Boolean value
+ * @param value Boolean value
+ */
 data class BooleanValue(val value: Boolean) : Value {
 
     override fun compute(context: Context): Value {

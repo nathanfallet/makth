@@ -6,16 +6,29 @@ import me.nathanfallet.makth.numbers.Real
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable
 
+/**
+ * Equality operation.
+ * @param left Left value
+ * @param right Right value
+ * @param operator Operator, default to Equals
+ */
 data class Equality(
     val left: Value,
     val right: Value,
     val operator: Operator = Operator.Equals
 ) : Operation {
 
+    /**
+     * Available operators for equalities
+     */
     enum class Operator {
 
         Equals, NotEquals, LessThan, GreaterThan, LessThanOrEquals, GreaterThanOrEquals;
 
+        /**
+         * Get the raw string for this operator
+         * @return Raw string
+         */
         fun toRawString(): String {
             return when (this) {
                 Equals -> "="
@@ -27,6 +40,10 @@ data class Equality(
             }
         }
 
+        /**
+         * Get the LaTeX string for this operator
+         * @return LaTeX string
+         */
         fun toLaTeXString(): String {
             return when (this) {
                 Equals -> "\\eq"

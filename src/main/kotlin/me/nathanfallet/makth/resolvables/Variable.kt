@@ -4,10 +4,18 @@ import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.numbers.Real
 import me.nathanfallet.makth.extensions.BooleanValue
 
+/**
+ * Variable representation
+ */
 data class Variable private constructor(val name: String) : Value {
 
     companion object {
 
+        /**
+         * Instantiate a variable from a name
+         * @param name Variable name
+         * @return Variable instance
+         */
         @JvmStatic
         fun instantiate(name: String): Value {
             // Check for booleans
