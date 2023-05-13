@@ -5,6 +5,7 @@ import me.nathanfallet.makth.extensions.StringValue
 import me.nathanfallet.makth.lexers.MathLexer.SyntaxException
 import me.nathanfallet.makth.numbers.Integer
 import me.nathanfallet.makth.numbers.Rational
+import me.nathanfallet.makth.numbers.Real
 import me.nathanfallet.makth.operations.Equality
 import me.nathanfallet.makth.operations.Product
 import me.nathanfallet.makth.operations.Quotient
@@ -59,7 +60,13 @@ class MathLexerTest {
 
     @Test
     fun parseVariable() {
-        assertEquals(Variable("x"), MathLexer("x").execute(context))
+        assertEquals(Variable.instantiate("x"), MathLexer("x").execute(context))
+    }
+
+    @Test
+    fun parsePi() {
+        assertEquals(Real.pi, MathLexer("pi").execute(context))
+        assertEquals(Real.pi, MathLexer("\u03C0").execute(context))
     }
 
     @Test
@@ -90,7 +97,7 @@ class MathLexerTest {
     @Test
     fun parseSumWithVariable() {
         assertEquals(
-            Sum(Integer.instantiate(1), Variable("x")),
+            Sum(Integer.instantiate(1), Variable.instantiate("x")),
             MathLexer("1 + x").execute(context)
         )
     }
@@ -111,7 +118,7 @@ class MathLexerTest {
     @Test
     fun parseDifferenceWithVariable() {
         assertEquals(
-            Sum(Integer.instantiate(1), Product(Integer.instantiate(-1), Variable("x"))),
+            Sum(Integer.instantiate(1), Product(Integer.instantiate(-1), Variable.instantiate("x"))),
             MathLexer("1 - x").execute(context)
         )
     }
@@ -137,7 +144,7 @@ class MathLexerTest {
     @Test
     fun parseProductWithVariable() {
         assertEquals(
-            Product(Integer.instantiate(2), Variable("x")),
+            Product(Integer.instantiate(2), Variable.instantiate("x")),
             MathLexer("2 * x").execute(context)
         )
     }
@@ -163,7 +170,7 @@ class MathLexerTest {
     @Test
     fun parseQuotientWithVariable() {
         assertEquals(
-            Quotient(Integer.instantiate(2), Variable("x")),
+            Quotient(Integer.instantiate(2), Variable.instantiate("x")),
             MathLexer("2 / x").execute(context)
         )
     }
@@ -189,7 +196,7 @@ class MathLexerTest {
     @Test
     fun parseRemainderWithVariable() {
         assertEquals(
-            Remainder(Integer.instantiate(2), Variable("x")),
+            Remainder(Integer.instantiate(2), Variable.instantiate("x")),
             MathLexer("2 % x").execute(context)
         )
     }
@@ -215,7 +222,7 @@ class MathLexerTest {
     @Test
     fun parseExponentiateWithVariable() {
         assertEquals(
-            Exponentiation(Integer.instantiate(2), Variable("x")),
+            Exponentiation(Integer.instantiate(2), Variable.instantiate("x")),
             MathLexer("2 ^ x").execute(context)
         )
     }
@@ -239,7 +246,7 @@ class MathLexerTest {
     @Test
     fun parseEquality() {
         assertEquals(
-            Equality(Variable("x"), Integer.instantiate(2)),
+            Equality(Variable.instantiate("x"), Integer.instantiate(2)),
             MathLexer("x = 2").execute(context)
         )
     }
@@ -255,7 +262,7 @@ class MathLexerTest {
     @Test
     fun parseEqualityNotEquals() {
         assertEquals(
-            Equality(Variable("x"), Integer.instantiate(2), Equality.Operator.NotEquals),
+            Equality(Variable.instantiate("x"), Integer.instantiate(2), Equality.Operator.NotEquals),
             MathLexer("x != 2").execute(context)
         )
     }
@@ -263,7 +270,7 @@ class MathLexerTest {
     @Test
     fun parseEqualityLessThan() {
         assertEquals(
-            Equality(Variable("x"), Integer.instantiate(2), Equality.Operator.LessThan),
+            Equality(Variable.instantiate("x"), Integer.instantiate(2), Equality.Operator.LessThan),
             MathLexer("x < 2").execute(context)
         )
     }
@@ -271,7 +278,7 @@ class MathLexerTest {
     @Test
     fun parseEqualityGreaterThan() {
         assertEquals(
-            Equality(Variable("x"), Integer.instantiate(2), Equality.Operator.GreaterThan),
+            Equality(Variable.instantiate("x"), Integer.instantiate(2), Equality.Operator.GreaterThan),
             MathLexer("x > 2").execute(context)
         )
     }
@@ -279,7 +286,7 @@ class MathLexerTest {
     @Test
     fun parseEqualityLessThanOrEquals() {
         assertEquals(
-            Equality(Variable("x"), Integer.instantiate(2), Equality.Operator.LessThanOrEquals),
+            Equality(Variable.instantiate("x"), Integer.instantiate(2), Equality.Operator.LessThanOrEquals),
             MathLexer("x <= 2").execute(context)
         )
     }
@@ -287,7 +294,7 @@ class MathLexerTest {
     @Test
     fun parseEqualityGreaterThanOrEquals() {
         assertEquals(
-            Equality(Variable("x"), Integer.instantiate(2), Equality.Operator.GreaterThanOrEquals),
+            Equality(Variable.instantiate("x"), Integer.instantiate(2), Equality.Operator.GreaterThanOrEquals),
             MathLexer("x >= 2").execute(context)
         )
     }

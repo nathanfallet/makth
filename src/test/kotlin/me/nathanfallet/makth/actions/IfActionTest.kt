@@ -33,7 +33,7 @@ class IfActionTest {
     fun toRawString() {
         assertEquals(
             "if (x = 2) {\n}",
-            IfAction(Equality(Variable("x"), Integer.instantiate(2)), listOf()).toAlgorithmString()
+            IfAction(Equality(Variable.instantiate("x"), Integer.instantiate(2)), listOf()).toAlgorithmString()
         )
     }
 
@@ -42,7 +42,7 @@ class IfActionTest {
         assertEquals(
             "if (x = 2) {\n    print(\"Test\")\n}",
             IfAction(
-                Equality(Variable("x"), Integer.instantiate(2)),
+                Equality(Variable.instantiate("x"), Integer.instantiate(2)),
                 listOf(PrintAction(listOf(StringValue("Test"))))
             ).toAlgorithmString()
         )
@@ -53,7 +53,7 @@ class IfActionTest {
         assertEquals(
             "if (x = 2) {\n    print(\"Test\")\n} else {\n    print(\"Test2\")\n}",
             IfAction(
-                Equality(Variable("x"), Integer.instantiate(2)),
+                Equality(Variable.instantiate("x"), Integer.instantiate(2)),
                 listOf(PrintAction(listOf(StringValue("Test")))),
                 listOf(PrintAction(listOf(StringValue("Test2"))))
             ).toAlgorithmString()
@@ -64,11 +64,11 @@ class IfActionTest {
     fun handler() {
         assertEquals(
             IfAction(
-                Equality(Variable("x"), Integer.instantiate(2)),
+                Equality(Variable.instantiate("x"), Integer.instantiate(2)),
                 listOf(),
                 listOf()
             ),
-            IfAction.handler(listOf(Equality(Variable("x"), Integer.instantiate(2))))
+            IfAction.handler(listOf(Equality(Variable.instantiate("x"), Integer.instantiate(2))))
         )
     }
 
@@ -113,7 +113,7 @@ class IfActionTest {
             contextWithXAndY,
             contextWithX.execute(
                 IfAction(
-                    Equality(Variable("x"), Integer.instantiate(2)),
+                    Equality(Variable.instantiate("x"), Integer.instantiate(2)),
                     listOf(SetAction("y", Integer.instantiate(4))),
                     listOf()
                 )
@@ -126,7 +126,7 @@ class IfActionTest {
         assertThrows(Action.UnknownVariablesException::class.java) {
             context.execute(
                 IfAction(
-                    Equality(Variable("x"), Integer.instantiate(2)),
+                    Equality(Variable.instantiate("x"), Integer.instantiate(2)),
                     listOf(),
                     listOf()
                 )
@@ -139,7 +139,7 @@ class IfActionTest {
         assertThrows(Action.NotABooleanException::class.java) {
             contextWithX.execute(
                 IfAction(
-                    Variable("x"),
+                    Variable.instantiate("x"),
                     listOf(),
                     listOf()
                 )

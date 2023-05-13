@@ -45,7 +45,7 @@ class AlgorithmLexerTest {
     fun parseIfAction() {
         assertEquals(
             listOf(
-                IfAction(Equality(Variable("x"), Integer.instantiate(2)), listOf())
+                IfAction(Equality(Variable.instantiate("x"), Integer.instantiate(2)), listOf())
             ),
             AlgorithmLexer("if (x = 2)").execute()
         )
@@ -56,7 +56,7 @@ class AlgorithmLexerTest {
         assertEquals(
             listOf(
                 IfAction(
-                    Equality(Variable("x"), Integer.instantiate(2)),
+                    Equality(Variable.instantiate("x"), Integer.instantiate(2)),
                     listOf(
                         PrintAction(listOf(StringValue("Test")))
                     )
@@ -71,10 +71,10 @@ class AlgorithmLexerTest {
         assertEquals(
             listOf(
                 IfAction(
-                    Equality(Variable("x"), Integer.instantiate(2)),
+                    Equality(Variable.instantiate("x"), Integer.instantiate(2)),
                     listOf(
                         IfAction(
-                            Equality(Variable("y"), Integer.instantiate(3)),
+                            Equality(Variable.instantiate("y"), Integer.instantiate(3)),
                             listOf(
                                 PrintAction(listOf(StringValue("Test")))
                             )
@@ -91,7 +91,7 @@ class AlgorithmLexerTest {
         assertEquals(
             listOf(
                 IfAction(
-                    Equality(Variable("x"), Integer.instantiate(2)),
+                    Equality(Variable.instantiate("x"), Integer.instantiate(2)),
                     listOf(
                         PrintAction(listOf(StringValue("Test")))
                     ),
@@ -118,7 +118,7 @@ class AlgorithmLexerTest {
     fun parsePrintActionWithTwoArguments() {
         assertEquals(
             listOf(
-                PrintAction(listOf(StringValue("x = "), Variable("x")))
+                PrintAction(listOf(StringValue("x = "), Variable.instantiate("x")))
             ),
             AlgorithmLexer("print(\"x = \", x)").execute()
         )
@@ -140,7 +140,7 @@ class AlgorithmLexerTest {
             listOf(
                 WhileAction(
                     Equality(
-                        Variable("x"),
+                        Variable.instantiate("x"),
                         Integer.instantiate(10),
                         Equality.Operator.LessThan
                     ), listOf()
@@ -155,8 +155,8 @@ class AlgorithmLexerTest {
         assertEquals(
             listOf(
                 WhileAction(
-                    Equality(Variable("x"), Integer.instantiate(10), Equality.Operator.LessThan),
-                    listOf(SetAction("x", Sum(Variable("x"), Integer.instantiate(1))))
+                    Equality(Variable.instantiate("x"), Integer.instantiate(10), Equality.Operator.LessThan),
+                    listOf(SetAction("x", Sum(Variable.instantiate("x"), Integer.instantiate(1))))
                 )
             ),
             AlgorithmLexer("while (x < 10) { set(x, x + 1) }").execute()

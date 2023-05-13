@@ -47,8 +47,8 @@ class SumTest {
     @Test
     fun extractVariables() {
         assertEquals(
-            setOf(Variable("x"), Variable("y")),
-            Sum(Variable("x"), Variable("y")).extractVariables()
+            setOf(Variable.instantiate("x"), Variable.instantiate("y")),
+            Sum(Variable.instantiate("x"), Variable.instantiate("y")).extractVariables()
         )
     }
 

@@ -1,8 +1,29 @@
 package me.nathanfallet.makth.resolvables
 
 import me.nathanfallet.makth.interfaces.Value
+import me.nathanfallet.makth.numbers.Real
+import me.nathanfallet.makth.extensions.BooleanValue
 
-data class Variable(val name: String) : Value {
+data class Variable private constructor(val name: String) : Value {
+
+    companion object {
+
+        @JvmStatic
+        fun instantiate(name: String): Value {
+            // Check for booleans
+            if (name == "true" || name == "false") {
+                return BooleanValue(name == "true")
+            }
+
+            // Check for some constants
+            if (name == "pi" || name == "\u03C0") {
+                return Real.pi
+            }
+
+            return Variable(name)
+        }
+
+    }
 
     override fun compute(context: Context): Value {
         return context.data[name] ?: this

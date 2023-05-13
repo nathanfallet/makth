@@ -39,7 +39,7 @@ class PrintActionTest {
     fun toRawString() {
         assertEquals(
             "print(\"x = \", x)",
-            PrintAction(listOf(StringValue("x = "), Variable("x"))).toAlgorithmString()
+            PrintAction(listOf(StringValue("x = "), Variable.instantiate("x"))).toAlgorithmString()
         )
     }
 
@@ -55,14 +55,14 @@ class PrintActionTest {
     fun printStringWithVariable() {
         assertEquals(
             contextWithXAndString,
-            contextWithX.execute(PrintAction(listOf(StringValue("x = "), Variable("x"))))
+            contextWithX.execute(PrintAction(listOf(StringValue("x = "), Variable.instantiate("x"))))
         )
     }
 
     @Test
     fun printStringWithVariableWithoutContext() {
         assertThrows(Action.UnknownVariablesException::class.java) {
-            context.execute(PrintAction(listOf(StringValue("x = "), Variable("x"))))
+            context.execute(PrintAction(listOf(StringValue("x = "), Variable.instantiate("x"))))
         }
     }
 

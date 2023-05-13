@@ -45,8 +45,8 @@ class QuotientTest {
     @Test
     fun extractVariables() {
         assertEquals(
-            setOf(Variable("x"), Variable("y")),
-            Quotient(Variable("x"), Variable("y")).extractVariables()
+            setOf(Variable.instantiate("x"), Variable.instantiate("y")),
+            Quotient(Variable.instantiate("x"), Variable.instantiate("y")).extractVariables()
         )
     }
 

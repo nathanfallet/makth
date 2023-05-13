@@ -45,8 +45,8 @@ class RemainderTest {
     @Test
     fun extractVariables() {
         assertEquals(
-            setOf(Variable("x"), Variable("y")),
-            Remainder(Variable("x"), Variable("y")).extractVariables()
+            setOf(Variable.instantiate("x"), Variable.instantiate("y")),
+            Remainder(Variable.instantiate("x"), Variable.instantiate("y")).extractVariables()
         )
     }
 

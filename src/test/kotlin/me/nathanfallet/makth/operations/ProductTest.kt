@@ -45,8 +45,8 @@ class ProductTest {
     @Test
     fun extractVariables() {
         assertEquals(
-            setOf(Variable("x"), Variable("y")),
-            Product(Variable("x"), Variable("y")).extractVariables()
+            setOf(Variable.instantiate("x"), Variable.instantiate("y")),
+            Product(Variable.instantiate("x"), Variable.instantiate("y")).extractVariables()
         )
     }
 

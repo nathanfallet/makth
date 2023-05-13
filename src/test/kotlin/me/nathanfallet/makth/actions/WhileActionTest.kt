@@ -33,7 +33,7 @@ class WhileActionTest {
             "while (x < 10) {\n}",
             WhileAction(
                 Equality(
-                    Variable("x"),
+                    Variable.instantiate("x"),
                     Integer.instantiate(10),
                     Equality.Operator.LessThan
                 ), listOf()
@@ -46,8 +46,8 @@ class WhileActionTest {
         assertEquals(
             "while (x < 10) {\n    set(x, x + 1)\n}",
             WhileAction(
-                Equality(Variable("x"), Integer.instantiate(10), Equality.Operator.LessThan),
-                listOf(SetAction("x", Sum(Variable("x"), Integer.instantiate(1))))
+                Equality(Variable.instantiate("x"), Integer.instantiate(10), Equality.Operator.LessThan),
+                listOf(SetAction("x", Sum(Variable.instantiate("x"), Integer.instantiate(1))))
             ).toAlgorithmString()
         )
     }
@@ -56,10 +56,10 @@ class WhileActionTest {
     fun handler() {
         assertEquals(
             WhileAction(
-                Equality(Variable("x"), Integer.instantiate(2)),
+                Equality(Variable.instantiate("x"), Integer.instantiate(2)),
                 listOf()
             ),
-            WhileAction.handler(listOf(Equality(Variable("x"), Integer.instantiate(2))))
+            WhileAction.handler(listOf(Equality(Variable.instantiate("x"), Integer.instantiate(2))))
         )
     }
 
@@ -76,8 +76,8 @@ class WhileActionTest {
             contextWithXIncremented,
             contextWithX.execute(
                 WhileAction(
-                    Equality(Variable("x"), Integer.instantiate(10), Equality.Operator.LessThan),
-                    listOf(SetAction("x", Sum(Variable("x"), Integer.instantiate(1))))
+                    Equality(Variable.instantiate("x"), Integer.instantiate(10), Equality.Operator.LessThan),
+                    listOf(SetAction("x", Sum(Variable.instantiate("x"), Integer.instantiate(1))))
                 )
             )
         )
@@ -88,7 +88,7 @@ class WhileActionTest {
         assertThrows(Action.UnknownVariablesException::class.java) {
             context.execute(
                 WhileAction(
-                    Equality(Variable("x"), Integer.instantiate(2)),
+                    Equality(Variable.instantiate("x"), Integer.instantiate(2)),
                     listOf()
                 )
             )
@@ -100,7 +100,7 @@ class WhileActionTest {
         assertThrows(Action.NotABooleanException::class.java) {
             contextWithX.execute(
                 WhileAction(
-                    Variable("x"),
+                    Variable.instantiate("x"),
                     listOf()
                 )
             )
