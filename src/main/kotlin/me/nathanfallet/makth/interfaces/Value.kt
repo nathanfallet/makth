@@ -16,4 +16,8 @@ interface Value: Output {
 
     fun extractVariables(): Set<Variable>
 
+    fun getMainPrecedence(): Int {
+        return Int.MAX_VALUE
+    }
+
 }

@@ -22,15 +22,31 @@ data class Sum(
     }
 
     override fun toRawString(): String {
-        return "${left.toRawString()} + ${right.toRawString()}"
+        val leftRawString = left.toRawString().let {
+            if (left.getMainPrecedence() < getMainPrecedence()) "($it)" else it
+        }
+        val rightRawString = right.toRawString().let {
+            if (right.getMainPrecedence() < getMainPrecedence()) "($it)" else it
+        }
+        return "$leftRawString + $rightRawString"
     }
 
     override fun toLaTeXString(): String {
-        return "${left.toLaTeXString()} + ${right.toLaTeXString()}"
+        val leftLaTeXString = left.toLaTeXString().let {
+            if (left.getMainPrecedence() < getMainPrecedence()) "($it)" else it
+        }
+        val rightLaTeXString = right.toLaTeXString().let {
+            if (right.getMainPrecedence() < getMainPrecedence()) "($it)" else it
+        }
+        return "$leftLaTeXString + $rightLaTeXString"
     }
 
     override fun extractVariables(): Set<Variable> {
         return left.extractVariables() + right.extractVariables()
+    }
+
+    override fun getMainPrecedence(): Int {
+        return Operation.Utils.getPrecedence("+")
     }
 
 }

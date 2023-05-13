@@ -19,10 +19,26 @@ class RemainderTest {
     }
 
     @Test
+    fun toRawStringWithBraces() {
+        assertEquals(
+            "(1 + 2) % (3 + 4)",
+            Remainder(Sum(Integer.instantiate(1), Integer.instantiate(2)), Sum(Integer.instantiate(3), Integer.instantiate(4))).toRawString()
+        )
+    }
+
+    @Test
     fun toLaTeXString() {
         assertEquals(
             "1 % 2",
             Remainder(Integer.instantiate(1), Integer.instantiate(2)).toLaTeXString()
+        )
+    }
+
+    @Test
+    fun toLaTeXStringWithBraces() {
+        assertEquals(
+            "(1 + 2) % (3 + 4)",
+            Remainder(Sum(Integer.instantiate(1), Integer.instantiate(2)), Sum(Integer.instantiate(3), Integer.instantiate(4))).toLaTeXString()
         )
     }
 

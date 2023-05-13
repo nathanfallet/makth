@@ -19,10 +19,26 @@ class QuotientTest {
     }
 
     @Test
+    fun toRawStringWithBraces() {
+        assertEquals(
+            "(1 + 2) / (3 + 4)",
+            Quotient(Sum(Integer.instantiate(1), Integer.instantiate(2)), Sum(Integer.instantiate(3), Integer.instantiate(4))).toRawString()
+        )
+    }
+
+    @Test
     fun toLaTeXString() {
         assertEquals(
             "\\frac{1}{2}",
             Quotient(Integer.instantiate(1), Integer.instantiate(2)).toLaTeXString()
+        )
+    }
+
+    @Test
+    fun toLaTeXStringWithBraces() {
+        assertEquals(
+            "\\frac{1 + 2}{3 + 4}",
+            Quotient(Sum(Integer.instantiate(1), Integer.instantiate(2)), Sum(Integer.instantiate(3), Integer.instantiate(4))).toLaTeXString()
         )
     }
 
