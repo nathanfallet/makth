@@ -112,8 +112,8 @@ class RealTest {
     fun multiplyCorrectVector() {
         // pi * (1, 2) = (pi, 2pi)
         assertEquals(
-            Vector(listOf(Real.pi, Real.instantiate(2 * PI))),
-            Real.pi.multiply(Vector(listOf(Integer.instantiate(1), Integer.instantiate(2))))
+            Vector.instantiate(listOf(Real.pi, Real.instantiate(2 * PI))),
+            Real.pi.multiply(Vector.instantiate(listOf(Integer.instantiate(1), Integer.instantiate(2))))
         )
     }
 

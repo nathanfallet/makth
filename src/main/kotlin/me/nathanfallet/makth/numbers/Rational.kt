@@ -147,8 +147,11 @@ interface Rational : Real {
                 return instantiate(newNumerator, newDenominator)
             }
         }
+        if (right is Real) {
+            return RealImpl(getDoubleValue()).multiply(right)
+        }
         if (right is Vector) {
-            return Vector(right.elements.map { multiply(it) })
+            return Vector.instantiate(right.getElements().map { multiply(it) })
         }
         return super.multiply(right)
     }

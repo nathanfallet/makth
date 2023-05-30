@@ -11,7 +11,7 @@ import me.nathanfallet.makth.sets.Vector
 /**
  * Real representation
  */
-interface Real : Value {
+interface Real : Vector {
 
     // Instantiate
 
@@ -65,6 +65,12 @@ interface Real : Value {
         return instantiate(abs(getDoubleValue()))
     }
 
+    // Vector
+
+    override fun getElements(): List<Value> {
+        return listOf(this)
+    }
+
     // Value
 
     override fun toRawString(): String {
@@ -97,7 +103,7 @@ interface Real : Value {
             return instantiate(getDoubleValue() * right.getDoubleValue())
         }
         if (right is Vector) {
-            return Vector(right.elements.map { multiply(it) })
+            return Vector.instantiate(right.getElements().map { multiply(it) })
         }
         return super.multiply(right)
     }

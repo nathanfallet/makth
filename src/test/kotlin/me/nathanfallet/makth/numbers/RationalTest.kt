@@ -128,8 +128,8 @@ class RationalTest {
     fun mutliplyCorrectVector() {
         // 1/2 * [1, 2] = [1/2, 1]
         assertEquals(
-            Vector(listOf(Rational.instantiate(1, 2), Integer.instantiate(1))),
-            Rational.instantiate(1, 2).multiply(Vector(listOf(Integer.instantiate(1), Integer.instantiate(2)))))
+            Vector.instantiate(listOf(Rational.instantiate(1, 2), Integer.instantiate(1))),
+            Rational.instantiate(1, 2).multiply(Vector.instantiate(listOf(Integer.instantiate(1), Integer.instantiate(2)))))
     }
 
     @Test

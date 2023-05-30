@@ -11,32 +11,61 @@ import me.nathanfallet.makth.numbers.Real
  * It's a set of elements of the same type
  * @param elements List of elements
  */
-data class Vector(
-    val elements: List<Value>
-) : Value {
+interface Vector : Value {
+
+    // Instantiate
+
+    companion object {
+
+        /**
+         * Instantiate a vector from a list of elements
+         * @param elements List of elements
+         * @return Vector
+         */
+        @JvmStatic
+        fun instantiate(elements: List<Value>): Vector {
+            if (elements.count() == 1 && elements.first() is Vector) {
+                return elements.first() as Vector
+            }
+            return VectorImpl(elements)
+        }
+
+    }
+
+    // Vector interface
+
+    /**
+     * Get elements
+     * @return List of elements
+     */
+    fun getElements(): List<Value>
+
+    // Value
 
     override fun compute(context: Context): Value {
-        return Vector(elements.map { it.compute(context) })
+        return Vector.instantiate(getElements().map { it.compute(context) })
     }
 
     override fun toRawString(): String {
-        return elements.joinToString(", ", "(", ")") { it.toRawString() }
+        return getElements().joinToString(", ", "(", ")") { it.toRawString() }
     }
 
     override fun toLaTeXString(): String {
-        return elements.joinToString(" \\\\ ", "\\begin{pmatrix} ", " \\end{pmatrix}") { it.toLaTeXString() }
+        return getElements().joinToString(" \\\\ ", "\\begin{pmatrix} ", " \\end{pmatrix}") { it.toLaTeXString() }
     }
 
     override fun extractVariables(): Set<Variable> {
-        return elements.flatMap { it.extractVariables() }.toSet()
+        return getElements().flatMap { it.extractVariables() }.toSet()
     }
+
+    // Operations
 
     override fun sum(right: Value): Value {
         if (right is Vector) {
-            if (elements.size != right.elements.size) {
+            if (getElements().size != right.getElements().size) {
                 throw UnsupportedOperationException("Cannot sum vectors of different sizes")
             }
-            return Vector(elements.zip(right.elements).map { pair ->
+            return Vector.instantiate(getElements().zip(right.getElements()).map { pair ->
                 Sum(pair.first, pair.second).compute(Context())
             })
         }
@@ -45,7 +74,7 @@ data class Vector(
 
     override fun multiply(right: Value): Value {
         if (right is Real) {
-            return Vector(elements.map { it.multiply(right) })
+            return Vector.instantiate(getElements().map { it.multiply(right) })
         }
         return super.multiply(right)
     }

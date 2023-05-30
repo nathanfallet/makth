@@ -303,7 +303,7 @@ class MathLexerTest {
     @Test
     fun parseVector() {
         assertEquals(
-            Vector(listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3))),
+            Vector.instantiate(listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3))),
             MathLexer("(1, 2, 3)").execute(context)
         )
     }

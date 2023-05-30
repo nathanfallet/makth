@@ -35,7 +35,8 @@ interface Operation : Value {
                 ">" -> Equality(left, right, Equality.Operator.GreaterThan)
                 "<=" -> Equality(left, right, Equality.Operator.LessThanOrEquals)
                 ">=" -> Equality(left, right, Equality.Operator.GreaterThanOrEquals)
-                "," -> if (left is Vector) Vector(left.elements + right) else Vector(listOf(left, right))
+                "," -> if (left is Vector) Vector.instantiate(left.getElements() + right)
+                       else Vector.instantiate(listOf(left, right))
                 else -> throw MathLexer.UnknownOperatorException(operator)
             }
         }
