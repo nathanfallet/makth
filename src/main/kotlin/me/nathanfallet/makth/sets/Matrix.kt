@@ -89,5 +89,5 @@ interface Matrix : Value {
         }
         return super.sum(right)
     }
-    
+
 }
