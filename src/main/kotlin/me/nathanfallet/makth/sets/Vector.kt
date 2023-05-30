@@ -11,7 +11,7 @@ import me.nathanfallet.makth.numbers.Real
  * It's a set of elements of the same type
  * @param elements List of elements
  */
-interface Vector : Value {
+interface Vector : Matrix {
 
     // Instantiate
 
@@ -47,7 +47,7 @@ interface Vector : Value {
     }
 
     override fun toRawString(): String {
-        return getElements().joinToString(", ", "(", ")") { it.toRawString() }
+        return getElements().joinToString("; ", "(", ")") { it.toRawString() }
     }
 
     override fun toLaTeXString(): String {
@@ -58,11 +58,21 @@ interface Vector : Value {
         return getElements().flatMap { it.extractVariables() }.toSet()
     }
 
+    // Matrix
+
+    override fun getRows(): List<List<Value>> {
+        return getElements().map { listOf(it) }
+    }
+
+    override fun getColumns(): List<List<Value>> {
+        return listOf(this.getElements())
+    }
+
     // Operations
 
     override fun sum(right: Value): Value {
         if (right is Vector) {
-            if (getElements().size != right.getElements().size) {
+            if (getElements().count() != right.getElements().count()) {
                 throw UnsupportedOperationException("Cannot sum vectors of different sizes")
             }
             return Vector.instantiate(getElements().zip(right.getElements()).map { pair ->

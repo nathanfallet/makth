@@ -15,6 +15,7 @@ import me.nathanfallet.makth.operations.Remainder
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable
 import me.nathanfallet.makth.sets.Vector
+import me.nathanfallet.makth.sets.Matrix
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThrows
 import org.junit.Test
@@ -245,6 +246,14 @@ class MathLexerTest {
     }
 
     @Test
+    fun parseExpressionWithoutParentheses() {
+        assertEquals(
+            Integer.instantiate(26),
+            MathLexer("2 * 3 + 4 * 5").execute(context)
+        )
+    }
+
+    @Test
     fun parseEquality() {
         assertEquals(
             Equality(Variable.instantiate("x"), Integer.instantiate(2)),
@@ -304,7 +313,19 @@ class MathLexerTest {
     fun parseVector() {
         assertEquals(
             Vector.instantiate(listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3))),
-            MathLexer("(1, 2, 3)").execute(context)
+            MathLexer("(1; 2; 3)").execute(context)
+        )
+    }
+
+    @Test
+    fun parseMatrix() {
+        assertEquals(
+            Matrix.instantiate(listOf(
+                listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3)),
+                listOf(Integer.instantiate(4), Integer.instantiate(5), Integer.instantiate(6)),
+                listOf(Integer.instantiate(7), Integer.instantiate(8), Integer.instantiate(9))
+            )),
+            MathLexer("(1, 2, 3; 4, 5, 6; 7, 8, 9)").execute(context)
         )
     }
 
