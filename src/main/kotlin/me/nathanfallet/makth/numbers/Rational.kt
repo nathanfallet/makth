@@ -1,6 +1,8 @@
 package me.nathanfallet.makth.numbers
 
 import me.nathanfallet.makth.extensions.gcd
+import me.nathanfallet.makth.interfaces.Value
+import me.nathanfallet.makth.sets.Vector
 
 /**
  * Rational representation
@@ -113,7 +115,7 @@ interface Rational : Real {
 
     // Operations
 
-    override fun sum(right: Real): Real {
+    override fun sum(right: Value): Value {
         if (right is Integer) {
             val newNumerator = getNumerator().sum(getDenominator().multiply(right))
             if (newNumerator is Integer) {
@@ -131,7 +133,7 @@ interface Rational : Real {
         return RealImpl(getDoubleValue()).sum(right)
     }
 
-    override fun multiply(right: Real): Real {
+    override fun multiply(right: Value): Value {
         if (right is Integer) {
             val newNumerator = getNumerator().multiply(right)
             if (newNumerator is Integer) {
@@ -145,10 +147,13 @@ interface Rational : Real {
                 return instantiate(newNumerator, newDenominator)
             }
         }
+        if (right is Vector) {
+            return Vector(right.elements.map { multiply(it) })
+        }
         return RealImpl(getDoubleValue()).multiply(right)
     }
 
-    override fun divide(right: Real): Real {
+    override fun divide(right: Value): Value {
         if (right is Integer) {
             val newDenominator = getDenominator().multiply(right)
             if (newDenominator is Integer) {
@@ -171,7 +176,7 @@ interface Rational : Real {
         return RealImpl(getDoubleValue()).divide(right)
     }
 
-    override fun remainder(right: Real): Real {
+    override fun remainder(right: Value): Value {
         if (right is Integer) {
             val newRight = getDenominator().multiply(right)
             val newNumerator = getNumerator().remainder(newRight)
@@ -195,7 +200,7 @@ interface Rational : Real {
         return RealImpl(getDoubleValue()).remainder(right)
     }
 
-    override fun raise(right: Real): Real {
+    override fun raise(right: Value): Value {
         val newNumerator = getNumerator().raise(right)
         val newDenominator = getDenominator().raise(right)
         return newNumerator.divide(newDenominator)

@@ -4,22 +4,14 @@ import kotlin.math.abs
 import kotlin.math.floor
 import kotlin.math.pow
 import me.nathanfallet.makth.interfaces.Value
-import me.nathanfallet.makth.operations.Divisible
-import me.nathanfallet.makth.operations.Exponentiable
-import me.nathanfallet.makth.operations.Multipliable
-import me.nathanfallet.makth.operations.Summable
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable
+import me.nathanfallet.makth.sets.Vector
 
 /**
  * Real representation
  */
-interface Real :
-        Value,
-        Summable<Real, Real>,
-        Multipliable<Real, Real>,
-        Divisible<Real, Real>,
-        Exponentiable<Real, Real> {
+interface Real : Value {
 
     // Instantiate
 
@@ -93,24 +85,42 @@ interface Real :
 
     // Operations
 
-    override fun sum(right: Real): Real {
-        return instantiate(getDoubleValue() + right.getDoubleValue())
+    override fun sum(right: Value): Value {
+        if (right is Real) {
+            return instantiate(getDoubleValue() + right.getDoubleValue())
+        }
+        throw UnsupportedOperationException()
     }
 
-    override fun multiply(right: Real): Real {
-        return instantiate(getDoubleValue() * right.getDoubleValue())
+    override fun multiply(right: Value): Value {
+        if (right is Real) {
+            return instantiate(getDoubleValue() * right.getDoubleValue())
+        }
+        if (right is Vector) {
+            return Vector(right.elements.map { multiply(it) })
+        }
+        throw UnsupportedOperationException()
     }
 
-    override fun divide(right: Real): Real {
-        return instantiate(getDoubleValue() / right.getDoubleValue())
+    override fun divide(right: Value): Value {
+        if (right is Real) {
+            return instantiate(getDoubleValue() / right.getDoubleValue())
+        }
+        throw UnsupportedOperationException()
     }
 
-    override fun remainder(right: Real): Real {
-        return instantiate(getDoubleValue() % right.getDoubleValue())
+    override fun remainder(right: Value): Value {
+        if (right is Real) {
+            return instantiate(getDoubleValue() % right.getDoubleValue())
+        }
+        throw UnsupportedOperationException()
     }
 
-    override fun raise(right: Real): Real {
-        return instantiate(getDoubleValue().pow(right.getDoubleValue()))
+    override fun raise(right: Value): Value {
+        if (right is Real) {
+            return instantiate(getDoubleValue().pow(right.getDoubleValue()))
+        }
+        throw UnsupportedOperationException()
     }
 
 }

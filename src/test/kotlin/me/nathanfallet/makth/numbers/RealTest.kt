@@ -5,6 +5,7 @@ import org.junit.Test
 import kotlin.math.PI
 import kotlin.math.pow
 import kotlin.math.sqrt
+import me.nathanfallet.makth.sets.Vector
 
 class RealTest {
 
@@ -95,6 +96,15 @@ class RealTest {
         assertEquals(
             Real.instantiate(PI * PI),
             Real.pi.multiply(Real.pi)
+        )
+    }
+
+    @Test
+    fun multiplyCorrectVector() {
+        // pi * (1, 2) = (pi, 2pi)
+        assertEquals(
+            Vector(listOf(Real.pi, Real.instantiate(2 * PI))),
+            Real.pi.multiply(Vector(listOf(Integer.instantiate(1), Integer.instantiate(2))))
         )
     }
 

@@ -4,6 +4,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import kotlin.math.PI
 import kotlin.math.pow
+import me.nathanfallet.makth.sets.Vector
 
 class IntegerTest {
 
@@ -96,6 +97,15 @@ class IntegerTest {
         assertEquals(
             Real.instantiate(-2 * PI),
             Integer.instantiate(-2).multiply(Real.pi)
+        )
+    }
+
+    @Test
+    fun multiplyCorrectVector() {
+        // -2 * (1, 2) = (-2, -4)
+        assertEquals(
+            Vector(listOf(Integer.instantiate(-2), Integer.instantiate(-4))),
+            Integer.instantiate(-2).multiply(Vector(listOf(Integer.instantiate(1), Integer.instantiate(2))))
         )
     }
 

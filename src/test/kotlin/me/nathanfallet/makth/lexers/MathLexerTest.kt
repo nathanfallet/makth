@@ -14,6 +14,7 @@ import me.nathanfallet.makth.operations.Exponentiation
 import me.nathanfallet.makth.operations.Remainder
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable
+import me.nathanfallet.makth.sets.Vector
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThrows
 import org.junit.Test
@@ -296,6 +297,14 @@ class MathLexerTest {
         assertEquals(
             Equality(Variable.instantiate("x"), Integer.instantiate(2), Equality.Operator.GreaterThanOrEquals),
             MathLexer("x >= 2").execute(context)
+        )
+    }
+
+    @Test
+    fun parseVector() {
+        assertEquals(
+            Vector(listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3))),
+            MathLexer("(1, 2, 3)").execute(context)
         )
     }
 

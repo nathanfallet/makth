@@ -4,6 +4,8 @@ import kotlin.math.abs
 import kotlin.math.pow
 import me.nathanfallet.makth.extensions.pow
 import me.nathanfallet.makth.extensions.nthRoot
+import me.nathanfallet.makth.interfaces.Value
+import me.nathanfallet.makth.sets.Vector
 
 /**
  * Integer representation
@@ -66,7 +68,7 @@ interface Integer : Rational {
 
     // Operations
 
-    override fun sum(right: Real): Real {
+    override fun sum(right: Value): Value {
         if (right is Integer) {
             return instantiate(getLongValue() + right.getLongValue())
         }
@@ -80,7 +82,7 @@ interface Integer : Rational {
         return RealImpl(getDoubleValue()).sum(right)
     }
 
-    override fun multiply(right: Real): Real {
+    override fun multiply(right: Value): Value {
         if (right is Integer) {
             return instantiate(getLongValue() * right.getLongValue())
         }
@@ -93,10 +95,13 @@ interface Integer : Rational {
                 )
             }
         }
+        if (right is Vector) {
+            return Vector(right.elements.map { multiply(it) })
+        }
         return RealImpl(getDoubleValue()).multiply(right)
     }
 
-    override fun divide(right: Real): Real {
+    override fun divide(right: Value): Value {
         if (right is Integer) {
             return Rational.instantiate(
                 this,
@@ -115,7 +120,7 @@ interface Integer : Rational {
         return RealImpl(getDoubleValue()).divide(right)
     }
 
-    override fun remainder(right: Real): Real {
+    override fun remainder(right: Value): Value {
         if (right is Integer) {
             return instantiate(getLongValue() % right.getLongValue())
         }
@@ -131,7 +136,7 @@ interface Integer : Rational {
         return RealImpl(getDoubleValue()).remainder(right)
     }
 
-    override fun raise(right: Real): Real {
+    override fun raise(right: Value): Value {
         if (right is Integer) {
             return if (right.getLongValue() < 0) {
                 Rational.instantiate(
@@ -161,7 +166,6 @@ interface Integer : Rational {
                 }
             }
         }
-
         return RealImpl(getDoubleValue()).raise(right)
     }
 

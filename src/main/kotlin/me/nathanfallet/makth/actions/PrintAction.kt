@@ -47,10 +47,6 @@ data class PrintAction(val values: List<Value>) : Action {
     }
 
     override fun toAlgorithmString(): String {
-        val builder = StringBuilder()
-        builder.append("print(")
-        builder.append(values.joinToString(", ") { it.toAlgorithmString() })
-        builder.append(")")
-        return builder.toString()
+        return values.joinToString(", ", "print(", ")") { it.toAlgorithmString() }
     }
 }

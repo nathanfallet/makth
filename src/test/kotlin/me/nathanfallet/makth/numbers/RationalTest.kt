@@ -5,6 +5,7 @@ import org.junit.Assert.assertThrows
 import org.junit.Test
 import kotlin.math.PI
 import kotlin.math.pow
+import me.nathanfallet.makth.sets.Vector
 
 class RationalTest {
 
@@ -121,6 +122,14 @@ class RationalTest {
             Real.instantiate(0.5 * PI),
             Rational.instantiate(1, 2).multiply(Real.pi)
         )
+    }
+
+    @Test
+    fun mutliplyCorrectVector() {
+        // 1/2 * [1, 2] = [1/2, 1]
+        assertEquals(
+            Vector(listOf(Rational.instantiate(1, 2), Integer.instantiate(1))),
+            Rational.instantiate(1, 2).multiply(Vector(listOf(Integer.instantiate(1), Integer.instantiate(2)))))
     }
 
     @Test

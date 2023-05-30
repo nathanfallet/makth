@@ -4,6 +4,7 @@ import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.lexers.MathLexer
 import me.nathanfallet.makth.lexers.AlgorithmLexer.SyntaxException
 import me.nathanfallet.makth.numbers.Integer
+import me.nathanfallet.makth.sets.Vector
 
 /**
  * Interface for all operations between values
@@ -34,6 +35,7 @@ interface Operation : Value {
                 ">" -> Equality(left, right, Equality.Operator.GreaterThan)
                 "<=" -> Equality(left, right, Equality.Operator.LessThanOrEquals)
                 ">=" -> Equality(left, right, Equality.Operator.GreaterThanOrEquals)
+                "," -> if (left is Vector) Vector(left.elements + right) else Vector(listOf(left, right))
                 else -> throw MathLexer.UnknownOperatorException(operator)
             }
         }
