@@ -130,7 +130,7 @@ interface Rational : Real {
                 return instantiate(newNumerator, newDenominator)
             }
         }
-        return RealImpl(getDoubleValue()).sum(right)
+        return super.sum(right)
     }
 
     override fun multiply(right: Value): Value {
@@ -150,7 +150,7 @@ interface Rational : Real {
         if (right is Vector) {
             return Vector(right.elements.map { multiply(it) })
         }
-        return RealImpl(getDoubleValue()).multiply(right)
+        return super.multiply(right)
     }
 
     override fun divide(right: Value): Value {
@@ -173,7 +173,7 @@ interface Rational : Real {
                 )
             }
         }
-        return RealImpl(getDoubleValue()).divide(right)
+        return super.divide(right)
     }
 
     override fun remainder(right: Value): Value {
@@ -197,13 +197,17 @@ interface Rational : Real {
                 )
             }
         }
-        return RealImpl(getDoubleValue()).remainder(right)
+        return super.remainder(right)
     }
 
     override fun raise(right: Value): Value {
-        val newNumerator = getNumerator().raise(right)
-        val newDenominator = getDenominator().raise(right)
-        return newNumerator.divide(newDenominator)
+        val denominator = getDenominator()
+        if (denominator != Integer.instantiate(1)) {
+            val newNumerator = getNumerator().raise(right)
+            val newDenominator = denominator.raise(right)
+            return newNumerator.divide(newDenominator)
+        }
+        return super.raise(right)
     }
 
 }

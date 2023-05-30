@@ -18,12 +18,11 @@ data class Sum(
     override fun compute(context: Context): Value {
         val left = left.compute(context)
         val right = right.compute(context)
-
-        if (left is Real && right is Real) {
-            return left.sum(right)
+        return try {
+            left.sum(right)
+        } catch (e: UnsupportedOperationException) {
+            Sum(left, right)
         }
-
-        return Sum(left, right)
     }
 
     override fun toRawString(): String {

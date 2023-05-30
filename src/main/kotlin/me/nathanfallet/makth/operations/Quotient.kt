@@ -18,12 +18,11 @@ data class Quotient(
     override fun compute(context: Context): Value {
         val left = left.compute(context)
         val right = right.compute(context)
-
-        if (left is Real && right is Real) {
-            return left.divide(right)
+        return try {
+            left.divide(right)
+        } catch (e: UnsupportedOperationException) {
+            Quotient(left, right)
         }
-
-        return Quotient(left, right)
     }
 
     override fun toRawString(): String {

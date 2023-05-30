@@ -89,7 +89,7 @@ interface Real : Value {
         if (right is Real) {
             return instantiate(getDoubleValue() + right.getDoubleValue())
         }
-        throw UnsupportedOperationException()
+        return super.sum(right)
     }
 
     override fun multiply(right: Value): Value {
@@ -99,28 +99,28 @@ interface Real : Value {
         if (right is Vector) {
             return Vector(right.elements.map { multiply(it) })
         }
-        throw UnsupportedOperationException()
+        return super.multiply(right)
     }
 
     override fun divide(right: Value): Value {
         if (right is Real) {
             return instantiate(getDoubleValue() / right.getDoubleValue())
         }
-        throw UnsupportedOperationException()
+        return super.divide(right)
     }
 
     override fun remainder(right: Value): Value {
         if (right is Real) {
             return instantiate(getDoubleValue() % right.getDoubleValue())
         }
-        throw UnsupportedOperationException()
+        return super.remainder(right)
     }
 
     override fun raise(right: Value): Value {
         if (right is Real) {
             return instantiate(getDoubleValue().pow(right.getDoubleValue()))
         }
-        throw UnsupportedOperationException()
+        return super.raise(right)
     }
 
 }

@@ -18,12 +18,11 @@ data class Exponentiation(
     override fun compute(context: Context): Value {
         val left = left.compute(context)
         val right = right.compute(context)
-
-        if (left is Real && right is Real) {
-            return left.raise(right)
+        return try {
+            left.raise(right)
+        } catch (e: UnsupportedOperationException) {
+            Exponentiation(left, right)
         }
-
-        return Exponentiation(left, right)
     }
 
     override fun toRawString(): String {

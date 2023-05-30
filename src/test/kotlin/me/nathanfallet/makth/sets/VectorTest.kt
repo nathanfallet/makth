@@ -2,6 +2,7 @@ package me.nathanfallet.makth.sets
 
 import me.nathanfallet.makth.numbers.Integer
 import me.nathanfallet.makth.resolvables.Variable
+import me.nathanfallet.makth.extensions.StringValue
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThrows
 import org.junit.Test
@@ -54,6 +55,15 @@ class VectorTest {
     }
 
     @Test
+    fun sumUnsupported() {
+        assertThrows(UnsupportedOperationException::class.java) {
+            Vector(listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3))).sum(
+                StringValue("test")
+            )
+        }
+    }
+
+    @Test
     fun multiplyCorrectReal() {
         // (1, 2, 3) * 2 = (2, 4, 6)
         assertEquals(
@@ -62,6 +72,15 @@ class VectorTest {
                 Integer.instantiate(2)
             )
         )
+    }
+
+    @Test
+    fun multiplyUnsupported() {
+        assertThrows(UnsupportedOperationException::class.java) {
+            Vector(listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3))).multiply(
+                StringValue("test")
+            )
+        }
     }
 
 }

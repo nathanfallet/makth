@@ -5,6 +5,7 @@ import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.numbers.Real
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable
+import me.nathanfallet.makth.sets.Vector
 
 /**
  * Equality operation.
@@ -71,6 +72,13 @@ data class Equality(
                 Operator.GreaterThan -> leftDouble > rightDouble
                 Operator.LessThanOrEquals -> leftDouble <= rightDouble
                 Operator.GreaterThanOrEquals -> leftDouble >= rightDouble
+            })
+        }
+        if (left is Vector && right is Vector) {
+            return BooleanValue(when (operator) {
+                Operator.Equals -> left == right
+                Operator.NotEquals -> left != right
+                else -> throw UnsupportedOperationException()
             })
         }
 

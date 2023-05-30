@@ -40,14 +40,14 @@ data class Vector(
                 Sum(pair.first, pair.second).compute(Context())
             })
         }
-        throw UnsupportedOperationException()
+        return super.sum(right)
     }
 
     override fun multiply(right: Value): Value {
         if (right is Real) {
             return Vector(elements.map { it.multiply(right) })
         }
-        throw UnsupportedOperationException()
+        return super.multiply(right)
     }
 
 }

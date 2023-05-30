@@ -79,7 +79,7 @@ interface Integer : Rational {
                 return Rational.instantiate(newNumerator, right.getDenominator())
             }
         }
-        return RealImpl(getDoubleValue()).sum(right)
+        return super.sum(right)
     }
 
     override fun multiply(right: Value): Value {
@@ -98,7 +98,7 @@ interface Integer : Rational {
         if (right is Vector) {
             return Vector(right.elements.map { multiply(it) })
         }
-        return RealImpl(getDoubleValue()).multiply(right)
+        return super.multiply(right)
     }
 
     override fun divide(right: Value): Value {
@@ -117,7 +117,7 @@ interface Integer : Rational {
                 )
             }
         }
-        return RealImpl(getDoubleValue()).divide(right)
+        return super.divide(right)
     }
 
     override fun remainder(right: Value): Value {
@@ -133,7 +133,7 @@ interface Integer : Rational {
                 )
             }
         }
-        return RealImpl(getDoubleValue()).remainder(right)
+        return super.remainder(right)
     }
 
     override fun raise(right: Value): Value {
@@ -166,7 +166,7 @@ interface Integer : Rational {
                 }
             }
         }
-        return RealImpl(getDoubleValue()).raise(right)
+        return super.raise(right)
     }
 
 }
