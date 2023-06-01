@@ -33,7 +33,7 @@ class RealTest {
     fun testEqualsTrue() {
         assertEquals(true, Real.instantiate(1.23456789).equals(Real.instantiate(1.23456789)))
     }
-    
+
     @Test
     fun testEqualsFalse() {
         assertEquals(false, Real.instantiate(1.23456789).equals(Real.instantiate(9.87654321)))

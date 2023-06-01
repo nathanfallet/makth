@@ -12,6 +12,6 @@ fun orOrThrowUnsupportedOperationException(
     }
     if (values.all { it == null }) {
         throw UnsupportedOperationException()
-    } 
+    }
     return values.fold(false) { acc, b -> acc || (b ?: false) }
 }
