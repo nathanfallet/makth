@@ -52,6 +52,21 @@ interface Action {
         "Value is not a boolean: ${value.toRawString()}"
     )
 
+    /**
+     * Exception thrown when a variable is not iterable
+     * @param action Action that failed
+     * @param context Context of the action
+     * @param value Value that is not iterable
+     */
+    open class NotIterableException(
+        action: Action,
+        context: Context,
+        val value: Value
+    ) : ExecutionException(
+        action, context,
+        "Value is not iterable: ${value.toRawString()}"
+    )
+
     // Interface
 
     /**

@@ -1,5 +1,6 @@
 package me.nathanfallet.makth.sets
 
+import me.nathanfallet.makth.interfaces.Iterable
 import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable
@@ -7,7 +8,7 @@ import me.nathanfallet.makth.resolvables.Variable
 /*
  * Represents a matrix
  */
-interface Matrix : Value {
+interface Matrix : Iterable {
 
     // Instantiate
 
@@ -49,6 +50,14 @@ interface Matrix : Value {
      * @return List of columns
      */
     fun getColumns(): List<List<Value>>
+
+    // Iterable
+
+    override fun getIterator(): Iterator<Value> {
+        return getRows().map {
+            Matrix.instantiate(listOf(it))
+        }.iterator()
+    }
 
     // Value
 

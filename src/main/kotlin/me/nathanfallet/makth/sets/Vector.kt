@@ -40,6 +40,12 @@ interface Vector : Matrix {
      */
     fun getElements(): List<Value>
 
+    // Iterable
+
+    override fun getIterator(): Iterator<Value> {
+        return getElements().iterator()
+    }
+
     // Value
 
     override fun compute(context: Context): Value {

@@ -27,17 +27,11 @@ data class SetAction(val identifier: String, val value: Value) : Action {
             if (args.count() != 2) {
                 throw IncorrectArgumentCountException("set", args.count(), 2)
             }
-            val identifier =
-                    when (val identifierValue = args[0]) {
-                        is Variable -> identifierValue.name
-                        is StringValue -> identifierValue.value
-                        else ->
-                                throw IncorrectArgumentTypeException(
-                                        "set",
-                                        identifierValue,
-                                        Variable::class
-                                )
-                    }
+            val identifier = when (val identifierValue = args[0]) {
+                is Variable -> identifierValue.name
+                is StringValue -> identifierValue.value
+                else -> throw IncorrectArgumentTypeException("set", identifierValue, Variable::class)
+            }
             return SetAction(identifier, args[1])
         }
     }
