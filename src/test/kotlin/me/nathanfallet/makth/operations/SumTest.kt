@@ -19,6 +19,14 @@ class SumTest {
     }
 
     @Test
+    fun toRawStringWithMinus() {
+        assertEquals(
+            "1 - 2",
+            Sum(Integer.instantiate(1), Integer.instantiate(-2)).toRawString()
+        )
+    }
+
+    @Test
     fun toRawStringWithBraces() {
         // This will technically never happen, but it's the only way to test it
         assertEquals(
@@ -32,6 +40,14 @@ class SumTest {
         assertEquals(
             "1 + 2",
             Sum(Integer.instantiate(1), Integer.instantiate(2)).toLaTeXString()
+        )
+    }
+
+    @Test
+    fun toLaTeXStringWithMinus() {
+        assertEquals(
+            "1 - 2",
+            Sum(Integer.instantiate(1), Integer.instantiate(-2)).toLaTeXString()
         )
     }
 
@@ -58,6 +74,56 @@ class SumTest {
         assertEquals(
             Integer.instantiate(3),
             Sum(Integer.instantiate(1), Integer.instantiate(2)).compute(context)
+        )
+    }
+
+    @Test
+    fun testEqualsTrue() {
+        assertEquals(
+            true,
+            Sum(Variable.instantiate("x"), Integer.instantiate(2)).equals(
+                Sum(Variable.instantiate("x"), Integer.instantiate(2))
+            )
+        )
+    }
+
+    @Test
+    fun testEqualsTrue2() {
+        assertEquals(
+            true,
+            Sum(Integer.instantiate(2), Variable.instantiate("x")).equals(
+                Sum(Variable.instantiate("x"), Integer.instantiate(2))
+            )
+        )
+    }
+
+    @Test
+    fun testEqualsFalse() {
+        assertEquals(
+            false,
+            Sum(Variable.instantiate("x"), Integer.instantiate(1)).equals(
+                Sum(Variable.instantiate("x"), Integer.instantiate(2))
+            )
+        )
+    }
+
+    @Test
+    fun testLessThanTrue() {
+        assertEquals(
+            true,
+            Sum(Variable.instantiate("x"), Integer.instantiate(1)).lessThan(
+                Sum(Variable.instantiate("x"), Integer.instantiate(2))
+            )
+        )
+    }
+
+    @Test
+    fun testLessThanTrue2() {
+        assertEquals(
+            true,
+            Sum(Variable.instantiate("x"), Integer.instantiate(1)).lessThan(
+                Sum(Integer.instantiate(2), Variable.instantiate("x"))
+            )
         )
     }
 

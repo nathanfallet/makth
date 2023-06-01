@@ -92,4 +92,11 @@ data class Equality(
         return Operation.Utils.getPrecedence("=")
     }
 
+    override fun equals(right: Value): Boolean {
+        if (right is Equality) {
+            return left.equals(right.left) && this.right.equals(right.right) && operator == right.operator
+        }
+        return super.equals(right)
+    }
+
 }

@@ -1,6 +1,7 @@
 package me.nathanfallet.makth.operations
 
 import me.nathanfallet.makth.extensions.BooleanValue
+import me.nathanfallet.makth.extensions.StringValue
 import me.nathanfallet.makth.numbers.Integer
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable

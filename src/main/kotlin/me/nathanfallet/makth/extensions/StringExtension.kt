@@ -31,6 +31,13 @@ data class StringValue(val value: String, val latex: Boolean = false) : Value {
         return setOf()
     }
 
+    override fun equals(right: Value): Boolean {
+        if (right is StringValue) {
+            return value == right.value
+        }
+        return super.equals(right)
+    }
+
 }
 
 fun String.indentLines(): String {

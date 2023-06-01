@@ -49,4 +49,12 @@ data class Variable private constructor(val name: String) : Value {
         return setOf(this)
     }
 
+    override fun equals(right: Value): Boolean {
+        // If name is different, we don't know what's inside each so we can't compare
+        if (right is Variable && name == right.name) {
+            return true
+        }
+        return super.equals(right)
+    }
+
 }

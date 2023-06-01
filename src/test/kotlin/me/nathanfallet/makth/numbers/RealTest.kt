@@ -30,6 +30,26 @@ class RealTest {
     }
 
     @Test
+    fun testEqualsTrue() {
+        assertEquals(true, Real.instantiate(1.23456789).equals(Real.instantiate(1.23456789)))
+    }
+
+    @Test
+    fun testEqualsFalse() {
+        assertEquals(false, Real.instantiate(1.23456789).equals(Real.instantiate(9.87654321)))
+    }
+
+    @Test
+    fun testLessThanTrue() {
+        assertEquals(true, Real.instantiate(1.23456789).lessThan(Real.instantiate(9.87654321)))
+    }
+
+    @Test
+    fun testLessThanFalse() {
+        assertEquals(false, Real.instantiate(9.87654321).lessThan(Real.instantiate(1.23456789)))
+    }
+
+    @Test
     fun sumCorrectNatural() {
         // pi + 1 = 1 + pi
         assertEquals(

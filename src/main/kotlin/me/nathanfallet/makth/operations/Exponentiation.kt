@@ -50,4 +50,11 @@ data class Exponentiation(
         return Operation.Utils.getPrecedence("^")
     }
 
+    override fun equals(right: Value): Boolean {
+        if (right is Exponentiation) {
+            return left.equals(right.left) && this.right.equals(right.right)
+        }
+        return super.equals(right)
+    }
+
 }

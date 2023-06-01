@@ -4,6 +4,7 @@ import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.numbers.Real
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable
+import me.nathanfallet.makth.extensions.orOrThrowUnsupportedOperationException
 
 /**
  * Product operation.
@@ -32,6 +33,9 @@ data class Product(
         val rightRawString = right.toRawString().let {
             if (right.getMainPrecedence() < getMainPrecedence()) "($it)" else it
         }
+        if (leftRawString == "-1") {
+            return "-$rightRawString"
+        }
         return "$leftRawString * $rightRawString"
     }
 
@@ -42,6 +46,9 @@ data class Product(
         val rightLaTeXString = right.toLaTeXString().let {
             if (right.getMainPrecedence() < getMainPrecedence()) "($it)" else it
         }
+        if (leftLaTeXString == "-1") {
+            return "-$rightLaTeXString"
+        }
         return "$leftLaTeXString \\times $rightLaTeXString"
     }
 
@@ -51,6 +58,16 @@ data class Product(
 
     override fun getMainPrecedence(): Int {
         return Operation.Utils.getPrecedence("*")
+    }
+
+    override fun equals(right: Value): Boolean {
+        if (right is Product) {
+            return orOrThrowUnsupportedOperationException(
+                { left.equals(right.left) && this.right.equals(right.right) },
+                { left.equals(right.right) && this.right.equals(right.left) }
+            )
+        }
+        return super.equals(right)
     }
 
 }
