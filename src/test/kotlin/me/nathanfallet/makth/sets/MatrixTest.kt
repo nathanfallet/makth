@@ -32,6 +32,34 @@ class MatrixTest {
     }
 
     @Test
+    fun getRows() {
+        assertEquals(
+            listOf(
+                listOf(Integer.instantiate(1), Integer.instantiate(2)),
+                listOf(Integer.instantiate(3), Integer.instantiate(4))
+            ),
+            Matrix.instantiate(listOf(
+                listOf(Integer.instantiate(1), Integer.instantiate(2)),
+                listOf(Integer.instantiate(3), Integer.instantiate(4))
+            )).getRows()
+        )
+    }
+
+    @Test
+    fun getColumns() {
+        assertEquals(
+            listOf(
+                listOf(Integer.instantiate(1), Integer.instantiate(3)),
+                listOf(Integer.instantiate(2), Integer.instantiate(4))
+            ),
+            Matrix.instantiate(listOf(
+                listOf(Integer.instantiate(1), Integer.instantiate(2)),
+                listOf(Integer.instantiate(3), Integer.instantiate(4))
+            )).getColumns()
+        )
+    }
+
+    @Test
     fun extractVariables() {
         assertEquals(
             setOf(Variable.instantiate("x"), Variable.instantiate("y")),
@@ -57,6 +85,20 @@ class MatrixTest {
         assertEquals(
             Integer.instantiate(1),
             Matrix.instantiate(listOf(listOf(Integer.instantiate(1))))
+        )
+    }
+
+    @Test
+    fun transposition() {
+        assertEquals(
+            Matrix.instantiate(listOf(
+                listOf(Integer.instantiate(1), Integer.instantiate(3)),
+                listOf(Integer.instantiate(2), Integer.instantiate(4))
+            )),
+            Matrix.instantiate(listOf(
+                listOf(Integer.instantiate(1), Integer.instantiate(2)),
+                listOf(Integer.instantiate(3), Integer.instantiate(4))
+            )).transpose()
         )
     }
 
@@ -98,6 +140,37 @@ class MatrixTest {
                 listOf(Integer.instantiate(1), Integer.instantiate(2)),
                 listOf(Integer.instantiate(3), Integer.instantiate(4))
             )).sum(StringValue("test"))
+        }
+    }
+
+    @Test
+    fun multiplyCorrectMatrix() {
+        assertEquals(
+            Matrix.instantiate(listOf(
+                listOf(Integer.instantiate(3), Integer.instantiate(2340)),
+                listOf(Integer.instantiate(0), Integer.instantiate(1000))
+            )),
+            Matrix.instantiate(listOf(
+                listOf(Integer.instantiate(2), Integer.instantiate(3), Integer.instantiate(4)),
+                listOf(Integer.instantiate(1), Integer.instantiate(0), Integer.instantiate(0))
+            )).multiply(Matrix.instantiate(listOf(
+                listOf(Integer.instantiate(0), Integer.instantiate(1000)),
+                listOf(Integer.instantiate(1), Integer.instantiate(100)),
+                listOf(Integer.instantiate(0), Integer.instantiate(10))
+            )))
+        )
+    }
+
+    @Test
+    fun multiplyIncorrectMatrix() {
+        assertThrows(UnsupportedOperationException::class.java) {
+            Matrix.instantiate(listOf(
+                listOf(Integer.instantiate(2), Integer.instantiate(3), Integer.instantiate(4)),
+                listOf(Integer.instantiate(1), Integer.instantiate(0), Integer.instantiate(0))
+            )).multiply(Matrix.instantiate(listOf(
+                listOf(Integer.instantiate(2), Integer.instantiate(3), Integer.instantiate(4)),
+                listOf(Integer.instantiate(1), Integer.instantiate(0), Integer.instantiate(0))
+            )))
         }
     }
 

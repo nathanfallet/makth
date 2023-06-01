@@ -5,7 +5,7 @@ import kotlin.math.pow
 import me.nathanfallet.makth.extensions.pow
 import me.nathanfallet.makth.extensions.nthRoot
 import me.nathanfallet.makth.interfaces.Value
-import me.nathanfallet.makth.sets.Vector
+import me.nathanfallet.makth.sets.Matrix
 
 /**
  * Integer representation
@@ -98,8 +98,10 @@ interface Integer : Rational {
         if (right is Real) {
             return RealImpl(getDoubleValue()).multiply(right)
         }
-        if (right is Vector) {
-            return Vector.instantiate(right.getElements().map { multiply(it) })
+        if (right is Matrix) {
+            return Matrix.instantiate(right.getRows().map { rows ->
+                rows.map { multiply(it) }
+            })
         }
         return super.multiply(right)
     }

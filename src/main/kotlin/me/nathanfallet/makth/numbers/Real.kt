@@ -7,6 +7,7 @@ import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable
 import me.nathanfallet.makth.sets.Vector
+import me.nathanfallet.makth.sets.Matrix
 
 /**
  * Real representation
@@ -102,8 +103,10 @@ interface Real : Vector {
         if (right is Real) {
             return instantiate(getDoubleValue() * right.getDoubleValue())
         }
-        if (right is Vector) {
-            return Vector.instantiate(right.getElements().map { multiply(it) })
+        if (right is Matrix) {
+            return Matrix.instantiate(right.getRows().map { rows ->
+                rows.map { multiply(it) }
+            })
         }
         return super.multiply(right)
     }

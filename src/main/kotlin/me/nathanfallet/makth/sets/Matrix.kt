@@ -78,6 +78,10 @@ interface Matrix : Value {
 
     // Operations
 
+    fun transpose(): Matrix {
+        return Matrix.instantiate(getColumns())
+    }
+
     override fun sum(right: Value): Value {
         if (right is Matrix) {
             if (getRows().count() != right.getRows().count() || getColumns().count() != right.getColumns().count()) {
@@ -88,6 +92,22 @@ interface Matrix : Value {
             })
         }
         return super.sum(right)
+    }
+
+    override fun multiply(right: Value): Value {
+        if (right is Matrix) {
+            if (getColumns().count() != right.getRows().count()) {
+                throw UnsupportedOperationException("Cannot multiply matrices with incompatible sizes")
+            }
+            return Matrix.instantiate(getRows().map { row ->
+                right.getColumns().map { column ->
+                    row.zip(column).map {
+                        it.first.multiply(it.second)
+                    }.reduce { a, b -> a.sum(b) }
+                }
+            })
+        }
+        return super.multiply(right)
     }
 
 }

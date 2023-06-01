@@ -34,6 +34,30 @@ class VectorTest {
     }
 
     @Test
+    fun getElements() {
+        assertEquals(
+            listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3)),
+            Vector.instantiate(listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3))).getElements()
+        )
+    }
+
+    @Test
+    fun getRows() {
+        assertEquals(
+            listOf(listOf(Integer.instantiate(1)), listOf(Integer.instantiate(2)), listOf(Integer.instantiate(3))),
+            Vector.instantiate(listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3))).getRows()
+        )
+    }
+
+    @Test
+    fun getColumns() {
+        assertEquals(
+            listOf(listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3))),
+            Vector.instantiate(listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3))).getColumns()
+        )
+    }
+
+    @Test
     fun sumCorrectVector() {
         assertEquals(
             Vector.instantiate(listOf(Integer.instantiate(5), Integer.instantiate(7), Integer.instantiate(9))),

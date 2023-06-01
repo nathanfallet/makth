@@ -6,7 +6,7 @@ import org.junit.Test
 import kotlin.math.PI
 import kotlin.math.pow
 import kotlin.math.sqrt
-import me.nathanfallet.makth.sets.Vector
+import me.nathanfallet.makth.sets.Matrix
 import me.nathanfallet.makth.extensions.StringValue
 
 class RealTest {
@@ -110,10 +110,16 @@ class RealTest {
 
     @Test
     fun multiplyCorrectVector() {
-        // pi * (1, 2) = (pi, 2pi)
+        // pi * [[1, 2], [3, 4]] = [[pi, 2pi], [3pi, 4pi]]
         assertEquals(
-            Vector.instantiate(listOf(Real.pi, Real.instantiate(2 * PI))),
-            Real.pi.multiply(Vector.instantiate(listOf(Integer.instantiate(1), Integer.instantiate(2))))
+            Matrix.instantiate(listOf(
+                listOf(Real.pi, Real.pi.multiply(Integer.instantiate(2))),
+                listOf(Real.pi.multiply(Integer.instantiate(3)), Real.pi.multiply(Integer.instantiate(4)))
+            )),
+            Real.pi.multiply(Matrix.instantiate(listOf(
+                listOf(Integer.instantiate(1), Integer.instantiate(2)),
+                listOf(Integer.instantiate(3), Integer.instantiate(4))
+            )))
         )
     }
 

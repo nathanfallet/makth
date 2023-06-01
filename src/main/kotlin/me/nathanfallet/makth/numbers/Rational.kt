@@ -2,7 +2,7 @@ package me.nathanfallet.makth.numbers
 
 import me.nathanfallet.makth.extensions.gcd
 import me.nathanfallet.makth.interfaces.Value
-import me.nathanfallet.makth.sets.Vector
+import me.nathanfallet.makth.sets.Matrix
 
 /**
  * Rational representation
@@ -150,8 +150,10 @@ interface Rational : Real {
         if (right is Real) {
             return RealImpl(getDoubleValue()).multiply(right)
         }
-        if (right is Vector) {
-            return Vector.instantiate(right.getElements().map { multiply(it) })
+        if (right is Matrix) {
+            return Matrix.instantiate(right.getRows().map { rows ->
+                rows.map { multiply(it) }
+            })
         }
         return super.multiply(right)
     }
