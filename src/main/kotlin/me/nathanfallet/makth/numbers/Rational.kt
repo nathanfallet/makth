@@ -1,6 +1,8 @@
 package me.nathanfallet.makth.numbers
 
 import me.nathanfallet.makth.extensions.gcd
+import me.nathanfallet.makth.interfaces.Value
+import me.nathanfallet.makth.sets.Matrix
 
 /**
  * Rational representation
@@ -113,7 +115,7 @@ interface Rational : Real {
 
     // Operations
 
-    override fun sum(right: Real): Real {
+    override fun sum(right: Value): Value {
         if (right is Integer) {
             val newNumerator = getNumerator().sum(getDenominator().multiply(right))
             if (newNumerator is Integer) {
@@ -128,10 +130,10 @@ interface Rational : Real {
                 return instantiate(newNumerator, newDenominator)
             }
         }
-        return RealImpl(getDoubleValue()).sum(right)
+        return super.sum(right)
     }
 
-    override fun multiply(right: Real): Real {
+    override fun multiply(right: Value): Value {
         if (right is Integer) {
             val newNumerator = getNumerator().multiply(right)
             if (newNumerator is Integer) {
@@ -145,10 +147,18 @@ interface Rational : Real {
                 return instantiate(newNumerator, newDenominator)
             }
         }
-        return RealImpl(getDoubleValue()).multiply(right)
+        if (right is Real) {
+            return RealImpl(getDoubleValue()).multiply(right)
+        }
+        if (right is Matrix) {
+            return Matrix.instantiate(right.getRows().map { rows ->
+                rows.map { multiply(it) }
+            })
+        }
+        return super.multiply(right)
     }
 
-    override fun divide(right: Real): Real {
+    override fun divide(right: Value): Value {
         if (right is Integer) {
             val newDenominator = getDenominator().multiply(right)
             if (newDenominator is Integer) {
@@ -168,10 +178,10 @@ interface Rational : Real {
                 )
             }
         }
-        return RealImpl(getDoubleValue()).divide(right)
+        return super.divide(right)
     }
 
-    override fun remainder(right: Real): Real {
+    override fun remainder(right: Value): Value {
         if (right is Integer) {
             val newRight = getDenominator().multiply(right)
             val newNumerator = getNumerator().remainder(newRight)
@@ -192,13 +202,17 @@ interface Rational : Real {
                 )
             }
         }
-        return RealImpl(getDoubleValue()).remainder(right)
+        return super.remainder(right)
     }
 
-    override fun raise(right: Real): Real {
-        val newNumerator = getNumerator().raise(right)
-        val newDenominator = getDenominator().raise(right)
-        return newNumerator.divide(newDenominator)
+    override fun raise(right: Value): Value {
+        val denominator = getDenominator()
+        if (denominator != Integer.instantiate(1)) {
+            val newNumerator = getNumerator().raise(right)
+            val newDenominator = denominator.raise(right)
+            return newNumerator.divide(newDenominator)
+        }
+        return super.raise(right)
     }
 
 }

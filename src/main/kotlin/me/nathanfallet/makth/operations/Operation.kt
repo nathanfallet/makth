@@ -4,6 +4,8 @@ import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.lexers.MathLexer
 import me.nathanfallet.makth.lexers.AlgorithmLexer.SyntaxException
 import me.nathanfallet.makth.numbers.Integer
+import me.nathanfallet.makth.sets.Vector
+import me.nathanfallet.makth.sets.Matrix
 
 /**
  * Interface for all operations between values
@@ -34,6 +36,8 @@ interface Operation : Value {
                 ">" -> Equality(left, right, Equality.Operator.GreaterThan)
                 "<=" -> Equality(left, right, Equality.Operator.LessThanOrEquals)
                 ">=" -> Equality(left, right, Equality.Operator.GreaterThanOrEquals)
+                "," -> createHorizontalMatrix(left, right)
+                ";" -> createVerticalMatrix(left, right)
                 else -> throw MathLexer.UnknownOperatorException(operator)
             }
         }
@@ -45,10 +49,38 @@ interface Operation : Value {
          */
         fun getPrecedence(operation: String): Int {
             return when (operation) {
-                "^" -> 3
-                "*", "/", "%" -> 2
-                "+", "-" -> 1
+                "^" -> 5
+                "*", "/", "%" -> 4
+                "+", "-" -> 3
+                "," -> 2
+                ";" -> 1
                 else -> 0
+            }
+        }
+
+        internal fun createHorizontalMatrix(left: Value, right: Value): Matrix {
+            return if (left is Matrix && left.getRows().count() == 1) {
+                // We add one element to the first and only row
+                Matrix.instantiate(listOf(
+                    left.getRows().first() + right
+                ))
+            } else {
+                // Create a new matrix with two elements on the only row
+                Matrix.instantiate(listOf(
+                    listOf(left), listOf(right)
+                ))
+            }
+        }
+
+        internal fun createVerticalMatrix(left: Value, right: Value): Matrix {
+            return if (left is Matrix && right is Matrix && right.getRows().count() == 1) {
+                // We add one row to the first matrix
+                Matrix.instantiate(left.getRows() + right.getRows())
+            } else {
+                // Create a new matrix with two rows
+                Matrix.instantiate(listOf(
+                    listOf(left), listOf(right)
+                ))
             }
         }
 

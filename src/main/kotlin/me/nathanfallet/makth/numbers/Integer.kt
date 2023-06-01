@@ -4,6 +4,8 @@ import kotlin.math.abs
 import kotlin.math.pow
 import me.nathanfallet.makth.extensions.pow
 import me.nathanfallet.makth.extensions.nthRoot
+import me.nathanfallet.makth.interfaces.Value
+import me.nathanfallet.makth.sets.Matrix
 
 /**
  * Integer representation
@@ -66,7 +68,7 @@ interface Integer : Rational {
 
     // Operations
 
-    override fun sum(right: Real): Real {
+    override fun sum(right: Value): Value {
         if (right is Integer) {
             return instantiate(getLongValue() + right.getLongValue())
         }
@@ -77,10 +79,10 @@ interface Integer : Rational {
                 return Rational.instantiate(newNumerator, right.getDenominator())
             }
         }
-        return RealImpl(getDoubleValue()).sum(right)
+        return super.sum(right)
     }
 
-    override fun multiply(right: Real): Real {
+    override fun multiply(right: Value): Value {
         if (right is Integer) {
             return instantiate(getLongValue() * right.getLongValue())
         }
@@ -93,10 +95,18 @@ interface Integer : Rational {
                 )
             }
         }
-        return RealImpl(getDoubleValue()).multiply(right)
+        if (right is Real) {
+            return RealImpl(getDoubleValue()).multiply(right)
+        }
+        if (right is Matrix) {
+            return Matrix.instantiate(right.getRows().map { rows ->
+                rows.map { multiply(it) }
+            })
+        }
+        return super.multiply(right)
     }
 
-    override fun divide(right: Real): Real {
+    override fun divide(right: Value): Value {
         if (right is Integer) {
             return Rational.instantiate(
                 this,
@@ -112,10 +122,10 @@ interface Integer : Rational {
                 )
             }
         }
-        return RealImpl(getDoubleValue()).divide(right)
+        return super.divide(right)
     }
 
-    override fun remainder(right: Real): Real {
+    override fun remainder(right: Value): Value {
         if (right is Integer) {
             return instantiate(getLongValue() % right.getLongValue())
         }
@@ -128,10 +138,10 @@ interface Integer : Rational {
                 )
             }
         }
-        return RealImpl(getDoubleValue()).remainder(right)
+        return super.remainder(right)
     }
 
-    override fun raise(right: Real): Real {
+    override fun raise(right: Value): Value {
         if (right is Integer) {
             return if (right.getLongValue() < 0) {
                 Rational.instantiate(
@@ -161,8 +171,7 @@ interface Integer : Rational {
                 }
             }
         }
-
-        return RealImpl(getDoubleValue()).raise(right)
+        return super.raise(right)
     }
 
 }

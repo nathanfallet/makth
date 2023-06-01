@@ -5,6 +5,7 @@ import org.junit.Assert.assertThrows
 import org.junit.Test
 import kotlin.math.PI
 import kotlin.math.pow
+import me.nathanfallet.makth.sets.Matrix
 
 class RationalTest {
 
@@ -120,6 +121,23 @@ class RationalTest {
         assertEquals(
             Real.instantiate(0.5 * PI),
             Rational.instantiate(1, 2).multiply(Real.pi)
+        )
+    }
+
+    @Test
+    fun mutliplyCorrectMatrix() {
+        // 1/2 * [[1, 2], [3, 4]] = [[1/2, 1], [3/2, 2]]
+        assertEquals(
+            Matrix.instantiate(listOf(
+                listOf(Rational.instantiate(1, 2), Integer.instantiate(1)),
+                listOf(Rational.instantiate(3, 2), Integer.instantiate(2))
+            )),
+            Rational.instantiate(1, 2).multiply(
+                Matrix.instantiate(listOf(
+                    listOf(Integer.instantiate(1), Integer.instantiate(2)),
+                    listOf(Integer.instantiate(3), Integer.instantiate(4))
+                ))
+            )
         )
     }
 

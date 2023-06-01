@@ -1,10 +1,13 @@
 package me.nathanfallet.makth.numbers
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThrows
 import org.junit.Test
 import kotlin.math.PI
 import kotlin.math.pow
 import kotlin.math.sqrt
+import me.nathanfallet.makth.sets.Matrix
+import me.nathanfallet.makth.extensions.StringValue
 
 class RealTest {
 
@@ -63,6 +66,13 @@ class RealTest {
     }
 
     @Test
+    fun sumUnsupported() {
+        assertThrows(UnsupportedOperationException::class.java) {
+            Real.pi.sum(StringValue("test"))
+        }
+    }
+
+    @Test
     fun multiplyCorrectNatural() {
         // pi * 3 = 3pi
         assertEquals(
@@ -96,6 +106,28 @@ class RealTest {
             Real.instantiate(PI * PI),
             Real.pi.multiply(Real.pi)
         )
+    }
+
+    @Test
+    fun multiplyCorrectVector() {
+        // pi * [[1, 2], [3, 4]] = [[pi, 2pi], [3pi, 4pi]]
+        assertEquals(
+            Matrix.instantiate(listOf(
+                listOf(Real.pi, Real.pi.multiply(Integer.instantiate(2))),
+                listOf(Real.pi.multiply(Integer.instantiate(3)), Real.pi.multiply(Integer.instantiate(4)))
+            )),
+            Real.pi.multiply(Matrix.instantiate(listOf(
+                listOf(Integer.instantiate(1), Integer.instantiate(2)),
+                listOf(Integer.instantiate(3), Integer.instantiate(4))
+            )))
+        )
+    }
+
+    @Test
+    fun multiplyUnsupported() {
+        assertThrows(UnsupportedOperationException::class.java) {
+            Real.pi.multiply(StringValue("test"))
+        }
     }
 
     @Test
@@ -135,6 +167,13 @@ class RealTest {
     }
 
     @Test
+    fun divideUnsupported() {
+        assertThrows(UnsupportedOperationException::class.java) {
+            Real.pi.divide(StringValue("test"))
+        }
+    }
+
+    @Test
     fun remainderCorrectNatural() {
         // pi % 3 = pi%3
         assertEquals(
@@ -171,6 +210,13 @@ class RealTest {
     }
 
     @Test
+    fun remainderUnsupported() {
+        assertThrows(UnsupportedOperationException::class.java) {
+            Real.pi.remainder(StringValue("test"))
+        }
+    }
+
+    @Test
     fun raiseCorrectNatural() {
         // pi ^ 2 = pi^2
         assertEquals(
@@ -204,6 +250,13 @@ class RealTest {
             Real.instantiate(PI.pow(PI)),
             Real.pi.raise(Real.pi)
         )
+    }
+
+    @Test
+    fun raiseUnsupported() {
+        assertThrows(UnsupportedOperationException::class.java) {
+            Real.pi.raise(StringValue("test"))
+        }
     }
 
     @Test

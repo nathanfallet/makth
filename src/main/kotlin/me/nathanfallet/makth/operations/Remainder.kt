@@ -18,12 +18,11 @@ data class Remainder(
     override fun compute(context: Context): Value {
         val left = left.compute(context)
         val right = right.compute(context)
-
-        if (left is Real && right is Real) {
-            return left.remainder(right)
+        return try {
+            left.remainder(right)
+        } catch (e: UnsupportedOperationException) {
+            Remainder(left, right)
         }
-
-        return Remainder(left, right)
     }
 
     override fun toRawString(): String {

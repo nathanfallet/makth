@@ -5,6 +5,7 @@ import org.junit.Assert.assertThrows
 import org.junit.Test
 import kotlin.math.PI
 import kotlin.math.pow
+import me.nathanfallet.makth.sets.Matrix
 
 class NaturalTest {
 
@@ -88,6 +89,23 @@ class NaturalTest {
         assertEquals(
             Real.instantiate(2 * PI),
             Integer.instantiate(2).multiply(Real.pi)
+        )
+    }
+
+    @Test
+    fun multiplyCorrectMatrix() {
+        // 2 * [[1, 2], [3, 4]] = [[2, 4], [6, 8]]
+        assertEquals(
+            Matrix.instantiate(listOf(
+                listOf(Integer.instantiate(2), Integer.instantiate(4)),
+                listOf(Integer.instantiate(6), Integer.instantiate(8))
+            )),
+            Integer.instantiate(2).multiply(
+                Matrix.instantiate(listOf(
+                    listOf(Integer.instantiate(1), Integer.instantiate(2)),
+                    listOf(Integer.instantiate(3), Integer.instantiate(4))
+                ))
+            )
         )
     }
 

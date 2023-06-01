@@ -4,22 +4,15 @@ import kotlin.math.abs
 import kotlin.math.floor
 import kotlin.math.pow
 import me.nathanfallet.makth.interfaces.Value
-import me.nathanfallet.makth.operations.Divisible
-import me.nathanfallet.makth.operations.Exponentiable
-import me.nathanfallet.makth.operations.Multipliable
-import me.nathanfallet.makth.operations.Summable
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable
+import me.nathanfallet.makth.sets.Vector
+import me.nathanfallet.makth.sets.Matrix
 
 /**
  * Real representation
  */
-interface Real :
-        Value,
-        Summable<Real, Real>,
-        Multipliable<Real, Real>,
-        Divisible<Real, Real>,
-        Exponentiable<Real, Real> {
+interface Real : Vector {
 
     // Instantiate
 
@@ -73,6 +66,12 @@ interface Real :
         return instantiate(abs(getDoubleValue()))
     }
 
+    // Vector
+
+    override fun getElements(): List<Value> {
+        return listOf(this)
+    }
+
     // Value
 
     override fun toRawString(): String {
@@ -93,24 +92,58 @@ interface Real :
 
     // Operations
 
-    override fun sum(right: Real): Real {
-        return instantiate(getDoubleValue() + right.getDoubleValue())
+    override fun equals(right: Value): Boolean {
+        if (right is Real) {
+            return getDoubleValue() == right.getDoubleValue()
+        }
+        return super.equals(right)
     }
 
-    override fun multiply(right: Real): Real {
-        return instantiate(getDoubleValue() * right.getDoubleValue())
+    override fun lessThan(right: Value): Boolean {
+        if (right is Real) {
+            return getDoubleValue() < right.getDoubleValue()
+        }
+        return super.lessThan(right)
     }
 
-    override fun divide(right: Real): Real {
-        return instantiate(getDoubleValue() / right.getDoubleValue())
+    override fun sum(right: Value): Value {
+        if (right is Real) {
+            return instantiate(getDoubleValue() + right.getDoubleValue())
+        }
+        return super.sum(right)
     }
 
-    override fun remainder(right: Real): Real {
-        return instantiate(getDoubleValue() % right.getDoubleValue())
+    override fun multiply(right: Value): Value {
+        if (right is Real) {
+            return instantiate(getDoubleValue() * right.getDoubleValue())
+        }
+        if (right is Matrix) {
+            return Matrix.instantiate(right.getRows().map { rows ->
+                rows.map { multiply(it) }
+            })
+        }
+        return super.multiply(right)
     }
 
-    override fun raise(right: Real): Real {
-        return instantiate(getDoubleValue().pow(right.getDoubleValue()))
+    override fun divide(right: Value): Value {
+        if (right is Real) {
+            return instantiate(getDoubleValue() / right.getDoubleValue())
+        }
+        return super.divide(right)
+    }
+
+    override fun remainder(right: Value): Value {
+        if (right is Real) {
+            return instantiate(getDoubleValue() % right.getDoubleValue())
+        }
+        return super.remainder(right)
+    }
+
+    override fun raise(right: Value): Value {
+        if (right is Real) {
+            return instantiate(getDoubleValue().pow(right.getDoubleValue()))
+        }
+        return super.raise(right)
     }
 
 }

@@ -18,12 +18,11 @@ data class Product(
     override fun compute(context: Context): Value {
         val left = left.compute(context)
         val right = right.compute(context)
-
-        if (left is Real && right is Real) {
-            return left.multiply(right)
+        return try {
+            left.multiply(right)
+        } catch (e: UnsupportedOperationException) {
+            Product(left, right)
         }
-
-        return Product(left, right)
     }
 
     override fun toRawString(): String {
