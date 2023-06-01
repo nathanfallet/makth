@@ -1,6 +1,7 @@
 package me.nathanfallet.makth.extensions
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThrows
 import org.junit.Test
 
 class StringExtensionTest {
@@ -63,6 +64,23 @@ class StringExtensionTest {
     @Test
     fun toLaTeXStringWithLaTeXAndEscape() {
         assertEquals("x \\\$ 2", StringValue("x \$ 2", true).toLaTeXString())
+    }
+
+    @Test
+    fun testEqualsTrue() {
+        assertEquals(true, StringValue("Hello world!").equals(StringValue("Hello world!")))
+    }
+
+    @Test
+    fun testEqualsFalse() {
+        assertEquals(false, StringValue("Hello world!").equals(StringValue("Hello world")))
+    }
+
+    @Test
+    fun testEqualsUnsupported() {
+        assertThrows(UnsupportedOperationException::class.java) {
+            StringValue("Hello world!").equals(BooleanValue(true))
+        }
     }
 
 }

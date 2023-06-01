@@ -26,4 +26,11 @@ data class BooleanValue(val value: Boolean) : Value {
         return setOf()
     }
 
+    override fun equals(right: Value): Boolean {
+        if (right is BooleanValue) {
+            return value == right.value
+        }
+        return super.equals(right)
+    }
+
 }

@@ -2,6 +2,7 @@ package me.nathanfallet.makth.resolvables;
 
 import me.nathanfallet.makth.numbers.Integer;
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThrows
 import org.junit.Test
 
 class VariableTest {
@@ -24,6 +25,18 @@ class VariableTest {
     @Test
     fun toLaTeXString() {
         assertEquals("x", Variable.instantiate("x").toLaTeXString())
+    }
+
+    @Test
+    fun testEqualsTrue() {
+        assertEquals(true, Variable.instantiate("x").equals(Variable.instantiate("x")))
+    }
+
+    @Test
+    fun testEqualsUnsupported() {
+        assertThrows(UnsupportedOperationException::class.java) {
+            Variable.instantiate("x").equals(Variable.instantiate("y"))
+        }
     }
 
 }

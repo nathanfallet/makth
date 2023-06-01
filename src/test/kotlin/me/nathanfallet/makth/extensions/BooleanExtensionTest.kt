@@ -1,6 +1,7 @@
 package me.nathanfallet.makth.extensions
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThrows
 import org.junit.Test
 
 class BooleanExtensionTest {
@@ -33,6 +34,23 @@ class BooleanExtensionTest {
     @Test
     fun toLaTeXStringFalse() {
         assertEquals("\\text{false}", BooleanValue(false).toLaTeXString())
+    }
+
+    @Test
+    fun testEqualsTrue() {
+        assertEquals(true, BooleanValue(true).equals(BooleanValue(true)))
+    }
+
+    @Test
+    fun testEqualsFalse() {
+        assertEquals(false, BooleanValue(true).equals(BooleanValue(false)))
+    }
+
+    @Test
+    fun testEqualsUnsupported() {
+        assertThrows(UnsupportedOperationException::class.java) {
+            BooleanValue(true).equals(StringValue("Hello world!"))
+        }
     }
 
 }

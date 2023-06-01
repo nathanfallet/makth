@@ -4,6 +4,7 @@ import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.numbers.Real
 import me.nathanfallet.makth.resolvables.Context
 import me.nathanfallet.makth.resolvables.Variable
+import me.nathanfallet.makth.extensions.orOrThrowUnsupportedOperationException
 
 /**
  * Quotient operation.
@@ -46,6 +47,16 @@ data class Quotient(
 
     override fun getMainPrecedence(): Int {
         return Operation.Utils.getPrecedence("/")
+    }
+
+    override fun equals(right: Value): Boolean {
+        if (right is Quotient) {
+            return orOrThrowUnsupportedOperationException(
+                { left.equals(right.left) && this.right.equals(right.right) },
+                { left.equals(this.right) && right.left.equals(right.right) }
+            )
+        }
+        return super.equals(right)
     }
 
 }

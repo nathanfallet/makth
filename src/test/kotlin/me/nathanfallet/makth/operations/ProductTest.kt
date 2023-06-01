@@ -27,6 +27,14 @@ class ProductTest {
     }
 
     @Test
+    fun toRawStringWithMinus() {
+        assertEquals(
+            "-x",
+            Product(Integer.instantiate(-1), Variable.instantiate("x")).toRawString()
+        )
+    }
+
+    @Test
     fun toLaTeXString() {
         assertEquals(
             "1 \\times 2",
@@ -39,6 +47,14 @@ class ProductTest {
         assertEquals(
             "(1 + 2) \\times (3 + 4)",
             Product(Sum(Integer.instantiate(1), Integer.instantiate(2)), Sum(Integer.instantiate(3), Integer.instantiate(4))).toLaTeXString()
+        )
+    }
+
+    @Test
+    fun toLaTeXStringWithMinus() {
+        assertEquals(
+            "-x",
+            Product(Integer.instantiate(-1), Variable.instantiate("x")).toLaTeXString()
         )
     }
 
