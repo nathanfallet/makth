@@ -92,6 +92,20 @@ interface Real : Vector {
 
     // Operations
 
+    override fun equals(right: Value): Boolean {
+        if (right is Real) {
+            return getDoubleValue() == right.getDoubleValue()
+        }
+        return super.equals(right)
+    }
+
+    override fun lessThan(right: Value): Boolean {
+        if (right is Real) {
+            return getDoubleValue() < right.getDoubleValue()
+        }
+        return super.lessThan(right)
+    }
+
     override fun sum(right: Value): Value {
         if (right is Real) {
             return instantiate(getDoubleValue() + right.getDoubleValue())

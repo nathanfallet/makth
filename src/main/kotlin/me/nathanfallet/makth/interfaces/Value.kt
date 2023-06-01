@@ -50,6 +50,24 @@ interface Value: Output {
     }
 
     /**
+     * Check if the value is equal to another value
+     * @param right Right value
+     * @return True if equals, false otherwise
+     */
+    fun equals(right: Value): Boolean {
+        throw UnsupportedOperationException()
+    }
+
+    /**
+     * Check if the value is less than another value
+     * @param right Right value
+     * @return True if less than, false otherwise
+     */
+    fun lessThan(right: Value): Boolean {
+        throw UnsupportedOperationException()
+    }
+
+    /**
      * Sum left value with right value
      * @param right Right value
      * @return Result

@@ -82,6 +82,15 @@ interface Matrix : Value {
         return Matrix.instantiate(getColumns())
     }
 
+    override fun equals(right: Value): Boolean {
+        if (right is Matrix) {
+            return getRows().count() == right.getRows().count() && getColumns().count() == right.getColumns().count() && getRows().zip(right.getRows()).all { rows ->
+                rows.first.zip(rows.second).all { it.first.equals(it.second) }
+            }
+        }
+        return super.equals(right)
+    }
+
     override fun sum(right: Value): Value {
         if (right is Matrix) {
             if (getRows().count() != right.getRows().count() || getColumns().count() != right.getColumns().count()) {

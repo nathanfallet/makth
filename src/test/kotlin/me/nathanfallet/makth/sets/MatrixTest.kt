@@ -174,4 +174,14 @@ class MatrixTest {
         }
     }
 
+    @Test
+    fun multiplyUnsupported() {
+        assertThrows(UnsupportedOperationException::class.java) {
+            Matrix.instantiate(listOf(
+                listOf(Integer.instantiate(1), Integer.instantiate(2)),
+                listOf(Integer.instantiate(3), Integer.instantiate(4))
+            )).multiply(StringValue("test"))
+        }
+    }
+
 }

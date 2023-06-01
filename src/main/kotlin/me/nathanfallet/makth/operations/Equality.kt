@@ -62,27 +62,18 @@ data class Equality(
         val left = left.compute(context)
         val right = right.compute(context)
 
-        if (left is Real && right is Real) {
-            val leftDouble = left.getDoubleValue()
-            val rightDouble = right.getDoubleValue()
+        return try {
             return BooleanValue(when (operator) {
-                Operator.Equals -> leftDouble == rightDouble
-                Operator.NotEquals -> leftDouble != rightDouble
-                Operator.LessThan -> leftDouble < rightDouble
-                Operator.GreaterThan -> leftDouble > rightDouble
-                Operator.LessThanOrEquals -> leftDouble <= rightDouble
-                Operator.GreaterThanOrEquals -> leftDouble >= rightDouble
+                Operator.Equals -> left.equals(right)
+                Operator.NotEquals -> !left.equals(right)
+                Operator.LessThan -> left.lessThan(right)
+                Operator.GreaterThan -> !(left.lessThan(right) || left.equals(right))
+                Operator.LessThanOrEquals -> left.lessThan(right) || left.equals(right)
+                Operator.GreaterThanOrEquals -> !left.lessThan(right)
             })
+        } catch (e: UnsupportedOperationException) {
+            Equality(left, right, operator)
         }
-        if (left is Vector && right is Vector) {
-            return BooleanValue(when (operator) {
-                Operator.Equals -> left == right
-                Operator.NotEquals -> left != right
-                else -> throw UnsupportedOperationException()
-            })
-        }
-
-        return Equality(left, right, operator)
     }
 
     override fun toRawString(): String {
