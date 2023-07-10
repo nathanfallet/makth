@@ -9,20 +9,20 @@ import me.nathanfallet.makth.sets.Matrix
 class IntegerTest {
 
     @Test
-    fun toRawString() {
-        assertEquals("-1", Integer.instantiate(-1).toRawString())
+    fun rawString() {
+        assertEquals("-1", Integer.instantiate(-1).rawString)
     }
 
     @Test
-    fun toLaTeXString() {
-        assertEquals("-1", Integer.instantiate(-1).toLaTeXString())
+    fun laTeXString() {
+        assertEquals("-1", Integer.instantiate(-1).laTeXString)
     }
 
     @Test
     fun correctNumerator() {
         assertEquals(
             Integer.instantiate(-2),
-            Integer.instantiate(-2).getNumerator()
+            Integer.instantiate(-2).numerator
         )
     }
 
@@ -30,7 +30,7 @@ class IntegerTest {
     fun correctDenominator() {
         assertEquals(
             Integer.instantiate(1),
-            Integer.instantiate(-2).getDenominator()
+            Integer.instantiate(-2).denominator
         )
     }
 

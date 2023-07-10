@@ -36,52 +36,51 @@ interface Vector : Matrix {
 
     /**
      * Get elements
-     * @return List of elements
      */
-    fun getElements(): List<Value>
+    val elements: List<Value>
 
     // Iterable
 
-    override fun getIterator(): Iterator<Value> {
-        return getElements().iterator()
+    override val iterator: Iterator<Value> get() {
+        return elements.iterator()
     }
 
     // Value
 
     override fun compute(context: Context): Value {
-        return Vector.instantiate(getElements().map { it.compute(context) })
+        return Vector.instantiate(elements.map { it.compute(context) })
     }
 
-    override fun toRawString(): String {
-        return getElements().joinToString("; ", "(", ")") { it.toRawString() }
+    override val rawString: String get() {
+        return elements.joinToString("; ", "(", ")") { it.rawString }
     }
 
-    override fun toLaTeXString(): String {
-        return getElements().joinToString(" \\\\ ", "\\begin{pmatrix} ", " \\end{pmatrix}") { it.toLaTeXString() }
+    override val laTeXString: String get() {
+        return elements.joinToString(" \\\\ ", "\\begin{pmatrix} ", " \\end{pmatrix}") { it.laTeXString }
     }
 
-    override fun extractVariables(): Set<Variable> {
-        return getElements().flatMap { it.extractVariables() }.toSet()
+    override val variables: Set<Variable> get() {
+        return elements.flatMap { it.variables }.toSet()
     }
 
     // Matrix
 
-    override fun getRows(): List<List<Value>> {
-        return getElements().map { listOf(it) }
+    override val rows: List<List<Value>> get() {
+        return elements.map { listOf(it) }
     }
 
-    override fun getColumns(): List<List<Value>> {
-        return listOf(this.getElements())
+    override val columns: List<List<Value>> get() {
+        return listOf(this.elements)
     }
 
     // Operations
 
     override fun sum(right: Value): Value {
         if (right is Vector) {
-            if (getElements().count() != right.getElements().count()) {
+            if (elements.count() != right.elements.count()) {
                 throw UnsupportedOperationException("Cannot sum vectors of different sizes")
             }
-            return Vector.instantiate(getElements().zip(right.getElements()).map { pair ->
+            return Vector.instantiate(elements.zip(right.elements).map { pair ->
                 Sum(pair.first, pair.second).compute(Context())
             })
         }
@@ -90,7 +89,7 @@ interface Vector : Matrix {
 
     override fun multiply(right: Value): Value {
         if (right is Real) {
-            return Vector.instantiate(getElements().map { it.multiply(right) })
+            return Vector.instantiate(elements.map { it.multiply(right) })
         }
         return super.multiply(right)
     }

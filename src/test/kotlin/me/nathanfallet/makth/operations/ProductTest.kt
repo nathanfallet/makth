@@ -11,10 +11,10 @@ class ProductTest {
     private val context = Context()
 
     @Test
-    fun toRawString() {
+    fun rawString() {
         assertEquals(
             "1 * 2",
-            Product(Integer.instantiate(1), Integer.instantiate(2)).toRawString()
+            Product(Integer.instantiate(1), Integer.instantiate(2)).rawString
         )
     }
 
@@ -22,7 +22,7 @@ class ProductTest {
     fun toRawStringWithBraces() {
         assertEquals(
             "(1 + 2) * (3 + 4)",
-            Product(Sum(Integer.instantiate(1), Integer.instantiate(2)), Sum(Integer.instantiate(3), Integer.instantiate(4))).toRawString()
+            Product(Sum(Integer.instantiate(1), Integer.instantiate(2)), Sum(Integer.instantiate(3), Integer.instantiate(4))).rawString
         )
     }
 
@@ -30,15 +30,15 @@ class ProductTest {
     fun toRawStringWithMinus() {
         assertEquals(
             "-x",
-            Product(Integer.instantiate(-1), Variable.instantiate("x")).toRawString()
+            Product(Integer.instantiate(-1), Variable.instantiate("x")).rawString
         )
     }
 
     @Test
-    fun toLaTeXString() {
+    fun laTeXString() {
         assertEquals(
             "1 \\times 2",
-            Product(Integer.instantiate(1), Integer.instantiate(2)).toLaTeXString()
+            Product(Integer.instantiate(1), Integer.instantiate(2)).laTeXString
         )
     }
 
@@ -46,7 +46,7 @@ class ProductTest {
     fun toLaTeXStringWithBraces() {
         assertEquals(
             "(1 + 2) \\times (3 + 4)",
-            Product(Sum(Integer.instantiate(1), Integer.instantiate(2)), Sum(Integer.instantiate(3), Integer.instantiate(4))).toLaTeXString()
+            Product(Sum(Integer.instantiate(1), Integer.instantiate(2)), Sum(Integer.instantiate(3), Integer.instantiate(4))).laTeXString
         )
     }
 
@@ -54,15 +54,15 @@ class ProductTest {
     fun toLaTeXStringWithMinus() {
         assertEquals(
             "-x",
-            Product(Integer.instantiate(-1), Variable.instantiate("x")).toLaTeXString()
+            Product(Integer.instantiate(-1), Variable.instantiate("x")).laTeXString
         )
     }
 
     @Test
-    fun extractVariables() {
+    fun variables() {
         assertEquals(
             setOf(Variable.instantiate("x"), Variable.instantiate("y")),
-            Product(Variable.instantiate("x"), Variable.instantiate("y")).extractVariables()
+            Product(Variable.instantiate("x"), Variable.instantiate("y")).variables
         )
     }
 

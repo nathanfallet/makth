@@ -25,31 +25,31 @@ data class Remainder(
         }
     }
 
-    override fun toRawString(): String {
-        val leftRawString = left.toRawString().let {
-            if (left.getMainPrecedence() < getMainPrecedence()) "($it)" else it
+    override val rawString: String get() {
+        val leftRawString = left.rawString.let {
+            if (left.mainPrecedence < mainPrecedence) "($it)" else it
         }
-        val rightRawString = right.toRawString().let {
-            if (right.getMainPrecedence() < getMainPrecedence()) "($it)" else it
+        val rightRawString = right.rawString.let {
+            if (right.mainPrecedence < mainPrecedence) "($it)" else it
         }
         return "$leftRawString % $rightRawString"
     }
 
-    override fun toLaTeXString(): String {
-        val leftLaTeXString = left.toLaTeXString().let {
-            if (left.getMainPrecedence() < getMainPrecedence()) "($it)" else it
+    override val laTeXString: String get() {
+        val leftLaTeXString = left.laTeXString.let {
+            if (left.mainPrecedence < mainPrecedence) "($it)" else it
         }
-        val rightLaTeXString = right.toLaTeXString().let {
-            if (right.getMainPrecedence() < getMainPrecedence()) "($it)" else it
+        val rightLaTeXString = right.laTeXString.let {
+            if (right.mainPrecedence < mainPrecedence) "($it)" else it
         }
         return "$leftLaTeXString % $rightLaTeXString"
     }
 
-    override fun extractVariables(): Set<Variable> {
-        return left.extractVariables() + right.extractVariables()
+    override val variables: Set<Variable> get() {
+        return left.variables + right.variables
     }
 
-    override fun getMainPrecedence(): Int {
+    override val mainPrecedence: Int get() {
         return Operation.Utils.getPrecedence("%")
     }
 

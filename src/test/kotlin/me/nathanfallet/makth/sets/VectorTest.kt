@@ -10,50 +10,50 @@ import org.junit.Test
 class VectorTest {
 
     @Test
-    fun toRawString() {
+    fun rawString() {
         assertEquals(
             "(1; 2; 3)",
-            Vector.instantiate(listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3))).toRawString()
+            Vector.instantiate(listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3))).rawString
         )
     }
 
     @Test
-    fun toLaTeXString() {
+    fun laTeXString() {
         assertEquals(
             "\\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix}",
-            Vector.instantiate(listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3))).toLaTeXString()
+            Vector.instantiate(listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3))).laTeXString
         )
     }
 
     @Test
-    fun extractVariables() {
+    fun variables() {
         assertEquals(
             setOf(Variable.instantiate("x"), Variable.instantiate("y")),
-            Vector.instantiate(listOf(Variable.instantiate("x"), Variable.instantiate("y"))).extractVariables()
+            Vector.instantiate(listOf(Variable.instantiate("x"), Variable.instantiate("y"))).variables
         )
     }
 
     @Test
-    fun getElements() {
+    fun elements() {
         assertEquals(
             listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3)),
-            Vector.instantiate(listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3))).getElements()
+            Vector.instantiate(listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3))).elements
         )
     }
 
     @Test
-    fun getRows() {
+    fun rows() {
         assertEquals(
             listOf(listOf(Integer.instantiate(1)), listOf(Integer.instantiate(2)), listOf(Integer.instantiate(3))),
-            Vector.instantiate(listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3))).getRows()
+            Vector.instantiate(listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3))).rows
         )
     }
 
     @Test
-    fun getColumns() {
+    fun columns() {
         assertEquals(
             listOf(listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3))),
-            Vector.instantiate(listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3))).getColumns()
+            Vector.instantiate(listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3))).columns
         )
     }
 

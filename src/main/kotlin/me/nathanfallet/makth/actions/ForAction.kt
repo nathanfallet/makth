@@ -1,7 +1,7 @@
 package me.nathanfallet.makth.actions
 
 import me.nathanfallet.makth.extensions.BooleanValue
-import me.nathanfallet.makth.extensions.indentLines
+import me.nathanfallet.makth.extensions.indentedLines
 import me.nathanfallet.makth.extensions.StringValue
 import me.nathanfallet.makth.interfaces.Action
 import me.nathanfallet.makth.interfaces.Iterable
@@ -46,9 +46,8 @@ data class ForAction(val identifier: String, val iterable: Value, val actions: L
         val evaluatedIterable = iterable.compute(context)
 
         // Check if there are missing variables
-        val missingVariables = evaluatedIterable.extractVariables()
-        if (missingVariables.isNotEmpty()) {
-            throw Action.UnknownVariablesException(this, context, missingVariables)
+        evaluatedIterable.variables.takeIf { it.isNotEmpty() }?.let {
+            throw Action.UnknownVariablesException(this, context, it)
         }
 
         // Check if condition is a boolean
@@ -57,7 +56,7 @@ data class ForAction(val identifier: String, val iterable: Value, val actions: L
         }
 
         // Iterate
-        val iterator = evaluatedIterable.getIterator()
+        val iterator = evaluatedIterable.iterator
         var newContext = context
         while (iterator.hasNext()) {
             // Get next value
@@ -74,16 +73,16 @@ data class ForAction(val identifier: String, val iterable: Value, val actions: L
         return newContext
     }
 
-    override fun toAlgorithmString(): String {
+    override val algorithmString: String get() {
         val builder = StringBuilder()
         builder.append("for (")
         builder.append(identifier)
         builder.append(", ")
-        builder.append(iterable.toAlgorithmString())
+        builder.append(iterable.algorithmString)
         builder.append(") {")
         for (action in actions) {
             builder.append("\n")
-            builder.append(action.toAlgorithmString().indentLines())
+            builder.append(action.algorithmString.indentedLines)
         }
         builder.append("\n}")
         return builder.toString()

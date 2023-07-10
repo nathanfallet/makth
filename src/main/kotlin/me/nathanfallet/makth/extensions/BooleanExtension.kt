@@ -14,15 +14,15 @@ data class BooleanValue(val value: Boolean) : Value {
         return this
     }
 
-    override fun toRawString(): String {
+    override val rawString: String get() {
         return if (value) "true" else "false"
     }
 
-    override fun toLaTeXString(): String {
+    override val laTeXString: String get() {
         return if (value) "\\text{true}" else "\\text{false}"
     }
 
-    override fun extractVariables(): Set<Variable> {
+    override val variables: Set<Variable> get() {
         return setOf()
     }
 

@@ -75,7 +75,7 @@ class AlgorithmLexer(private var content: String) {
             val expected: KClass<out Value>
     ) :
             SyntaxException(
-                    "Incorrect argument type for $keyword, got ${value.toRawString()}, expected $expected"
+                    "Incorrect argument type for $keyword, got ${value.rawString}, expected $expected"
             )
 
     // Constants

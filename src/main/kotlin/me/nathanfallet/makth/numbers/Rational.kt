@@ -25,10 +25,10 @@ interface Rational : Real {
             denominator: Natural
         ): Rational {
             // Get GCD to simplify
-            val gcd = numerator.getLongValue().gcd(denominator.getLongValue())
+            val gcd = numerator.longValue.gcd(denominator.longValue)
             return if (gcd != 1L) {
-                val newNumeratorValue = numerator.getLongValue() / gcd
-                val newDenominatorValue = denominator.getLongValue() / gcd
+                val newNumeratorValue = numerator.longValue / gcd
+                val newDenominatorValue = denominator.longValue / gcd
                 if (newDenominatorValue == 1L) {
                     Integer.instantiate(newNumeratorValue)
                 } else {
@@ -53,13 +53,13 @@ interface Rational : Real {
             numerator: Integer,
             denominator: Integer
         ): Rational {
-            return if (denominator.getLongValue() < 0) {
+            return if (denominator.longValue < 0) {
                 instantiate(
-                    Integer.instantiate(-1 * numerator.getLongValue()),
-                    denominator.absoluteValue()
+                    Integer.instantiate(-1 * numerator.longValue),
+                    denominator.absoluteValue
                 )
             } else {
-                instantiate(numerator, denominator.absoluteValue())
+                instantiate(numerator, denominator.absoluteValue)
             }
         }
 
@@ -83,49 +83,47 @@ interface Rational : Real {
 
     /**
      * Get numerator
-     * @return Numerator
      */
-    fun getNumerator(): Integer
+    val numerator: Integer
 
     /**
      * Get denominator
-     * @return Denominator
      */
-    fun getDenominator(): Natural
+    val denominator: Natural
 
     // Real
 
-    override fun getDoubleValue(): Double {
-        return getNumerator().getDoubleValue() / getDenominator().getDoubleValue()
+    override val doubleValue: Double get() {
+        return numerator.doubleValue / denominator.doubleValue
     }
 
-    override fun absoluteValue(): Rational {
-        return instantiate(getNumerator().absoluteValue(), getDenominator())
+    override val absoluteValue: Rational get() {
+        return instantiate(numerator.absoluteValue, denominator)
     }
 
     // Value
 
-    override fun toRawString(): String {
-        return "${getNumerator().toRawString()}/${getDenominator().toRawString()}"
+    override val rawString: String get() {
+        return "${numerator.rawString}/${denominator.rawString}"
     }
 
-    override fun toLaTeXString(): String {
-        return "\\frac{${getNumerator().toLaTeXString()}}{${getDenominator().toLaTeXString()}}"
+    override val laTeXString: String get() {
+        return "\\frac{${numerator.laTeXString}}{${denominator.laTeXString}}"
     }
 
     // Operations
 
     override fun sum(right: Value): Value {
         if (right is Integer) {
-            val newNumerator = getNumerator().sum(getDenominator().multiply(right))
+            val newNumerator = numerator.sum(denominator.multiply(right))
             if (newNumerator is Integer) {
-                return instantiate(newNumerator, getDenominator())
+                return instantiate(newNumerator, denominator)
             }
         }
         if (right is Rational) {
-            val newNumerator = getNumerator().multiply(right.getDenominator())
-                .sum(right.getNumerator().multiply(getDenominator()))
-            val newDenominator = getDenominator().multiply(right.getDenominator())
+            val newNumerator = numerator.multiply(right.denominator)
+                .sum(right.numerator.multiply(denominator))
+            val newDenominator = denominator.multiply(right.denominator)
             if (newNumerator is Integer && newDenominator is Integer) {
                 return instantiate(newNumerator, newDenominator)
             }
@@ -135,23 +133,23 @@ interface Rational : Real {
 
     override fun multiply(right: Value): Value {
         if (right is Integer) {
-            val newNumerator = getNumerator().multiply(right)
+            val newNumerator = numerator.multiply(right)
             if (newNumerator is Integer) {
-                return instantiate(newNumerator, getDenominator())
+                return instantiate(newNumerator, denominator)
             }
         }
         if (right is Rational) {
-            val newNumerator = getNumerator().multiply(right.getNumerator())
-            val newDenominator = getDenominator().multiply(right.getDenominator())
+            val newNumerator = numerator.multiply(right.numerator)
+            val newDenominator = denominator.multiply(right.denominator)
             if (newNumerator is Integer && newDenominator is Integer) {
                 return instantiate(newNumerator, newDenominator)
             }
         }
         if (right is Real) {
-            return RealImpl(getDoubleValue()).multiply(right)
+            return RealImpl(doubleValue).multiply(right)
         }
         if (right is Matrix) {
-            return Matrix.instantiate(right.getRows().map { rows ->
+            return Matrix.instantiate(right.rows.map { rows ->
                 rows.map { multiply(it) }
             })
         }
@@ -160,17 +158,17 @@ interface Rational : Real {
 
     override fun divide(right: Value): Value {
         if (right is Integer) {
-            val newDenominator = getDenominator().multiply(right)
+            val newDenominator = denominator.multiply(right)
             if (newDenominator is Integer) {
                 return instantiate(
-                    getNumerator(),
+                    numerator,
                     newDenominator
                 )
             }
         }
         if (right is Rational) {
-            val newNumerator = getNumerator().multiply(right.getDenominator())
-            val newDenominator = getDenominator().multiply(right.getNumerator())
+            val newNumerator = numerator.multiply(right.denominator)
+            val newDenominator = denominator.multiply(right.numerator)
             if (newNumerator is Integer && newDenominator is Integer) {
                 return instantiate(
                     newNumerator,
@@ -183,18 +181,18 @@ interface Rational : Real {
 
     override fun remainder(right: Value): Value {
         if (right is Integer) {
-            val newRight = getDenominator().multiply(right)
-            val newNumerator = getNumerator().remainder(newRight)
+            val newRight = denominator.multiply(right)
+            val newNumerator = numerator.remainder(newRight)
             if (newRight is Integer && newNumerator is Integer) {
                 return instantiate(
                     newNumerator,
-                    getDenominator()
+                    denominator
                 )
             }
         }
         if (right is Rational) {
-            val newNumerator = getNumerator().multiply(right.getDenominator()).remainder(right.getNumerator().multiply(getDenominator()))
-            val newDenominator = getDenominator().multiply(right.getDenominator())
+            val newNumerator = numerator.multiply(right.denominator).remainder(right.numerator.multiply(denominator))
+            val newDenominator = denominator.multiply(right.denominator)
             if (newNumerator is Integer && newDenominator is Integer) {
                 return instantiate(
                     newNumerator,
@@ -206,9 +204,9 @@ interface Rational : Real {
     }
 
     override fun raise(right: Value): Value {
-        val denominator = getDenominator()
+        val denominator = denominator
         if (denominator != Integer.instantiate(1)) {
-            val newNumerator = getNumerator().raise(right)
+            val newNumerator = numerator.raise(right)
             val newDenominator = denominator.raise(right)
             return newNumerator.divide(newDenominator)
         }

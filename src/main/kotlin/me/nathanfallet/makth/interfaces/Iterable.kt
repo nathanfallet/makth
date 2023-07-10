@@ -6,9 +6,8 @@ package me.nathanfallet.makth.interfaces
 interface Iterable: Value {
 
     /**
-     * Get an iterator for this iterable
-     * @return Iterator
+     * Iterator
      */
-    fun getIterator(): Iterator<Value>
+    val iterator: Iterator<Value>
 
 }

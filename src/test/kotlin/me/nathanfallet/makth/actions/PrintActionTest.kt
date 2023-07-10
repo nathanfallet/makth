@@ -36,10 +36,10 @@ class PrintActionTest {
     )
 
     @Test
-    fun toRawString() {
+    fun algorithmString() {
         assertEquals(
             "print(\"x = \", x)",
-            PrintAction(listOf(StringValue("x = "), Variable.instantiate("x"))).toAlgorithmString()
+            PrintAction(listOf(StringValue("x = "), Variable.instantiate("x"))).algorithmString
         )
     }
 

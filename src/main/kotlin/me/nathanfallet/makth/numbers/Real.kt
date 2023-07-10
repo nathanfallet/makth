@@ -40,7 +40,7 @@ interface Real : Vector {
             // Is it possible, as a double has a finite number of digits?
 
             // Check for some constants
-            if (value == pi.getDoubleValue()) {
+            if (value == pi.doubleValue) {
                 return pi
             }
 
@@ -54,39 +54,37 @@ interface Real : Vector {
 
     /**
      * Get double value
-     * @return Double value
      */
-    fun getDoubleValue(): Double
+    val doubleValue: Double
 
     /**
      * Get the absolute value of this real
-     * @return Real
      */
-    fun absoluteValue(): Real {
-        return instantiate(abs(getDoubleValue()))
+    val absoluteValue: Real get() {
+        return instantiate(abs(doubleValue))
     }
 
     // Vector
 
-    override fun getElements(): List<Value> {
+    override val elements: List<Value> get() {
         return listOf(this)
     }
 
     // Value
 
-    override fun toRawString(): String {
-        return getDoubleValue().toString()
+    override val rawString: String get() {
+        return doubleValue.toString()
     }
 
-    override fun toLaTeXString(): String {
-        return getDoubleValue().toString()
+    override val laTeXString: String get() {
+        return doubleValue.toString()
     }
 
     override fun compute(context: Context): Value {
         return this
     }
 
-    override fun extractVariables(): Set<Variable> {
+    override val variables: Set<Variable> get() {
         return setOf()
     }
 
@@ -94,31 +92,31 @@ interface Real : Vector {
 
     override fun equals(right: Value): Boolean {
         if (right is Real) {
-            return getDoubleValue() == right.getDoubleValue()
+            return doubleValue == right.doubleValue
         }
         return super.equals(right)
     }
 
     override fun lessThan(right: Value): Boolean {
         if (right is Real) {
-            return getDoubleValue() < right.getDoubleValue()
+            return doubleValue < right.doubleValue
         }
         return super.lessThan(right)
     }
 
     override fun sum(right: Value): Value {
         if (right is Real) {
-            return instantiate(getDoubleValue() + right.getDoubleValue())
+            return instantiate(doubleValue + right.doubleValue)
         }
         return super.sum(right)
     }
 
     override fun multiply(right: Value): Value {
         if (right is Real) {
-            return instantiate(getDoubleValue() * right.getDoubleValue())
+            return instantiate(doubleValue * right.doubleValue)
         }
         if (right is Matrix) {
-            return Matrix.instantiate(right.getRows().map { rows ->
+            return Matrix.instantiate(right.rows.map { rows ->
                 rows.map { multiply(it) }
             })
         }
@@ -127,21 +125,21 @@ interface Real : Vector {
 
     override fun divide(right: Value): Value {
         if (right is Real) {
-            return instantiate(getDoubleValue() / right.getDoubleValue())
+            return instantiate(doubleValue / right.doubleValue)
         }
         return super.divide(right)
     }
 
     override fun remainder(right: Value): Value {
         if (right is Real) {
-            return instantiate(getDoubleValue() % right.getDoubleValue())
+            return instantiate(doubleValue % right.doubleValue)
         }
         return super.remainder(right)
     }
 
     override fun raise(right: Value): Value {
         if (right is Real) {
-            return instantiate(getDoubleValue().pow(right.getDoubleValue()))
+            return instantiate(doubleValue.pow(right.doubleValue))
         }
         return super.raise(right)
     }

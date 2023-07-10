@@ -41,20 +41,18 @@ interface Matrix : Iterable {
 
     /**
      * Get rows
-     * @return List of rows
      */
-    fun getRows(): List<List<Value>>
+    val rows: List<List<Value>>
 
     /**
      * Get columns
-     * @return List of columns
      */
-    fun getColumns(): List<List<Value>>
+    val columns: List<List<Value>>
 
     // Iterable
 
-    override fun getIterator(): Iterator<Value> {
-        return getRows().map {
+    override val iterator: Iterator<Value> get() {
+        return rows.map {
             Matrix.instantiate(listOf(it))
         }.iterator()
     }
@@ -62,38 +60,38 @@ interface Matrix : Iterable {
     // Value
 
     override fun compute(context: Context): Value {
-        return Matrix.instantiate(getRows().map { row ->
+        return Matrix.instantiate(rows.map { row ->
             row.map { it.compute(context) }
         })
     }
 
-    override fun toRawString(): String {
-        return getRows().joinToString("; ", "(", ")") {
-            it.joinToString(", ") { it.toRawString() }
+    override val rawString: String get() {
+        return rows.joinToString("; ", "(", ")") {
+            it.joinToString(", ") { it.rawString }
         }
     }
 
-    override fun toLaTeXString(): String {
-        return getRows().joinToString(" \\\\ ", "\\begin{bmatrix} ", " \\end{bmatrix}") {
-            it.joinToString(" & ") { it.toLaTeXString() }
+    override val laTeXString: String get() {
+        return rows.joinToString(" \\\\ ", "\\begin{bmatrix} ", " \\end{bmatrix}") {
+            it.joinToString(" & ") { it.laTeXString }
         }
     }
 
-    override fun extractVariables(): Set<Variable> {
-        return getRows().flatMap { row ->
-            row.flatMap { it.extractVariables() }
+    override val variables: Set<Variable> get() {
+        return rows.flatMap { row ->
+            row.flatMap { it.variables }
         }.toSet()
     }
 
     // Operations
 
     fun transpose(): Matrix {
-        return Matrix.instantiate(getColumns())
+        return Matrix.instantiate(columns)
     }
 
     override fun equals(right: Value): Boolean {
         if (right is Matrix) {
-            return getRows().count() == right.getRows().count() && getColumns().count() == right.getColumns().count() && getRows().zip(right.getRows()).all { rows ->
+            return rows.count() == right.rows.count() && columns.count() == right.columns.count() && rows.zip(right.rows).all { rows ->
                 rows.first.zip(rows.second).all { it.first.equals(it.second) }
             }
         }
@@ -102,10 +100,10 @@ interface Matrix : Iterable {
 
     override fun sum(right: Value): Value {
         if (right is Matrix) {
-            if (getRows().count() != right.getRows().count() || getColumns().count() != right.getColumns().count()) {
+            if (rows.count() != right.rows.count() || columns.count() != right.columns.count()) {
                 throw UnsupportedOperationException("Cannot sum matrices with different sizes")
             }
-            return Matrix.instantiate(getRows().zip(right.getRows()).map { rows ->
+            return Matrix.instantiate(rows.zip(right.rows).map { rows ->
                 rows.first.zip(rows.second).map { it.first.sum(it.second) }
             })
         }
@@ -114,11 +112,11 @@ interface Matrix : Iterable {
 
     override fun multiply(right: Value): Value {
         if (right is Matrix) {
-            if (getColumns().count() != right.getRows().count()) {
+            if (columns.count() != right.rows.count()) {
                 throw UnsupportedOperationException("Cannot multiply matrices with incompatible sizes")
             }
-            return Matrix.instantiate(getRows().map { row ->
-                right.getColumns().map { column ->
+            return Matrix.instantiate(rows.map { row ->
+                right.columns.map { column ->
                     row.zip(column).map {
                         it.first.multiply(it.second)
                     }.reduce { a, b -> a.sum(b) }

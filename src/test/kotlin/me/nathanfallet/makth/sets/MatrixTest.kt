@@ -10,29 +10,29 @@ import org.junit.Test
 class MatrixTest {
 
     @Test
-    fun toRawString() {
+    fun rawString() {
         assertEquals(
             "(1, 2; 3, 4)",
             Matrix.instantiate(listOf(
                 listOf(Integer.instantiate(1), Integer.instantiate(2)),
                 listOf(Integer.instantiate(3), Integer.instantiate(4))
-            )).toRawString()
+            )).rawString
         )
     }
 
     @Test
-    fun toLaTeXString() {
+    fun laTeXString() {
         assertEquals(
             "\\begin{bmatrix} 1 & 2 \\\\ 3 & 4 \\end{bmatrix}",
             Matrix.instantiate(listOf(
                 listOf(Integer.instantiate(1), Integer.instantiate(2)),
                 listOf(Integer.instantiate(3), Integer.instantiate(4))
-            )).toLaTeXString()
+            )).laTeXString
         )
     }
 
     @Test
-    fun getRows() {
+    fun rows() {
         assertEquals(
             listOf(
                 listOf(Integer.instantiate(1), Integer.instantiate(2)),
@@ -41,12 +41,12 @@ class MatrixTest {
             Matrix.instantiate(listOf(
                 listOf(Integer.instantiate(1), Integer.instantiate(2)),
                 listOf(Integer.instantiate(3), Integer.instantiate(4))
-            )).getRows()
+            )).rows
         )
     }
 
     @Test
-    fun getColumns() {
+    fun columns() {
         assertEquals(
             listOf(
                 listOf(Integer.instantiate(1), Integer.instantiate(3)),
@@ -55,18 +55,18 @@ class MatrixTest {
             Matrix.instantiate(listOf(
                 listOf(Integer.instantiate(1), Integer.instantiate(2)),
                 listOf(Integer.instantiate(3), Integer.instantiate(4))
-            )).getColumns()
+            )).columns
         )
     }
 
     @Test
-    fun extractVariables() {
+    fun variables() {
         assertEquals(
             setOf(Variable.instantiate("x"), Variable.instantiate("y")),
             Matrix.instantiate(listOf(
                 listOf(Variable.instantiate("x"), Integer.instantiate(2)),
                 listOf(Integer.instantiate(3), Variable.instantiate("y"))
-            )).extractVariables()
+            )).variables
         )
     }
 

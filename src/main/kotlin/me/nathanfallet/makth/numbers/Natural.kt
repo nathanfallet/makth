@@ -23,7 +23,7 @@ interface Natural : Integer {
 
     // Real
 
-    override fun absoluteValue(): Natural {
+    override val absoluteValue: Natural get() {
         return this
     }
 

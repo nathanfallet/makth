@@ -10,10 +10,9 @@ interface Value: Output {
 
     /**
      * Convert the value to a string that can be parsed by the algorithm lexer
-     * @return Algorithm string
      */
-    fun toAlgorithmString(): String {
-        return toRawString()
+    val algorithmString: String get() {
+        return rawString
     }
 
     /**
@@ -25,27 +24,23 @@ interface Value: Output {
 
     /**
      * Convert the value to a raw string
-     * @return Raw string
      */
-    fun toRawString(): String
+    val rawString: String
 
     /**
      * Convert the value to a LaTeX string
-     * @return LaTeX string
      */
-    fun toLaTeXString(): String
+    val laTeXString: String
 
     /**
      * Extract all variables from the value
-     * @return Set of variables
      */
-    fun extractVariables(): Set<Variable>
+    val variables: Set<Variable>
 
     /**
      * Get the precedence of the value, used for braces
-     * @return Precedence
      */
-    fun getMainPrecedence(): Int {
+    val mainPrecedence: Int get() {
         return Int.MAX_VALUE
     }
 

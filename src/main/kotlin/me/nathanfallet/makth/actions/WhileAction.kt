@@ -1,7 +1,7 @@
 package me.nathanfallet.makth.actions
 
 import me.nathanfallet.makth.extensions.BooleanValue
-import me.nathanfallet.makth.extensions.indentLines
+import me.nathanfallet.makth.extensions.indentedLines
 import me.nathanfallet.makth.interfaces.Action
 import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.lexers.AlgorithmLexer.IncorrectArgumentCountException
@@ -36,9 +36,8 @@ data class WhileAction(val condition: Value, val actions: List<Action>) : Action
         val evaluatedCondition = condition.compute(context)
 
         // Check if there are missing variables
-        val missingVariables = evaluatedCondition.extractVariables()
-        if (missingVariables.isNotEmpty()) {
-            throw Action.UnknownVariablesException(this, context, missingVariables)
+        evaluatedCondition.variables.takeIf { it.isNotEmpty() }?.let {
+            throw Action.UnknownVariablesException(this, context, it)
         }
 
         // Check if condition is a boolean
@@ -54,14 +53,14 @@ data class WhileAction(val condition: Value, val actions: List<Action>) : Action
         }
     }
 
-    override fun toAlgorithmString(): String {
+    override val algorithmString: String get() {
         val builder = StringBuilder()
         builder.append("while (")
-        builder.append(condition.toAlgorithmString())
+        builder.append(condition.algorithmString)
         builder.append(") {")
         for (action in actions) {
             builder.append("\n")
-            builder.append(action.toAlgorithmString().indentLines())
+            builder.append(action.algorithmString.indentedLines)
         }
         builder.append("\n}")
         return builder.toString()

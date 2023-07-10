@@ -33,9 +33,8 @@ data class PrintAction(val values: List<Value>) : Action {
                     val computed = it.compute(context)
 
                     // Check for missing variables
-                    val missingVariables = computed.extractVariables()
-                    if (missingVariables.isNotEmpty()) {
-                        throw Action.UnknownVariablesException(this, context, missingVariables)
+                    computed.variables.takeIf { it.isNotEmpty() }?.let {
+                        throw Action.UnknownVariablesException(this, context, it)
                     }
 
                     // Return
@@ -46,7 +45,7 @@ data class PrintAction(val values: List<Value>) : Action {
         return Context(context.data, context.outputs + output)
     }
 
-    override fun toAlgorithmString(): String {
-        return values.joinToString(", ", "print(", ")") { it.toAlgorithmString() }
+    override val algorithmString: String get() {
+        return values.joinToString(", ", "print(", ")") { it.algorithmString }
     }
 }

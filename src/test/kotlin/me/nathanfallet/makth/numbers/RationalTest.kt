@@ -10,13 +10,13 @@ import me.nathanfallet.makth.sets.Matrix
 class RationalTest {
 
     @Test
-    fun toRawString() {
-        assertEquals("-1/2", Rational.instantiate(-1, 2).toRawString())
+    fun rawString() {
+        assertEquals("-1/2", Rational.instantiate(-1, 2).rawString)
     }
 
     @Test
-    fun toLaTeXString() {
-        assertEquals("\\frac{-1}{2}", Rational.instantiate(-1, 2).toLaTeXString())
+    fun laTeXString() {
+        assertEquals("\\frac{-1}{2}", Rational.instantiate(-1, 2).laTeXString)
     }
 
     @Test
@@ -48,7 +48,7 @@ class RationalTest {
     fun absoluteValue() {
         assertEquals(
             Rational.instantiate(1, 2),
-            Rational.instantiate(-1, 2).absoluteValue()
+            Rational.instantiate(-1, 2).absoluteValue
         )
     }
 

@@ -4,15 +4,15 @@ import kotlin.math.PI
 
 internal class RealImplPi : Real {
 
-    override fun getDoubleValue(): Double {
+    override val doubleValue: Double get() {
         return PI
     }
 
-    override fun toRawString(): String {
+    override val rawString: String get() {
         return "\u03C0"
     }
 
-    override fun toLaTeXString(): String {
+    override val laTeXString: String get() {
         return "\\pi"
     }
 

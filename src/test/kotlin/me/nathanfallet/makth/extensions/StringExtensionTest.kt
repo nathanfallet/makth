@@ -7,63 +7,63 @@ import org.junit.Test
 class StringExtensionTest {
 
     @Test
-    fun toAlgorithmString() {
-        assertEquals("\"Hello world!\"", StringValue("Hello world!").toAlgorithmString())
+    fun algorithmString() {
+        assertEquals("\"Hello world!\"", StringValue("Hello world!").algorithmString)
     }
 
     @Test
-    fun toRawString() {
-        assertEquals("Hello world!", StringValue("Hello world!").toRawString())
+    fun rawString() {
+        assertEquals("Hello world!", StringValue("Hello world!").rawString)
     }
 
     @Test
-    fun toLaTeXString() {
-        assertEquals("\\text{Hello world!}", StringValue("Hello world!").toLaTeXString())
+    fun laTeXString() {
+        assertEquals("\\text{Hello world!}", StringValue("Hello world!").laTeXString)
     }
 
     @Test
     fun toAlgorithmStringWithLaTeX() {
-        assertEquals("\$x ^ 2\$", StringValue("x ^ 2", true).toAlgorithmString())
+        assertEquals("\$x ^ 2\$", StringValue("x ^ 2", true).algorithmString)
     }
 
     @Test
     fun toRawStringWithLaTeX() {
-        assertEquals("x ^ 2", StringValue("x ^ 2", true).toRawString())
+        assertEquals("x ^ 2", StringValue("x ^ 2", true).rawString)
     }
 
     @Test
     fun toLaTeXStringWithLaTeX() {
-        assertEquals("x ^ 2", StringValue("x ^ 2", true).toLaTeXString())
+        assertEquals("x ^ 2", StringValue("x ^ 2", true).laTeXString)
     }
 
     @Test
     fun toAlgorithmStringWithEscape() {
-        assertEquals("\"Hello \\\"world\\\"!\"", StringValue("Hello \"world\"!").toAlgorithmString())
+        assertEquals("\"Hello \\\"world\\\"!\"", StringValue("Hello \"world\"!").algorithmString)
     }
 
     @Test
     fun toRawStringWithEscape() {
-        assertEquals("Hello \"world\"!", StringValue("Hello \"world\"!").toRawString())
+        assertEquals("Hello \"world\"!", StringValue("Hello \"world\"!").rawString)
     }
 
     @Test
     fun toLaTeXStringWithEscape() {
-        assertEquals("\\text{Hello \"world\"!}", StringValue("Hello \"world\"!").toLaTeXString())
+        assertEquals("\\text{Hello \"world\"!}", StringValue("Hello \"world\"!").laTeXString)
     }
 
     @Test
     fun toAlgorithmStringWithLaTeXAndEscape() {
-        assertEquals("\$x \\\$ 2\$", StringValue("x \$ 2", true).toAlgorithmString())
+        assertEquals("\$x \\\$ 2\$", StringValue("x \$ 2", true).algorithmString)
     }
 
     @Test
     fun toRawStringWithLaTeXAndEscape() {
-        assertEquals("x \$ 2", StringValue("x \$ 2", true).toRawString())
+        assertEquals("x \$ 2", StringValue("x \$ 2", true).rawString)
     }
 
     @Test
     fun toLaTeXStringWithLaTeXAndEscape() {
-        assertEquals("x \\\$ 2", StringValue("x \$ 2", true).toLaTeXString())
+        assertEquals("x \\\$ 2", StringValue("x \$ 2", true).laTeXString)
     }
 
     @Test

@@ -59,10 +59,10 @@ interface Operation : Value {
         }
 
         internal fun createHorizontalMatrix(left: Value, right: Value): Matrix {
-            return if (left is Matrix && left.getRows().count() == 1) {
+            return if (left is Matrix && left.rows.count() == 1) {
                 // We add one element to the first and only row
                 Matrix.instantiate(listOf(
-                    left.getRows().first() + right
+                    left.rows.first() + right
                 ))
             } else {
                 // Create a new matrix with two elements on the only row
@@ -73,9 +73,9 @@ interface Operation : Value {
         }
 
         internal fun createVerticalMatrix(left: Value, right: Value): Matrix {
-            return if (left is Matrix && right is Matrix && right.getRows().count() == 1) {
+            return if (left is Matrix && right is Matrix && right.rows.count() == 1) {
                 // We add one row to the first matrix
-                Matrix.instantiate(left.getRows() + right.getRows())
+                Matrix.instantiate(left.rows + right.rows)
             } else {
                 // Create a new matrix with two rows
                 Matrix.instantiate(listOf(

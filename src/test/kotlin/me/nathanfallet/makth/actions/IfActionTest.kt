@@ -30,10 +30,10 @@ class IfActionTest {
     )
 
     @Test
-    fun toRawString() {
+    fun algorithmString() {
         assertEquals(
             "if (x = 2) {\n}",
-            IfAction(Equality(Variable.instantiate("x"), Integer.instantiate(2)), listOf()).toAlgorithmString()
+            IfAction(Equality(Variable.instantiate("x"), Integer.instantiate(2)), listOf()).algorithmString
         )
     }
 
@@ -44,7 +44,7 @@ class IfActionTest {
             IfAction(
                 Equality(Variable.instantiate("x"), Integer.instantiate(2)),
                 listOf(PrintAction(listOf(StringValue("Test"))))
-            ).toAlgorithmString()
+            ).algorithmString
         )
     }
 
@@ -56,7 +56,7 @@ class IfActionTest {
                 Equality(Variable.instantiate("x"), Integer.instantiate(2)),
                 listOf(PrintAction(listOf(StringValue("Test")))),
                 listOf(PrintAction(listOf(StringValue("Test2"))))
-            ).toAlgorithmString()
+            ).algorithmString
         )
     }
 

@@ -49,7 +49,7 @@ interface Action {
         val value: Value
     ) : ExecutionException(
         action, context,
-        "Value is not a boolean: ${value.toRawString()}"
+        "Value is not a boolean: ${value.rawString}"
     )
 
     /**
@@ -64,7 +64,7 @@ interface Action {
         val value: Value
     ) : ExecutionException(
         action, context,
-        "Value is not iterable: ${value.toRawString()}"
+        "Value is not iterable: ${value.rawString}"
     )
 
     // Interface
@@ -78,9 +78,8 @@ interface Action {
     fun execute(context: Context): Context
 
     /**
-     * Convert the action to a string that can be parsed by the algorithm lexer
-     * @return String representation of the action
+     * String representation of the action
      */
-    fun toAlgorithmString(): String
+    val algorithmString: String
 
 }

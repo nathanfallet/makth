@@ -28,9 +28,8 @@ data class Equality(
 
         /**
          * Get the raw string for this operator
-         * @return Raw string
          */
-        fun toRawString(): String {
+        val rawString: String get() {
             return when (this) {
                 Equals -> "="
                 NotEquals -> "!="
@@ -43,9 +42,8 @@ data class Equality(
 
         /**
          * Get the LaTeX string for this operator
-         * @return LaTeX string
          */
-        fun toLaTeXString(): String {
+        val laTeXString: String get() {
             return when (this) {
                 Equals -> "\\eq"
                 NotEquals -> "\\ne"
@@ -76,19 +74,19 @@ data class Equality(
         }
     }
 
-    override fun toRawString(): String {
-        return "${left.toRawString()} ${operator.toRawString()} ${right.toRawString()}"
+    override val rawString: String get() {
+        return "${left.rawString} ${operator.rawString} ${right.rawString}"
     }
 
-    override fun toLaTeXString(): String {
-        return "${left.toLaTeXString()} ${operator.toLaTeXString()} ${right.toLaTeXString()}"
+    override val laTeXString: String get() {
+        return "${left.laTeXString} ${operator.laTeXString} ${right.laTeXString}"
     }
 
-    override fun extractVariables(): Set<Variable> {
-        return left.extractVariables() + right.extractVariables()
+    override val variables: Set<Variable> get() {
+        return left.variables + right.variables
     }
 
-    override fun getMainPrecedence(): Int {
+    override val mainPrecedence: Int get() {
         return Operation.Utils.getPrecedence("=")
     }
 

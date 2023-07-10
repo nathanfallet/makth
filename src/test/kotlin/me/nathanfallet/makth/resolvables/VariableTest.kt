@@ -18,13 +18,13 @@ class VariableTest {
     }
 
     @Test
-    fun toRawString() {
-        assertEquals("x", Variable.instantiate("x").toRawString())
+    fun rawString() {
+        assertEquals("x", Variable.instantiate("x").rawString)
     }
 
     @Test
-    fun toLaTeXString() {
-        assertEquals("x", Variable.instantiate("x").toLaTeXString())
+    fun laTeXString() {
+        assertEquals("x", Variable.instantiate("x").laTeXString)
     }
 
     @Test

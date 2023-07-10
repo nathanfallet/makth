@@ -42,22 +42,15 @@ data class SetAction(val identifier: String, val value: Value) : Action {
         val valueToSet = value.compute(context)
 
         // Check if there are missing variables
-        val missingVariables = valueToSet.extractVariables()
-        if (missingVariables.isNotEmpty()) {
-            throw Action.UnknownVariablesException(this, context, missingVariables)
+        valueToSet.variables.takeIf { it.isNotEmpty() }?.let {
+            throw Action.UnknownVariablesException(this, context, it)
         }
 
         // Return the new context
         return Context(context.data + mapOf(identifier to valueToSet), context.outputs)
     }
 
-    override fun toAlgorithmString(): String {
-        val builder = StringBuilder()
-        builder.append("set(")
-        builder.append(identifier)
-        builder.append(", ")
-        builder.append(value.toAlgorithmString())
-        builder.append(")")
-        return builder.toString()
+    override val algorithmString: String get() {
+        return "set($identifier, ${value.algorithmString})"
     }
 }
