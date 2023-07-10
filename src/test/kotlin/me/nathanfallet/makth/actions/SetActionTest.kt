@@ -30,10 +30,10 @@ class SetActionTest {
     )
 
     @Test
-    fun toRawString() {
+    fun algorithmString() {
         assertEquals(
             "set(x, 2)",
-            SetAction("x", Integer.instantiate(2)).toAlgorithmString()
+            SetAction("x", Integer.instantiate(2)).algorithmString
         )
     }
 

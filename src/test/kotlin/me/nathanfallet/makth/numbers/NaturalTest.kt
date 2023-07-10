@@ -10,13 +10,13 @@ import me.nathanfallet.makth.sets.Matrix
 class NaturalTest {
 
     @Test
-    fun toRawString() {
-        assertEquals("5", Integer.instantiate(5).toRawString())
+    fun rawString() {
+        assertEquals("5", Integer.instantiate(5).rawString)
     }
 
     @Test
-    fun toLaTeXString() {
-        assertEquals("5", Integer.instantiate(5).toLaTeXString())
+    fun laTeXString() {
+        assertEquals("5", Integer.instantiate(5).laTeXString)
     }
 
     @Test

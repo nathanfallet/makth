@@ -178,7 +178,7 @@ class AlgorithmLexerTest {
             ),
             Context().execute(actions)
         )
-        assertEquals(raw, actions.joinToString("\n") { it.toAlgorithmString() })
+        assertEquals(raw, actions.joinToString("\n") { it.algorithmString })
     }
 
     @Test
@@ -250,8 +250,8 @@ class AlgorithmLexerTest {
             return context
         }
 
-        override fun toAlgorithmString(): String {
-            return "custom(" + value.toAlgorithmString() + ")"
+        override val algorithmString: String get() {
+            return "custom(" + value.algorithmString + ")"
         }
 
     }

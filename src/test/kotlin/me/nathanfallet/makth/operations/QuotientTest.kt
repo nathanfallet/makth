@@ -11,10 +11,10 @@ class QuotientTest {
     private val context = Context()
 
     @Test
-    fun toRawString() {
+    fun rawString() {
         assertEquals(
             "1 / 2",
-            Quotient(Integer.instantiate(1), Integer.instantiate(2)).toRawString()
+            Quotient(Integer.instantiate(1), Integer.instantiate(2)).rawString
         )
     }
 
@@ -22,15 +22,15 @@ class QuotientTest {
     fun toRawStringWithBraces() {
         assertEquals(
             "(1 + 2) / (3 + 4)",
-            Quotient(Sum(Integer.instantiate(1), Integer.instantiate(2)), Sum(Integer.instantiate(3), Integer.instantiate(4))).toRawString()
+            Quotient(Sum(Integer.instantiate(1), Integer.instantiate(2)), Sum(Integer.instantiate(3), Integer.instantiate(4))).rawString
         )
     }
 
     @Test
-    fun toLaTeXString() {
+    fun laTeXString() {
         assertEquals(
             "\\frac{1}{2}",
-            Quotient(Integer.instantiate(1), Integer.instantiate(2)).toLaTeXString()
+            Quotient(Integer.instantiate(1), Integer.instantiate(2)).laTeXString
         )
     }
 
@@ -38,15 +38,15 @@ class QuotientTest {
     fun toLaTeXStringWithBraces() {
         assertEquals(
             "\\frac{1 + 2}{3 + 4}",
-            Quotient(Sum(Integer.instantiate(1), Integer.instantiate(2)), Sum(Integer.instantiate(3), Integer.instantiate(4))).toLaTeXString()
+            Quotient(Sum(Integer.instantiate(1), Integer.instantiate(2)), Sum(Integer.instantiate(3), Integer.instantiate(4))).laTeXString
         )
     }
 
     @Test
-    fun extractVariables() {
+    fun variables() {
         assertEquals(
             setOf(Variable.instantiate("x"), Variable.instantiate("y")),
-            Quotient(Variable.instantiate("x"), Variable.instantiate("y")).extractVariables()
+            Quotient(Variable.instantiate("x"), Variable.instantiate("y")).variables
         )
     }
 

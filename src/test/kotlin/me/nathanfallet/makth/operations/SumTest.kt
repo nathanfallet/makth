@@ -11,10 +11,10 @@ class SumTest {
     private val context = Context()
 
     @Test
-    fun toRawString() {
+    fun rawString() {
         assertEquals(
             "1 + 2",
-            Sum(Integer.instantiate(1), Integer.instantiate(2)).toRawString()
+            Sum(Integer.instantiate(1), Integer.instantiate(2)).rawString
         )
     }
 
@@ -22,7 +22,7 @@ class SumTest {
     fun toRawStringWithMinus() {
         assertEquals(
             "1 - 2",
-            Sum(Integer.instantiate(1), Integer.instantiate(-2)).toRawString()
+            Sum(Integer.instantiate(1), Integer.instantiate(-2)).rawString
         )
     }
 
@@ -31,15 +31,15 @@ class SumTest {
         // This will technically never happen, but it's the only way to test it
         assertEquals(
             "(1 = 1) + (2 = 2)",
-            Sum(Equality(Integer.instantiate(1), Integer.instantiate(1)), Equality(Integer.instantiate(2), Integer.instantiate(2))).toRawString()
+            Sum(Equality(Integer.instantiate(1), Integer.instantiate(1)), Equality(Integer.instantiate(2), Integer.instantiate(2))).rawString
         )
     }
 
     @Test
-    fun toLaTeXString() {
+    fun laTeXString() {
         assertEquals(
             "1 + 2",
-            Sum(Integer.instantiate(1), Integer.instantiate(2)).toLaTeXString()
+            Sum(Integer.instantiate(1), Integer.instantiate(2)).laTeXString
         )
     }
 
@@ -47,7 +47,7 @@ class SumTest {
     fun toLaTeXStringWithMinus() {
         assertEquals(
             "1 - 2",
-            Sum(Integer.instantiate(1), Integer.instantiate(-2)).toLaTeXString()
+            Sum(Integer.instantiate(1), Integer.instantiate(-2)).laTeXString
         )
     }
 
@@ -56,15 +56,15 @@ class SumTest {
         // This will technically never happen, but it's the only way to test it
         assertEquals(
             "(1 \\eq 1) + (2 \\eq 2)",
-            Sum(Equality(Integer.instantiate(1), Integer.instantiate(1)), Equality(Integer.instantiate(2), Integer.instantiate(2))).toLaTeXString()
+            Sum(Equality(Integer.instantiate(1), Integer.instantiate(1)), Equality(Integer.instantiate(2), Integer.instantiate(2))).laTeXString
         )
     }
 
     @Test
-    fun extractVariables() {
+    fun variables() {
         assertEquals(
             setOf(Variable.instantiate("x"), Variable.instantiate("y")),
-            Sum(Variable.instantiate("x"), Variable.instantiate("y")).extractVariables()
+            Sum(Variable.instantiate("x"), Variable.instantiate("y")).variables
         )
     }
 

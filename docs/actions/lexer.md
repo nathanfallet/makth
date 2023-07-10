@@ -39,8 +39,8 @@ data class CustomAction(val value: Value): Action {
         return context
     }
 
-    override fun toAlgorithmString(): String {
-        return "custom(" + value.toAlgorithmString() + ")"
+    override val algorithmString: String get() {
+        return "custom(" + value.algorithmString + ")"
     }
         
 }

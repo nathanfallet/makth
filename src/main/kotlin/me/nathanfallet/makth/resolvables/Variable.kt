@@ -37,15 +37,15 @@ data class Variable private constructor(val name: String) : Value {
         return context.data[name] ?: this
     }
 
-    override fun toRawString(): String {
+    override val rawString: String get() {
         return name
     }
 
-    override fun toLaTeXString(): String {
+    override val laTeXString: String get() {
         return name
     }
 
-    override fun extractVariables(): Set<Variable> {
+    override val variables: Set<Variable> get() {
         return setOf(this)
     }
 

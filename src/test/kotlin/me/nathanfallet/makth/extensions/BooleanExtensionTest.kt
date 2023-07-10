@@ -8,32 +8,32 @@ class BooleanExtensionTest {
 
     @Test
     fun toAlgorithmStringTrue() {
-        assertEquals("true", BooleanValue(true).toAlgorithmString())
+        assertEquals("true", BooleanValue(true).algorithmString)
     }
 
     @Test
     fun toRawStringTrue() {
-        assertEquals("true", BooleanValue(true).toRawString())
+        assertEquals("true", BooleanValue(true).rawString)
     }
 
     @Test
     fun toLaTeXStringTrue() {
-        assertEquals("\\text{true}", BooleanValue(true).toLaTeXString())
+        assertEquals("\\text{true}", BooleanValue(true).laTeXString)
     }
 
     @Test
     fun toAlgorithmStringFalse() {
-        assertEquals("false", BooleanValue(false).toAlgorithmString())
+        assertEquals("false", BooleanValue(false).algorithmString)
     }
 
     @Test
     fun toRawStringFalse() {
-        assertEquals("false", BooleanValue(false).toRawString())
+        assertEquals("false", BooleanValue(false).rawString)
     }
 
     @Test
     fun toLaTeXStringFalse() {
-        assertEquals("\\text{false}", BooleanValue(false).toLaTeXString())
+        assertEquals("\\text{false}", BooleanValue(false).laTeXString)
     }
 
     @Test

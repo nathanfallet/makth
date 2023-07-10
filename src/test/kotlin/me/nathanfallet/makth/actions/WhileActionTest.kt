@@ -28,7 +28,7 @@ class WhileActionTest {
     )
 
     @Test
-    fun toRawString() {
+    fun rawString() {
         assertEquals(
             "while (x < 10) {\n}",
             WhileAction(
@@ -37,7 +37,7 @@ class WhileActionTest {
                     Integer.instantiate(10),
                     Equality.Operator.LessThan
                 ), listOf()
-            ).toAlgorithmString()
+            ).algorithmString
         )
     }
 
@@ -48,7 +48,7 @@ class WhileActionTest {
             WhileAction(
                 Equality(Variable.instantiate("x"), Integer.instantiate(10), Equality.Operator.LessThan),
                 listOf(SetAction("x", Sum(Variable.instantiate("x"), Integer.instantiate(1))))
-            ).toAlgorithmString()
+            ).algorithmString
         )
     }
 

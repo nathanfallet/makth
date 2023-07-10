@@ -32,51 +32,50 @@ interface Integer : Rational {
 
     /**
      * Get long value
-     * @return Long value
      */
-    fun getLongValue(): Long
+    val longValue: Long
 
     // Rational
 
-    override fun getNumerator(): Integer {
+    override val numerator: Integer get() {
         return this
     }
 
-    override fun getDenominator(): Natural {
+    override val denominator: Natural get() {
         return Natural.instantiate(1)
     }
 
     // Real
 
-    override fun getDoubleValue(): Double {
-        return getLongValue().toDouble()
+    override val doubleValue: Double get() {
+        return longValue.toDouble()
     }
 
-    override fun absoluteValue(): Natural {
-        return Natural.instantiate(abs(getLongValue()))
+    override val absoluteValue: Natural get() {
+        return Natural.instantiate(abs(longValue))
     }
 
     // Value
 
-    override fun toRawString(): String {
-        return getLongValue().toString()
+    override val rawString: String get() {
+        return longValue.toString()
     }
 
-    override fun toLaTeXString(): String {
-        return getLongValue().toString()
+    override val laTeXString: String get() {
+        return longValue.toString()
     }
 
     // Operations
 
     override fun sum(right: Value): Value {
         if (right is Integer) {
-            return instantiate(getLongValue() + right.getLongValue())
+            return instantiate(longValue + right.longValue)
         }
         if (right is Rational) {
-            val newNumerator = this.multiply(right.getDenominator())
-                .sum(right.getNumerator())
+            val newNumerator = this.multiply(right.denominator)
+                .sum(right.numerator)
             if (newNumerator is Integer) {
-                return Rational.instantiate(newNumerator, right.getDenominator())
+                return Rational.instantiate(newNumerator, right.denominator)
             }
         }
         return super.sum(right)
@@ -84,22 +83,22 @@ interface Integer : Rational {
 
     override fun multiply(right: Value): Value {
         if (right is Integer) {
-            return instantiate(getLongValue() * right.getLongValue())
+            return instantiate(longValue * right.longValue)
         }
         if (right is Rational) {
-            val newNumerator = this.multiply(right.getNumerator())
+            val newNumerator = this.multiply(right.numerator)
             if (newNumerator is Integer) {
                 return Rational.instantiate(
                     newNumerator,
-                    right.getDenominator()
+                    right.denominator
                 )
             }
         }
         if (right is Real) {
-            return RealImpl(getDoubleValue()).multiply(right)
+            return RealImpl(doubleValue).multiply(right)
         }
         if (right is Matrix) {
-            return Matrix.instantiate(right.getRows().map { rows ->
+            return Matrix.instantiate(right.rows.map { rows ->
                 rows.map { multiply(it) }
             })
         }
@@ -114,11 +113,11 @@ interface Integer : Rational {
             )
         }
         if (right is Rational) {
-            val newNumerator = this.multiply(right.getDenominator())
+            val newNumerator = this.multiply(right.denominator)
             if (newNumerator is Integer) {
                 return Rational.instantiate(
                     newNumerator,
-                    right.getNumerator()
+                    right.numerator
                 )
             }
         }
@@ -127,14 +126,14 @@ interface Integer : Rational {
 
     override fun remainder(right: Value): Value {
         if (right is Integer) {
-            return instantiate(getLongValue() % right.getLongValue())
+            return instantiate(longValue % right.longValue)
         }
         if (right is Rational) {
-            val newNumerator = getNumerator().multiply(right.getDenominator()).remainder(right.getNumerator())
+            val newNumerator = numerator.multiply(right.denominator).remainder(right.numerator)
             if (newNumerator is Integer) {
                 return Rational.instantiate(
                     newNumerator,
-                    right.getDenominator()
+                    right.denominator
                 )
             }
         }
@@ -143,31 +142,31 @@ interface Integer : Rational {
 
     override fun raise(right: Value): Value {
         if (right is Integer) {
-            return if (right.getLongValue() < 0) {
+            return if (right.longValue < 0) {
                 Rational.instantiate(
                     instantiate(1),
-                    instantiate(getLongValue().pow(-right.getLongValue()).toLong())
+                    instantiate(longValue.pow(-right.longValue).toLong())
                 )
             } else {
-                instantiate(getLongValue().pow(right.getLongValue()).toLong())
+                instantiate(longValue.pow(right.longValue).toLong())
             }
         }
         if (right is Rational) {
-            val firstRaised = raise(right.getNumerator())
+            val firstRaised = raise(right.numerator)
             if (firstRaised is Integer) {
-                return if (firstRaised.getDoubleValue() < 0) {
+                return if (firstRaised.doubleValue < 0) {
                     // In case of negative number, we need to take the oppposite
                     // and check if the denominator is even (to avoid complex case).
-                    if (right.getDenominator().getLongValue() and 1 == 0L) {
+                    if (right.denominator.longValue and 1 == 0L) {
                         Real.instantiate(Double.NaN)
                     } else {
                         Real.instantiate(
-                            -(-firstRaised.getLongValue())
-                            .nthRoot(right.getDenominator().getLongValue())
+                            -(-firstRaised.longValue)
+                            .nthRoot(right.denominator.longValue)
                         )
                     }
                 } else {
-                    Real.instantiate(firstRaised.getLongValue().nthRoot(right.getDenominator().getLongValue()))
+                    Real.instantiate(firstRaised.longValue.nthRoot(right.denominator.longValue))
                 }
             }
         }

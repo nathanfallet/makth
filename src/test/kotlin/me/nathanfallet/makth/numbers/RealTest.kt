@@ -12,20 +12,20 @@ import me.nathanfallet.makth.extensions.StringValue
 class RealTest {
 
     @Test
-    fun toRawString() {
-        assertEquals(1.23456789.toString(), Real.instantiate(1.23456789).toRawString())
+    fun rawString() {
+        assertEquals(1.23456789.toString(), Real.instantiate(1.23456789).rawString)
     }
 
     @Test
-    fun toLaTeXString() {
-        assertEquals(1.23456789.toString(), Real.instantiate(1.23456789).toLaTeXString())
+    fun laTeXString() {
+        assertEquals(1.23456789.toString(), Real.instantiate(1.23456789).laTeXString)
     }
 
     @Test
     fun absoluteValue() {
         assertEquals(
             Real.instantiate(1.23456789),
-            Real.instantiate(-1.23456789).absoluteValue()
+            Real.instantiate(-1.23456789).absoluteValue
         )
     }
 
@@ -288,13 +288,13 @@ class RealTest {
     }
 
     @Test
-    fun piToRawString() {
-        assertEquals("\u03C0", Real.pi.toRawString())
+    fun piRawString() {
+        assertEquals("\u03C0", Real.pi.rawString)
     }
 
     @Test
-    fun piToLaTeXString() {
-        assertEquals("\\pi", Real.pi.toLaTeXString())
+    fun piLaTeXString() {
+        assertEquals("\\pi", Real.pi.laTeXString)
     }
 
 }

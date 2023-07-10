@@ -90,18 +90,18 @@ class EqualityTest {
     }
 
     @Test
-    fun equalsToRawString() {
+    fun equalsrawString() {
         assertEquals(
             "1 = 2",
-            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.Equals).toRawString()
+            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.Equals).rawString
         )
     }
 
     @Test
-    fun equalsToLaTeXString() {
+    fun equalslaTeXString() {
         assertEquals(
             "1 \\eq 2",
-            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.Equals).toLaTeXString()
+            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.Equals).laTeXString
         )
     }
 
@@ -166,18 +166,18 @@ class EqualityTest {
     }
 
     @Test
-    fun notEqualsToRawString() {
+    fun notEqualsRawString() {
         assertEquals(
             "1 != 2",
-            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.NotEquals).toRawString()
+            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.NotEquals).rawString
         )
     }
 
     @Test
-    fun notEqualsToLaTeXString() {
+    fun notEqualsLaTeXString() {
         assertEquals(
             "1 \\ne 2",
-            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.NotEquals).toLaTeXString()
+            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.NotEquals).laTeXString
         )
     }
 
@@ -218,18 +218,18 @@ class EqualityTest {
     }
 
     @Test
-    fun lessThanToRawString() {
+    fun lessThanRawString() {
         assertEquals(
             "1 < 2",
-            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.LessThan).toRawString()
+            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.LessThan).rawString
         )
     }
 
     @Test
-    fun lessThanToLaTeXString() {
+    fun lessThanLaTeXString() {
         assertEquals(
             "1 \\lt 2",
-            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.LessThan).toLaTeXString()
+            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.LessThan).laTeXString
         )
     }
 
@@ -270,18 +270,18 @@ class EqualityTest {
     }
 
     @Test
-    fun greaterThanToRawString() {
+    fun greaterThanRawString() {
         assertEquals(
             "1 > 2",
-            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.GreaterThan).toRawString()
+            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.GreaterThan).rawString
         )
     }
 
     @Test
-    fun greaterThanToLaTeXString() {
+    fun greaterThanLaTeXString() {
         assertEquals(
             "1 \\gt 2",
-            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.GreaterThan).toLaTeXString()
+            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.GreaterThan).laTeXString
         )
     }
 
@@ -322,18 +322,18 @@ class EqualityTest {
     }
 
     @Test
-    fun lessThanOrEqualsToRawString() {
+    fun lessThanOrEqualsRawString() {
         assertEquals(
             "1 <= 2",
-            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.LessThanOrEquals).toRawString()
+            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.LessThanOrEquals).rawString
         )
     }
 
     @Test
-    fun lessThanOrEqualsToLaTeXString() {
+    fun lessThanOrEqualsRaTeXString() {
         assertEquals(
             "1 \\le 2",
-            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.LessThanOrEquals).toLaTeXString()
+            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.LessThanOrEquals).laTeXString
         )
     }
 
@@ -374,18 +374,18 @@ class EqualityTest {
     }
 
     @Test
-    fun greaterThanOrEqualsToRawString() {
+    fun greaterThanOrEqualsRawString() {
         assertEquals(
             "1 >= 2",
-            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.GreaterThanOrEquals).toRawString()
+            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.GreaterThanOrEquals).rawString
         )
     }
 
     @Test
-    fun greaterThanOrEqualsToLaTeXString() {
+    fun greaterThanOrEqualsLaTeXString() {
         assertEquals(
             "1 \\ge 2",
-            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.GreaterThanOrEquals).toLaTeXString()
+            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.GreaterThanOrEquals).laTeXString
         )
     }
 

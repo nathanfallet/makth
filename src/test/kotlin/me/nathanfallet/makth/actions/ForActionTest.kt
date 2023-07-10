@@ -30,14 +30,14 @@ class ForActionTest {
     )
 
     @Test
-    fun toRawString() {
+    fun algorithmString() {
         assertEquals(
             "for (x, (1; 2; 3)) {\n}",
             ForAction(
                 "x",
                 Vector.instantiate(listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3))),
                 listOf()
-            ).toAlgorithmString()
+            ).algorithmString
         )
     }
 
@@ -49,7 +49,7 @@ class ForActionTest {
                 "x",
                 Vector.instantiate(listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3))),
                 listOf(PrintAction(listOf(Variable.instantiate("x"))))
-            ).toAlgorithmString()
+            ).algorithmString
         )
     }
 

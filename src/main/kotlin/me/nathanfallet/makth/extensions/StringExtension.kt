@@ -14,20 +14,20 @@ data class StringValue(val value: String, val latex: Boolean = false) : Value {
         return this
     }
 
-    override fun toAlgorithmString(): String {
+    override val algorithmString: String get() {
         val char = if (latex) "$" else "\""
         return "$char${value.replace("$char", "\\$char")}$char"
     }
 
-    override fun toRawString(): String {
+    override val rawString: String get() {
         return value
     }
 
-    override fun toLaTeXString(): String {
+    override val laTeXString: String get() {
         return if (latex) value.replace("\$", "\\\$") else "\\text{${value.replace("{", "\\{").replace("}", "\\}")}}"
     }
 
-    override fun extractVariables(): Set<Variable> {
+    override val variables: Set<Variable> get() {
         return setOf()
     }
 
@@ -40,6 +40,6 @@ data class StringValue(val value: String, val latex: Boolean = false) : Value {
 
 }
 
-fun String.indentLines(): String {
+val String.indentedLines: String get() {
     return split("\n").joinToString("\n") { "    $it" }
 }

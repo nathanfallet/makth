@@ -11,10 +11,10 @@ class ExponentiationTest {
     private val context = Context()
 
     @Test
-    fun toRawString() {
+    fun rawString() {
         assertEquals(
             "1 ^ 2",
-            Exponentiation(Integer.instantiate(1), Integer.instantiate(2)).toRawString()
+            Exponentiation(Integer.instantiate(1), Integer.instantiate(2)).rawString
         )
     }
 
@@ -22,15 +22,15 @@ class ExponentiationTest {
     fun toRawStringWithBraces() {
         assertEquals(
             "(1 + 2) ^ (3 + 4)",
-            Exponentiation(Sum(Integer.instantiate(1), Integer.instantiate(2)), Sum(Integer.instantiate(3), Integer.instantiate(4))).toRawString()
+            Exponentiation(Sum(Integer.instantiate(1), Integer.instantiate(2)), Sum(Integer.instantiate(3), Integer.instantiate(4))).rawString
         )
     }
 
     @Test
-    fun toLaTeXString() {
+    fun laTeXString() {
         assertEquals(
             "1^{2}",
-            Exponentiation(Integer.instantiate(1), Integer.instantiate(2)).toLaTeXString()
+            Exponentiation(Integer.instantiate(1), Integer.instantiate(2)).laTeXString
         )
     }
 
@@ -38,15 +38,15 @@ class ExponentiationTest {
     fun toLaTeXStringWithBraces() {
         assertEquals(
             "(1 + 2)^{3 + 4}",
-            Exponentiation(Sum(Integer.instantiate(1), Integer.instantiate(2)), Sum(Integer.instantiate(3), Integer.instantiate(4))).toLaTeXString()
+            Exponentiation(Sum(Integer.instantiate(1), Integer.instantiate(2)), Sum(Integer.instantiate(3), Integer.instantiate(4))).laTeXString
         )
     }
 
     @Test
-    fun extractVariables() {
+    fun variables() {
         assertEquals(
             setOf(Variable.instantiate("x"), Variable.instantiate("y")),
-            Exponentiation(Variable.instantiate("x"), Variable.instantiate("y")).extractVariables()
+            Exponentiation(Variable.instantiate("x"), Variable.instantiate("y")).variables
         )
     }
 
