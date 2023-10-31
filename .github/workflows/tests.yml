@@ -17,6 +17,6 @@ jobs:
           distribution: temurin
           java-version: 19
       - name: Install dependencies and run tests
-        run: mvn clean test
+        run: ./gradlew check
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
