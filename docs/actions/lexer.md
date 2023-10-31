@@ -26,7 +26,6 @@ data class CustomAction(val value: Value): Action {
 
     companion object {
 
-        @JvmStatic
         fun handler(args: List<Value>): Action {
             if (args.count() != 1) {
                 throw IncorrectArgumentCountException("custom", args.count(), 1)
