@@ -1,6 +1,8 @@
 plugins {
     kotlin("multiplatform") version "1.9.10"
     id("convention.publication")
+    id("org.jetbrains.kotlinx.kover") version "0.7.4"
+    id("com.google.devtools.ksp") version "1.9.10-1.0.13"
 }
 
 group = "me.nathanfallet.makth"
@@ -56,4 +58,12 @@ kotlin {
         val nativeMain by getting
         val nativeTest by getting
     }
+}
+
+dependencies {
+    configurations
+        .filter { it.name.startsWith("ksp") && it.name.contains("Test") }
+        .forEach {
+            add(it.name, "io.mockative:mockative-processor:2.0.1")
+        }
 }
