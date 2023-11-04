@@ -3,10 +3,11 @@ plugins {
     id("convention.publication")
     id("org.jetbrains.kotlinx.kover") version "0.7.4"
     id("com.google.devtools.ksp") version "1.9.10-1.0.13"
+    id("dev.petuska.npm.publish") version "3.4.1"
 }
 
 group = "me.nathanfallet.makth"
-version = "1.2.0"
+version = "1.2.1"
 
 repositories {
     mavenCentral()
@@ -23,13 +24,8 @@ kotlin {
         }
     }
     js {
-        browser {
-            commonWebpackConfig {
-                cssSupport {
-                    enabled.set(true)
-                }
-            }
-        }
+        binaries.library()
+        browser()
     }
     val hostOs = System.getProperty("os.name")
     val isArm64 = System.getProperty("os.arch") == "aarch64"
@@ -66,4 +62,13 @@ dependencies {
         .forEach {
             add(it.name, "io.mockative:mockative-processor:2.0.1")
         }
+}
+
+npmPublish {
+    readme.set(file("README.md"))
+    registries {
+        register("npmjs") {
+            uri.set("https://registry.npmjs.org")
+        }
+    }
 }
