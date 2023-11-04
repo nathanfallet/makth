@@ -25,7 +25,9 @@ kotlin {
     }
     js {
         binaries.library()
+        nodejs()
         browser()
+        //generateTypeScriptDefinitions() // Not supported for now because of collections etc...
     }
     val hostOs = System.getProperty("os.name")
     val isArm64 = System.getProperty("os.arch") == "aarch64"
