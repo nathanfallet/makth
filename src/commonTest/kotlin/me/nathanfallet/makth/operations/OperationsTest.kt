@@ -1,7 +1,7 @@
 package me.nathanfallet.makth.operations;
 
 import me.nathanfallet.makth.lexers.AlgorithmLexer.SyntaxException
-import me.nathanfallet.makth.numbers.Integer
+import me.nathanfallet.makth.numbers.integers.IntegerFactory
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -12,69 +12,69 @@ class OperationsTest {
     @Test
     fun syntaxException() {
         assertFailsWith(SyntaxException::class) {
-            Operation.Utils.initialize("a", Integer.instantiate(1), Integer.instantiate(2))
+            OperationFactory.initialize("a", IntegerFactory.instantiate(1), IntegerFactory.instantiate(2))
         }
     }
 
     @Test
     fun precedenceExponentiateOverMultiply() {
         assertTrue(
-            Operation.Utils.getPrecedence("^") > Operation.Utils.getPrecedence("*")
+            OperationFactory.getPrecedence("^") > OperationFactory.getPrecedence("*")
         )
     }
 
     @Test
     fun precedenceMultiplyOverSum() {
         assertTrue(
-            Operation.Utils.getPrecedence("*") > Operation.Utils.getPrecedence("+")
+            OperationFactory.getPrecedence("*") > OperationFactory.getPrecedence("+")
         )
     }
 
     @Test
     fun precedenceSumOverEquals() {
         assertTrue(
-            Operation.Utils.getPrecedence("+") > Operation.Utils.getPrecedence("=")
+            OperationFactory.getPrecedence("+") > OperationFactory.getPrecedence("=")
         )
     }
 
     @Test
     fun precedenceSumSameAsDifference() {
-        assertEquals(Operation.Utils.getPrecedence("+"), Operation.Utils.getPrecedence("-"))
+        assertEquals(OperationFactory.getPrecedence("+"), OperationFactory.getPrecedence("-"))
     }
 
     @Test
     fun precedenceMultiplySameAsDivide() {
-        assertEquals(Operation.Utils.getPrecedence("*"), Operation.Utils.getPrecedence("/"))
+        assertEquals(OperationFactory.getPrecedence("*"), OperationFactory.getPrecedence("/"))
     }
 
     @Test
     fun precedenceMultiplySameAsRemainder() {
-        assertEquals(Operation.Utils.getPrecedence("*"), Operation.Utils.getPrecedence("%"))
+        assertEquals(OperationFactory.getPrecedence("*"), OperationFactory.getPrecedence("%"))
     }
 
     @Test
     fun precedenceNotEqualsSameAsEquals() {
-        assertEquals(Operation.Utils.getPrecedence("!="), Operation.Utils.getPrecedence("="))
+        assertEquals(OperationFactory.getPrecedence("!="), OperationFactory.getPrecedence("="))
     }
 
     @Test
     fun precedenceLessThanSameAsEquals() {
-        assertEquals(Operation.Utils.getPrecedence("<"), Operation.Utils.getPrecedence("="))
+        assertEquals(OperationFactory.getPrecedence("<"), OperationFactory.getPrecedence("="))
     }
 
     @Test
     fun precedenceGreaterThanSameAsEquals() {
-        assertEquals(Operation.Utils.getPrecedence(">"), Operation.Utils.getPrecedence("="))
+        assertEquals(OperationFactory.getPrecedence(">"), OperationFactory.getPrecedence("="))
     }
 
     @Test
     fun precedenceLessThanOrEqualsSameAsEquals() {
-        assertEquals(Operation.Utils.getPrecedence("<="), Operation.Utils.getPrecedence("="))
+        assertEquals(OperationFactory.getPrecedence("<="), OperationFactory.getPrecedence("="))
     }
 
     @Test
     fun precedenceGreaterThanOrEqualsSameAsEquals() {
-        assertEquals(Operation.Utils.getPrecedence(">="), Operation.Utils.getPrecedence("="))
+        assertEquals(OperationFactory.getPrecedence(">="), OperationFactory.getPrecedence("="))
     }
 
 }

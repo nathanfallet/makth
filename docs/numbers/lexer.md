@@ -16,7 +16,7 @@ Thanks to the context, you can pass variables:
 
 ```kotlin
 val context = Context(mapOf(
-    "x" to Integer.instantiate(2)
+    "x" to IntegerFactory.instantiate(2)
 ))
 val result = MathLexer("x + 3").execute(context) // 5
 ```

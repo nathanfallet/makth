@@ -1,10 +1,10 @@
 package me.nathanfallet.makth.actions
 
+import me.nathanfallet.makth.exceptions.UnknownVariablesException
 import me.nathanfallet.makth.extensions.StringValue
-import me.nathanfallet.makth.interfaces.Action
-import me.nathanfallet.makth.numbers.Integer
+import me.nathanfallet.makth.numbers.integers.IntegerFactory
 import me.nathanfallet.makth.resolvables.Context
-import me.nathanfallet.makth.resolvables.Variable
+import me.nathanfallet.makth.resolvables.variables.VariableFactory
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -22,16 +22,16 @@ class PrintActionTest {
 
     private val contextWithX = Context(
         mapOf(
-            "x" to Integer.instantiate(2)
+            "x" to IntegerFactory.instantiate(2)
         )
     )
 
     private val contextWithXAndString = Context(
         mapOf(
-            "x" to Integer.instantiate(2)
+            "x" to IntegerFactory.instantiate(2)
         ),
         listOf(
-            StringValue("x = "), Integer.instantiate(2), StringValue("\n")
+            StringValue("x = "), IntegerFactory.instantiate(2), StringValue("\n")
         )
     )
 
@@ -39,7 +39,7 @@ class PrintActionTest {
     fun algorithmString() {
         assertEquals(
             "print(\"x = \", x)",
-            PrintAction(listOf(StringValue("x = "), Variable.instantiate("x"))).algorithmString
+            PrintAction(listOf(StringValue("x = "), VariableFactory.instantiate("x"))).algorithmString
         )
     }
 
@@ -55,14 +55,14 @@ class PrintActionTest {
     fun printStringWithVariable() {
         assertEquals(
             contextWithXAndString,
-            contextWithX.execute(PrintAction(listOf(StringValue("x = "), Variable.instantiate("x"))))
+            contextWithX.execute(PrintAction(listOf(StringValue("x = "), VariableFactory.instantiate("x"))))
         )
     }
 
     @Test
     fun printStringWithVariableWithoutContext() {
-        assertFailsWith(Action.UnknownVariablesException::class) {
-            context.execute(PrintAction(listOf(StringValue("x = "), Variable.instantiate("x"))))
+        assertFailsWith(UnknownVariablesException::class) {
+            context.execute(PrintAction(listOf(StringValue("x = "), VariableFactory.instantiate("x"))))
         }
     }
 

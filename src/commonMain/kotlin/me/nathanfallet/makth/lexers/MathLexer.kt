@@ -3,15 +3,17 @@ package me.nathanfallet.makth.lexers
 import me.nathanfallet.makth.extensions.StringValue
 import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.lexers.AlgorithmLexer.SyntaxException
-import me.nathanfallet.makth.numbers.Integer
-import me.nathanfallet.makth.operations.Operation
+import me.nathanfallet.makth.numbers.integers.IntegerFactory
+import me.nathanfallet.makth.operations.OperationFactory
 import me.nathanfallet.makth.resolvables.Context
-import me.nathanfallet.makth.resolvables.Variable
+import me.nathanfallet.makth.resolvables.variables.VariableFactory
+import kotlin.js.JsExport
 
 /**
  * Lexer for math expressions
  * @param content Content to parse
  */
+@JsExport
 class MathLexer(private var content: String) {
 
     // Errors
@@ -162,7 +164,7 @@ class MathLexer(private var content: String) {
             TODO("Power not implemented!")
             // insertValue(Fraction(Number(`val`), Power(Number(10), Number(powerOfTen))))
         } else {
-            insertValue(Integer.instantiate(value))
+            insertValue(IntegerFactory.instantiate(value))
         }
 
         // Remove one, else current character is skipped
@@ -182,7 +184,7 @@ class MathLexer(private var content: String) {
         }
 
         // Insert into values
-        insertValue(Variable.instantiate(name.toString()))
+        insertValue(VariableFactory.instantiate(name.toString()))
     }
 
     // Utils for parsing
@@ -197,7 +199,8 @@ class MathLexer(private var content: String) {
         // While first operation has same of greater precedence to current, apply to two first
         // values
         while (operators.isNotEmpty() &&
-                Operation.Utils.getPrecedence(operators[0]) >= Operation.Utils.getPrecedence(op)) {
+            OperationFactory.getPrecedence(operators[0]) >= OperationFactory.getPrecedence(op)
+        ) {
             // Create a token
             val value = createValue()
             if (value != null) {
@@ -208,7 +211,7 @@ class MathLexer(private var content: String) {
 
         // If subtraction with no number before
         if (op == "-" && values.isEmpty()) {
-            insertValue(Integer.instantiate(0))
+            insertValue(IntegerFactory.instantiate(0))
         }
 
         // If next is "="
@@ -233,7 +236,7 @@ class MathLexer(private var content: String) {
         // Get operator and apply
         val op = getFirstOperationAndRemove()
         return if (op != null) {
-            Operation.Utils.initialize(op, left, right)
+            OperationFactory.initialize(op, left, right)
         } else null
     }
 

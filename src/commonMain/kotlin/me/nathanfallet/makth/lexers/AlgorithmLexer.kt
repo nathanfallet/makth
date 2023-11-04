@@ -7,12 +7,14 @@ import me.nathanfallet.makth.actions.WhileAction
 import me.nathanfallet.makth.interfaces.Action
 import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.resolvables.Context
+import kotlin.js.JsExport
 import kotlin.reflect.KClass
 
 /**
  * A lexer for algorithms
  * @param content Content of the algorithm
  */
+@JsExport
 class AlgorithmLexer(private var content: String) {
 
     // Errors

@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "me.nathanfallet.makth"
-version = "1.2.1"
+version = "1.2.2"
 
 repositories {
     mavenCentral()
@@ -25,7 +25,9 @@ kotlin {
     }
     js {
         binaries.library()
+        nodejs()
         browser()
+        //generateTypeScriptDefinitions() // Not supported for now because of collections etc...
     }
     val hostOs = System.getProperty("os.name")
     val isArm64 = System.getProperty("os.arch") == "aarch64"
@@ -41,6 +43,11 @@ kotlin {
 
 
     sourceSets {
+        all {
+            languageSettings.apply {
+                optIn("kotlin.js.ExperimentalJsExport")
+            }
+        }
         val commonMain by getting
         val commonTest by getting {
             dependencies {

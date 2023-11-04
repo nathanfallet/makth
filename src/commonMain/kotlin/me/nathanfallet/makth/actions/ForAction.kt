@@ -1,5 +1,8 @@
 package me.nathanfallet.makth.actions
 
+import me.nathanfallet.makth.exceptions.ExecutionException
+import me.nathanfallet.makth.exceptions.NotIterableException
+import me.nathanfallet.makth.exceptions.UnknownVariablesException
 import me.nathanfallet.makth.extensions.StringValue
 import me.nathanfallet.makth.extensions.indentedLines
 import me.nathanfallet.makth.interfaces.Action
@@ -8,7 +11,9 @@ import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.lexers.AlgorithmLexer.IncorrectArgumentCountException
 import me.nathanfallet.makth.lexers.AlgorithmLexer.IncorrectArgumentTypeException
 import me.nathanfallet.makth.resolvables.Context
-import me.nathanfallet.makth.resolvables.Variable
+import me.nathanfallet.makth.resolvables.variables.Variable
+import kotlin.js.JsExport
+import kotlin.jvm.JvmStatic
 
 /**
  * Action that executes a list of actions for a given set or interval.
@@ -16,6 +21,7 @@ import me.nathanfallet.makth.resolvables.Variable
  * @param iterable Iterable to iterate during the loop
  * @param actions Actions to execute while condition is true
  */
+@JsExport
 data class ForAction(val identifier: String, val iterable: Value, val actions: List<Action>) : Action {
 
     companion object {
@@ -25,6 +31,7 @@ data class ForAction(val identifier: String, val iterable: Value, val actions: L
          * @param args List of arguments
          * @return Action created from arguments
          */
+        @JvmStatic
         fun handler(args: List<Value>): Action {
             if (args.count() != 2) {
                 throw IncorrectArgumentCountException("for", args.count(), 2)
@@ -38,19 +45,19 @@ data class ForAction(val identifier: String, val iterable: Value, val actions: L
         }
     }
 
-    @Throws(Action.ExecutionException::class)
+    @Throws(ExecutionException::class)
     override fun execute(context: Context): Context {
         // Eval iterator
         val evaluatedIterable = iterable.compute(context)
 
         // Check if there are missing variables
         evaluatedIterable.variables.takeIf { it.isNotEmpty() }?.let {
-            throw Action.UnknownVariablesException(this, context, it)
+            throw UnknownVariablesException(this, context, it)
         }
 
         // Check if condition is a boolean
         if (evaluatedIterable !is Iterable) {
-            throw Action.NotIterableException(this, context, evaluatedIterable)
+            throw NotIterableException(this, context, evaluatedIterable)
         }
 
         // Iterate

@@ -1,8 +1,8 @@
 package me.nathanfallet.makth.operations
 
-import me.nathanfallet.makth.numbers.Integer
+import me.nathanfallet.makth.numbers.integers.IntegerFactory
 import me.nathanfallet.makth.resolvables.Context
-import me.nathanfallet.makth.resolvables.Variable
+import me.nathanfallet.makth.resolvables.variables.VariableFactory
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -14,7 +14,7 @@ class ProductTest {
     fun rawString() {
         assertEquals(
             "1 * 2",
-            Product(Integer.instantiate(1), Integer.instantiate(2)).rawString
+            Product(IntegerFactory.instantiate(1), IntegerFactory.instantiate(2)).rawString
         )
     }
 
@@ -22,7 +22,10 @@ class ProductTest {
     fun toRawStringWithBraces() {
         assertEquals(
             "(1 + 2) * (3 + 4)",
-            Product(Sum(Integer.instantiate(1), Integer.instantiate(2)), Sum(Integer.instantiate(3), Integer.instantiate(4))).rawString
+            Product(
+                Sum(IntegerFactory.instantiate(1), IntegerFactory.instantiate(2)),
+                Sum(IntegerFactory.instantiate(3), IntegerFactory.instantiate(4))
+            ).rawString
         )
     }
 
@@ -30,7 +33,7 @@ class ProductTest {
     fun toRawStringWithMinus() {
         assertEquals(
             "-x",
-            Product(Integer.instantiate(-1), Variable.instantiate("x")).rawString
+            Product(IntegerFactory.instantiate(-1), VariableFactory.instantiate("x")).rawString
         )
     }
 
@@ -38,7 +41,7 @@ class ProductTest {
     fun laTeXString() {
         assertEquals(
             "1 \\times 2",
-            Product(Integer.instantiate(1), Integer.instantiate(2)).laTeXString
+            Product(IntegerFactory.instantiate(1), IntegerFactory.instantiate(2)).laTeXString
         )
     }
 
@@ -46,7 +49,10 @@ class ProductTest {
     fun toLaTeXStringWithBraces() {
         assertEquals(
             "(1 + 2) \\times (3 + 4)",
-            Product(Sum(Integer.instantiate(1), Integer.instantiate(2)), Sum(Integer.instantiate(3), Integer.instantiate(4))).laTeXString
+            Product(
+                Sum(IntegerFactory.instantiate(1), IntegerFactory.instantiate(2)),
+                Sum(IntegerFactory.instantiate(3), IntegerFactory.instantiate(4))
+            ).laTeXString
         )
     }
 
@@ -54,15 +60,15 @@ class ProductTest {
     fun toLaTeXStringWithMinus() {
         assertEquals(
             "-x",
-            Product(Integer.instantiate(-1), Variable.instantiate("x")).laTeXString
+            Product(IntegerFactory.instantiate(-1), VariableFactory.instantiate("x")).laTeXString
         )
     }
 
     @Test
     fun variables() {
         assertEquals(
-            setOf(Variable.instantiate("x"), Variable.instantiate("y")),
-            Product(Variable.instantiate("x"), Variable.instantiate("y")).variables
+            setOf(VariableFactory.instantiate("x"), VariableFactory.instantiate("y")),
+            Product(VariableFactory.instantiate("x"), VariableFactory.instantiate("y")).variables
         )
     }
 
@@ -70,8 +76,8 @@ class ProductTest {
     fun multiplyNaturals() {
         // Check that a product is computed correctly
         assertEquals(
-            Integer.instantiate(6),
-            Product(Integer.instantiate(2), Integer.instantiate(3)).compute(context)
+            IntegerFactory.instantiate(6),
+            Product(IntegerFactory.instantiate(2), IntegerFactory.instantiate(3)).compute(context)
         )
     }
 

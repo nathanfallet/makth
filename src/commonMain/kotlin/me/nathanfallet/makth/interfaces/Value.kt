@@ -1,11 +1,14 @@
 package me.nathanfallet.makth.interfaces
 
 import me.nathanfallet.makth.resolvables.Context
-import me.nathanfallet.makth.resolvables.Variable
+import me.nathanfallet.makth.resolvables.variables.Variable
+import kotlin.js.JsExport
+import kotlin.js.JsName
 
 /**
  * Interface for all values that can be computed
  */
+@JsExport
 interface Value: Output {
 
     /**
@@ -49,6 +52,7 @@ interface Value: Output {
      * @param right Right value
      * @return True if equals, false otherwise
      */
+    @JsName("equalsValue")
     fun equals(right: Value): Boolean {
         throw UnsupportedOperationException()
     }

@@ -3,14 +3,14 @@ package me.nathanfallet.makth.lexers
 import me.nathanfallet.makth.extensions.BooleanValue
 import me.nathanfallet.makth.extensions.StringValue
 import me.nathanfallet.makth.lexers.AlgorithmLexer.SyntaxException
-import me.nathanfallet.makth.numbers.Integer
-import me.nathanfallet.makth.numbers.Rational
-import me.nathanfallet.makth.numbers.Real
+import me.nathanfallet.makth.numbers.integers.IntegerFactory
+import me.nathanfallet.makth.numbers.rationals.RationalFactory
+import me.nathanfallet.makth.numbers.reals.RealFactory
 import me.nathanfallet.makth.operations.*
 import me.nathanfallet.makth.resolvables.Context
-import me.nathanfallet.makth.resolvables.Variable
-import me.nathanfallet.makth.sets.Matrix
-import me.nathanfallet.makth.sets.Vector
+import me.nathanfallet.makth.resolvables.variables.VariableFactory
+import me.nathanfallet.makth.sets.matrixes.MatrixFactory
+import me.nathanfallet.makth.sets.vectors.VectorFactory
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -21,7 +21,7 @@ class MathLexerTest {
 
     private val contextWithX = Context(
         mapOf(
-            "x" to Integer.instantiate(2)
+            "x" to IntegerFactory.instantiate(2)
         )
     )
 
@@ -57,44 +57,44 @@ class MathLexerTest {
 
     @Test
     fun parseVariable() {
-        assertEquals(Variable.instantiate("x"), MathLexer("x").execute(context))
+        assertEquals(VariableFactory.instantiate("x"), MathLexer("x").execute(context))
     }
 
     @Test
     fun parsePi() {
-        assertEquals(Real.pi, MathLexer("pi").execute(context))
-        assertEquals(Real.pi, MathLexer("\u03C0").execute(context))
+        assertEquals(RealFactory.pi, MathLexer("pi").execute(context))
+        assertEquals(RealFactory.pi, MathLexer("\u03C0").execute(context))
     }
 
     @Test
     fun parseInteger() {
-        assertEquals(Integer.instantiate(2), MathLexer("2").execute(context))
+        assertEquals(IntegerFactory.instantiate(2), MathLexer("2").execute(context))
     }
 
     @Test
     fun parseInteger2() {
-        assertEquals(Integer.instantiate(-2), MathLexer("-2").execute(context))
+        assertEquals(IntegerFactory.instantiate(-2), MathLexer("-2").execute(context))
     }
 
     @Test
     fun parseInteger3() {
-        assertEquals(Integer.instantiate(-2), MathLexer("(-2)").execute(context))
+        assertEquals(IntegerFactory.instantiate(-2), MathLexer("(-2)").execute(context))
     }
 
     @Test
     fun parseSum() {
-        assertEquals(Integer.instantiate(3), MathLexer("1 + 2").execute(context))
+        assertEquals(IntegerFactory.instantiate(3), MathLexer("1 + 2").execute(context))
     }
 
     @Test
     fun parseSum2() {
-        assertEquals(Integer.instantiate(-1), MathLexer("1 + (-2)").execute(context))
+        assertEquals(IntegerFactory.instantiate(-1), MathLexer("1 + (-2)").execute(context))
     }
 
     @Test
     fun parseSumWithVariable() {
         assertEquals(
-            Sum(Integer.instantiate(1), Variable.instantiate("x")),
+            Sum(IntegerFactory.instantiate(1), VariableFactory.instantiate("x")),
             MathLexer("1 + x").execute(context)
         )
     }
@@ -102,20 +102,23 @@ class MathLexerTest {
     @Test
     fun parseSumWithVariableAndContext() {
         assertEquals(
-            Integer.instantiate(3),
+            IntegerFactory.instantiate(3),
             MathLexer("1 + x").execute(contextWithX)
         )
     }
 
     @Test
     fun parseDifference() {
-        assertEquals(Integer.instantiate(-1), MathLexer("1 - 2").execute(context))
+        assertEquals(IntegerFactory.instantiate(-1), MathLexer("1 - 2").execute(context))
     }
 
     @Test
     fun parseDifferenceWithVariable() {
         assertEquals(
-            Sum(Integer.instantiate(1), Product(Integer.instantiate(-1), Variable.instantiate("x"))),
+            Sum(
+                IntegerFactory.instantiate(1),
+                Product(IntegerFactory.instantiate(-1), VariableFactory.instantiate("x"))
+            ),
             MathLexer("1 - x").execute(context)
         )
     }
@@ -123,25 +126,25 @@ class MathLexerTest {
     @Test
     fun parseDifferenceWithVariableAndContext() {
         assertEquals(
-            Integer.instantiate(-1),
+            IntegerFactory.instantiate(-1),
             MathLexer("1 - x").execute(contextWithX)
         )
     }
 
     @Test
     fun parseProduct() {
-        assertEquals(Integer.instantiate(6), MathLexer("2 * 3").execute(context))
+        assertEquals(IntegerFactory.instantiate(6), MathLexer("2 * 3").execute(context))
     }
 
     @Test
     fun parseProduct2() {
-        assertEquals(Integer.instantiate(-6), MathLexer("2 * (-3)").execute(context))
+        assertEquals(IntegerFactory.instantiate(-6), MathLexer("2 * (-3)").execute(context))
     }
 
     @Test
     fun parseProductWithVariable() {
         assertEquals(
-            Product(Integer.instantiate(2), Variable.instantiate("x")),
+            Product(IntegerFactory.instantiate(2), VariableFactory.instantiate("x")),
             MathLexer("2 * x").execute(context)
         )
     }
@@ -149,25 +152,25 @@ class MathLexerTest {
     @Test
     fun parseProductWithVariableAndContext() {
         assertEquals(
-            Integer.instantiate(4),
+            IntegerFactory.instantiate(4),
             MathLexer("2 * x").execute(contextWithX)
         )
     }
 
     @Test
     fun parseQuotient() {
-        assertEquals(Rational.instantiate(2, 3), MathLexer("2 / 3").execute(context))
+        assertEquals(RationalFactory.instantiate(2, 3), MathLexer("2 / 3").execute(context))
     }
 
     @Test
     fun parseQuotient2() {
-        assertEquals(Rational.instantiate(-2, 3), MathLexer("2 / (-3)").execute(context))
+        assertEquals(RationalFactory.instantiate(-2, 3), MathLexer("2 / (-3)").execute(context))
     }
 
     @Test
     fun parseQuotientWithVariable() {
         assertEquals(
-            Quotient(Integer.instantiate(2), Variable.instantiate("x")),
+            Quotient(IntegerFactory.instantiate(2), VariableFactory.instantiate("x")),
             MathLexer("2 / x").execute(context)
         )
     }
@@ -175,25 +178,25 @@ class MathLexerTest {
     @Test
     fun parseQuotientWithVariableAndContext() {
         assertEquals(
-            Integer.instantiate(1),
+            IntegerFactory.instantiate(1),
             MathLexer("2 / x").execute(contextWithX)
         )
     }
 
     @Test
     fun parseRemainder() {
-        assertEquals(Integer.instantiate(2), MathLexer("2 % 3").execute(context))
+        assertEquals(IntegerFactory.instantiate(2), MathLexer("2 % 3").execute(context))
     }
 
     @Test
     fun parseRemainder2() {
-        assertEquals(Integer.instantiate(2), MathLexer("2 % (-3)").execute(context))
+        assertEquals(IntegerFactory.instantiate(2), MathLexer("2 % (-3)").execute(context))
     }
 
     @Test
     fun parseRemainderWithVariable() {
         assertEquals(
-            Remainder(Integer.instantiate(2), Variable.instantiate("x")),
+            Remainder(IntegerFactory.instantiate(2), VariableFactory.instantiate("x")),
             MathLexer("2 % x").execute(context)
         )
     }
@@ -201,25 +204,25 @@ class MathLexerTest {
     @Test
     fun parseRemainderWithVariableAndContext() {
         assertEquals(
-            Integer.instantiate(0),
+            IntegerFactory.instantiate(0),
             MathLexer("2 % x").execute(contextWithX)
         )
     }
 
     @Test
     fun parseExponentiate() {
-        assertEquals(Integer.instantiate(8), MathLexer("2 ^ 3").execute(context))
+        assertEquals(IntegerFactory.instantiate(8), MathLexer("2 ^ 3").execute(context))
     }
 
     @Test
     fun parseExponentiate2() {
-        assertEquals(Rational.instantiate(1, 8), MathLexer("2 ^ (-3)").execute(context))
+        assertEquals(RationalFactory.instantiate(1, 8), MathLexer("2 ^ (-3)").execute(context))
     }
 
     @Test
     fun parseExponentiateWithVariable() {
         assertEquals(
-            Exponentiation(Integer.instantiate(2), Variable.instantiate("x")),
+            Exponentiation(IntegerFactory.instantiate(2), VariableFactory.instantiate("x")),
             MathLexer("2 ^ x").execute(context)
         )
     }
@@ -227,7 +230,7 @@ class MathLexerTest {
     @Test
     fun parseExponentiateWithVariableAndContext() {
         assertEquals(
-            Integer.instantiate(4),
+            IntegerFactory.instantiate(4),
             MathLexer("2 ^ x").execute(contextWithX)
         )
     }
@@ -235,7 +238,7 @@ class MathLexerTest {
     @Test
     fun parseExpressionWithParentheses() {
         assertEquals(
-            Integer.instantiate(9),
+            IntegerFactory.instantiate(9),
             MathLexer("(1 + 2) * (9 / (1 + 2))").execute(context)
         )
     }
@@ -243,7 +246,7 @@ class MathLexerTest {
     @Test
     fun parseExpressionWithoutParentheses() {
         assertEquals(
-            Integer.instantiate(26),
+            IntegerFactory.instantiate(26),
             MathLexer("2 * 3 + 4 * 5").execute(context)
         )
     }
@@ -251,7 +254,7 @@ class MathLexerTest {
     @Test
     fun parseEquality() {
         assertEquals(
-            Equality(Variable.instantiate("x"), Integer.instantiate(2)),
+            Equality(VariableFactory.instantiate("x"), IntegerFactory.instantiate(2)),
             MathLexer("x = 2").execute(context)
         )
     }
@@ -267,7 +270,7 @@ class MathLexerTest {
     @Test
     fun parseEqualityNotEquals() {
         assertEquals(
-            Equality(Variable.instantiate("x"), Integer.instantiate(2), Equality.Operator.NotEquals),
+            Equality(VariableFactory.instantiate("x"), IntegerFactory.instantiate(2), Equality.Operator.NotEquals),
             MathLexer("x != 2").execute(context)
         )
     }
@@ -275,7 +278,7 @@ class MathLexerTest {
     @Test
     fun parseEqualityLessThan() {
         assertEquals(
-            Equality(Variable.instantiate("x"), Integer.instantiate(2), Equality.Operator.LessThan),
+            Equality(VariableFactory.instantiate("x"), IntegerFactory.instantiate(2), Equality.Operator.LessThan),
             MathLexer("x < 2").execute(context)
         )
     }
@@ -283,7 +286,7 @@ class MathLexerTest {
     @Test
     fun parseEqualityGreaterThan() {
         assertEquals(
-            Equality(Variable.instantiate("x"), Integer.instantiate(2), Equality.Operator.GreaterThan),
+            Equality(VariableFactory.instantiate("x"), IntegerFactory.instantiate(2), Equality.Operator.GreaterThan),
             MathLexer("x > 2").execute(context)
         )
     }
@@ -291,7 +294,11 @@ class MathLexerTest {
     @Test
     fun parseEqualityLessThanOrEquals() {
         assertEquals(
-            Equality(Variable.instantiate("x"), Integer.instantiate(2), Equality.Operator.LessThanOrEquals),
+            Equality(
+                VariableFactory.instantiate("x"),
+                IntegerFactory.instantiate(2),
+                Equality.Operator.LessThanOrEquals
+            ),
             MathLexer("x <= 2").execute(context)
         )
     }
@@ -299,7 +306,11 @@ class MathLexerTest {
     @Test
     fun parseEqualityGreaterThanOrEquals() {
         assertEquals(
-            Equality(Variable.instantiate("x"), Integer.instantiate(2), Equality.Operator.GreaterThanOrEquals),
+            Equality(
+                VariableFactory.instantiate("x"),
+                IntegerFactory.instantiate(2),
+                Equality.Operator.GreaterThanOrEquals
+            ),
             MathLexer("x >= 2").execute(context)
         )
     }
@@ -307,7 +318,13 @@ class MathLexerTest {
     @Test
     fun parseVector() {
         assertEquals(
-            Vector.instantiate(listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3))),
+            VectorFactory.instantiate(
+                listOf(
+                    IntegerFactory.instantiate(1),
+                    IntegerFactory.instantiate(2),
+                    IntegerFactory.instantiate(3)
+                )
+            ),
             MathLexer("(1; 2; 3)").execute(context)
         )
     }
@@ -315,10 +332,11 @@ class MathLexerTest {
     @Test
     fun parseMatrix() {
         assertEquals(
-            Matrix.instantiate(listOf(
-                listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3)),
-                listOf(Integer.instantiate(4), Integer.instantiate(5), Integer.instantiate(6)),
-                listOf(Integer.instantiate(7), Integer.instantiate(8), Integer.instantiate(9))
+            MatrixFactory.instantiate(
+                listOf(
+                    listOf(IntegerFactory.instantiate(1), IntegerFactory.instantiate(2), IntegerFactory.instantiate(3)),
+                    listOf(IntegerFactory.instantiate(4), IntegerFactory.instantiate(5), IntegerFactory.instantiate(6)),
+                    listOf(IntegerFactory.instantiate(7), IntegerFactory.instantiate(8), IntegerFactory.instantiate(9))
             )),
             MathLexer("(1, 2, 3; 4, 5, 6; 7, 8, 9)").execute(context)
         )

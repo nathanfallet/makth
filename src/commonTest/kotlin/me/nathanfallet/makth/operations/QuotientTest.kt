@@ -1,8 +1,8 @@
 package me.nathanfallet.makth.operations
 
-import me.nathanfallet.makth.numbers.Integer
+import me.nathanfallet.makth.numbers.integers.IntegerFactory
 import me.nathanfallet.makth.resolvables.Context
-import me.nathanfallet.makth.resolvables.Variable
+import me.nathanfallet.makth.resolvables.variables.VariableFactory
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -14,7 +14,7 @@ class QuotientTest {
     fun rawString() {
         assertEquals(
             "1 / 2",
-            Quotient(Integer.instantiate(1), Integer.instantiate(2)).rawString
+            Quotient(IntegerFactory.instantiate(1), IntegerFactory.instantiate(2)).rawString
         )
     }
 
@@ -22,7 +22,10 @@ class QuotientTest {
     fun toRawStringWithBraces() {
         assertEquals(
             "(1 + 2) / (3 + 4)",
-            Quotient(Sum(Integer.instantiate(1), Integer.instantiate(2)), Sum(Integer.instantiate(3), Integer.instantiate(4))).rawString
+            Quotient(
+                Sum(IntegerFactory.instantiate(1), IntegerFactory.instantiate(2)),
+                Sum(IntegerFactory.instantiate(3), IntegerFactory.instantiate(4))
+            ).rawString
         )
     }
 
@@ -30,7 +33,7 @@ class QuotientTest {
     fun laTeXString() {
         assertEquals(
             "\\frac{1}{2}",
-            Quotient(Integer.instantiate(1), Integer.instantiate(2)).laTeXString
+            Quotient(IntegerFactory.instantiate(1), IntegerFactory.instantiate(2)).laTeXString
         )
     }
 
@@ -38,15 +41,18 @@ class QuotientTest {
     fun toLaTeXStringWithBraces() {
         assertEquals(
             "\\frac{1 + 2}{3 + 4}",
-            Quotient(Sum(Integer.instantiate(1), Integer.instantiate(2)), Sum(Integer.instantiate(3), Integer.instantiate(4))).laTeXString
+            Quotient(
+                Sum(IntegerFactory.instantiate(1), IntegerFactory.instantiate(2)),
+                Sum(IntegerFactory.instantiate(3), IntegerFactory.instantiate(4))
+            ).laTeXString
         )
     }
 
     @Test
     fun variables() {
         assertEquals(
-            setOf(Variable.instantiate("x"), Variable.instantiate("y")),
-            Quotient(Variable.instantiate("x"), Variable.instantiate("y")).variables
+            setOf(VariableFactory.instantiate("x"), VariableFactory.instantiate("y")),
+            Quotient(VariableFactory.instantiate("x"), VariableFactory.instantiate("y")).variables
         )
     }
 
@@ -54,8 +60,8 @@ class QuotientTest {
     fun divideNaturals() {
         // Check that a quotient is computed correctly
         assertEquals(
-            Integer.instantiate(2),
-            Quotient(Integer.instantiate(6), Integer.instantiate(3)).compute(context)
+            IntegerFactory.instantiate(2),
+            Quotient(IntegerFactory.instantiate(6), IntegerFactory.instantiate(3)).compute(context)
         )
     }
 

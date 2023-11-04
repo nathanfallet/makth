@@ -1,11 +1,17 @@
 package me.nathanfallet.makth.actions
 
+import me.nathanfallet.makth.exceptions.ExecutionException
+import me.nathanfallet.makth.exceptions.NotABooleanException
+import me.nathanfallet.makth.exceptions.UnknownVariablesException
 import me.nathanfallet.makth.extensions.BooleanValue
 import me.nathanfallet.makth.extensions.indentedLines
 import me.nathanfallet.makth.interfaces.Action
 import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.lexers.AlgorithmLexer.IncorrectArgumentCountException
 import me.nathanfallet.makth.resolvables.Context
+import kotlin.js.JsExport
+import kotlin.jvm.JvmOverloads
+import kotlin.jvm.JvmStatic
 
 /**
  * Action that executes a list of actions if a condition is true,
@@ -14,7 +20,8 @@ import me.nathanfallet.makth.resolvables.Context
  * @param actions Actions to execute if condition is true
  * @param elseActions Actions to execute if condition is false
  */
-data class IfAction(
+@JsExport
+data class IfAction @JvmOverloads constructor(
         val condition: Value,
         val actions: List<Action>,
         val elseActions: List<Action> = listOf()
@@ -27,6 +34,7 @@ data class IfAction(
          * @param args List of arguments
          * @return Action created from arguments
          */
+        @JvmStatic
         fun handler(args: List<Value>): Action {
             if (args.count() != 1) {
                 throw IncorrectArgumentCountException("if", args.count(), 1)
@@ -35,19 +43,19 @@ data class IfAction(
         }
     }
 
-    @Throws(Action.ExecutionException::class)
+    @Throws(ExecutionException::class)
     override fun execute(context: Context): Context {
         // Eval condition
         val evaluatedCondition = condition.compute(context)
 
         // Check if there are missing variables
         evaluatedCondition.variables.takeIf { it.isNotEmpty() }?.let {
-            throw Action.UnknownVariablesException(this, context, it)
+            throw UnknownVariablesException(this, context, it)
         }
 
         // Check if condition is a boolean
         if (evaluatedCondition !is BooleanValue) {
-            throw Action.NotABooleanException(this, context, evaluatedCondition)
+            throw NotABooleanException(this, context, evaluatedCondition)
         }
 
         // Execute if it is true
