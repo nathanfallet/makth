@@ -12,7 +12,7 @@ A Kotlin library for algebra
 
 ## Installation and usage
 
-[Read documentation](https://docs.makth.org)
+[Read documentation](https://docs.makth.nathanfallet.me)
 
 ## Donate to the developer
 
