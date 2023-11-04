@@ -3,7 +3,8 @@ package me.nathanfallet.makth.operations
 import me.nathanfallet.makth.extensions.BooleanValue
 import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.resolvables.Context
-import me.nathanfallet.makth.resolvables.Variable
+import me.nathanfallet.makth.resolvables.variables.Variable
+import kotlin.js.JsExport
 
 /**
  * Equality operation.
@@ -11,6 +12,7 @@ import me.nathanfallet.makth.resolvables.Variable
  * @param right Right value
  * @param operator Operator, default to Equals
  */
+@JsExport
 data class Equality(
     val left: Value,
     val right: Value,
@@ -85,7 +87,7 @@ data class Equality(
     }
 
     override val mainPrecedence: Int get() {
-        return Operation.Utils.getPrecedence("=")
+        return OperationFactory.getPrecedence("=")
     }
 
     override fun equals(right: Value): Boolean {

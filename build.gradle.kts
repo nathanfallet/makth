@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "me.nathanfallet.makth"
-version = "1.2.1"
+version = "1.2.2"
 
 repositories {
     mavenCentral()
@@ -41,6 +41,11 @@ kotlin {
 
 
     sourceSets {
+        all {
+            languageSettings.apply {
+                optIn("kotlin.js.ExperimentalJsExport")
+            }
+        }
         val commonMain by getting
         val commonTest by getting {
             dependencies {

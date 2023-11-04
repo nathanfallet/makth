@@ -1,13 +1,14 @@
 package me.nathanfallet.makth.actions
 
+import me.nathanfallet.makth.exceptions.NotIterableException
+import me.nathanfallet.makth.exceptions.UnknownVariablesException
 import me.nathanfallet.makth.extensions.BooleanValue
 import me.nathanfallet.makth.extensions.StringValue
-import me.nathanfallet.makth.interfaces.Action
 import me.nathanfallet.makth.lexers.AlgorithmLexer.IncorrectArgumentCountException
-import me.nathanfallet.makth.numbers.Integer
+import me.nathanfallet.makth.numbers.integers.IntegerFactory
 import me.nathanfallet.makth.resolvables.Context
-import me.nathanfallet.makth.resolvables.Variable
-import me.nathanfallet.makth.sets.Vector
+import me.nathanfallet.makth.resolvables.variables.VariableFactory
+import me.nathanfallet.makth.sets.vectors.VectorFactory
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -18,12 +19,12 @@ class ForActionTest {
 
     private val contextWithOutput = Context(
         mapOf(
-            "x" to Integer.instantiate(3)
+            "x" to IntegerFactory.instantiate(3)
         ),
         listOf(
-            Integer.instantiate(1), StringValue("\n"),
-            Integer.instantiate(2), StringValue("\n"),
-            Integer.instantiate(3), StringValue("\n")
+            IntegerFactory.instantiate(1), StringValue("\n"),
+            IntegerFactory.instantiate(2), StringValue("\n"),
+            IntegerFactory.instantiate(3), StringValue("\n")
         )
     )
 
@@ -33,7 +34,13 @@ class ForActionTest {
             "for (x, (1; 2; 3)) {\n}",
             ForAction(
                 "x",
-                Vector.instantiate(listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3))),
+                VectorFactory.instantiate(
+                    listOf(
+                        IntegerFactory.instantiate(1),
+                        IntegerFactory.instantiate(2),
+                        IntegerFactory.instantiate(3)
+                    )
+                ),
                 listOf()
             ).algorithmString
         )
@@ -45,8 +52,14 @@ class ForActionTest {
             "for (x, (1; 2; 3)) {\n    print(x)\n}",
             ForAction(
                 "x",
-                Vector.instantiate(listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3))),
-                listOf(PrintAction(listOf(Variable.instantiate("x"))))
+                VectorFactory.instantiate(
+                    listOf(
+                        IntegerFactory.instantiate(1),
+                        IntegerFactory.instantiate(2),
+                        IntegerFactory.instantiate(3)
+                    )
+                ),
+                listOf(PrintAction(listOf(VariableFactory.instantiate("x"))))
             ).algorithmString
         )
     }
@@ -56,12 +69,24 @@ class ForActionTest {
         assertEquals(
             ForAction(
                 "x",
-                Vector.instantiate(listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3))),
+                VectorFactory.instantiate(
+                    listOf(
+                        IntegerFactory.instantiate(1),
+                        IntegerFactory.instantiate(2),
+                        IntegerFactory.instantiate(3)
+                    )
+                ),
                 listOf()
             ),
             ForAction.handler(listOf(
-                Variable.instantiate("x"),
-                Vector.instantiate(listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3)))
+                VariableFactory.instantiate("x"),
+                VectorFactory.instantiate(
+                    listOf(
+                        IntegerFactory.instantiate(1),
+                        IntegerFactory.instantiate(2),
+                        IntegerFactory.instantiate(3)
+                    )
+                )
             ))
         )
     }
@@ -80,8 +105,14 @@ class ForActionTest {
             context.execute(
                 ForAction(
                     "x",
-                    Vector.instantiate(listOf(Integer.instantiate(1), Integer.instantiate(2), Integer.instantiate(3))),
-                    listOf(PrintAction(listOf(Variable.instantiate("x"))))
+                    VectorFactory.instantiate(
+                        listOf(
+                            IntegerFactory.instantiate(1),
+                            IntegerFactory.instantiate(2),
+                            IntegerFactory.instantiate(3)
+                        )
+                    ),
+                    listOf(PrintAction(listOf(VariableFactory.instantiate("x"))))
                 )
             )
         )
@@ -89,16 +120,16 @@ class ForActionTest {
 
     @Test
     fun forWithPrintWithoutContext() {
-        assertFailsWith(Action.UnknownVariablesException::class) {
+        assertFailsWith(UnknownVariablesException::class) {
             context.execute(
-                ForAction("x", Variable.instantiate("y"), listOf())
+                ForAction("x", VariableFactory.instantiate("y"), listOf())
             )
         }
     }
 
     @Test
     fun forWhenNotIterable() {
-        assertFailsWith(Action.NotIterableException::class) {
+        assertFailsWith(NotIterableException::class) {
             context.execute(
                 ForAction("x", BooleanValue(true), listOf())
             )

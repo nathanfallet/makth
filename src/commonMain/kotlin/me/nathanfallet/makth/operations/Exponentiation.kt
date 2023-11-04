@@ -2,13 +2,15 @@ package me.nathanfallet.makth.operations
 
 import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.resolvables.Context
-import me.nathanfallet.makth.resolvables.Variable
+import me.nathanfallet.makth.resolvables.variables.Variable
+import kotlin.js.JsExport
 
 /**
  * Exponentiation operation.
  * @param left Left value
  * @param right Right value
  */
+@JsExport
 data class Exponentiation(
     val left: Value,
     val right: Value
@@ -46,7 +48,7 @@ data class Exponentiation(
     }
 
     override val mainPrecedence: Int get() {
-        return Operation.Utils.getPrecedence("^")
+        return OperationFactory.getPrecedence("^")
     }
 
     override fun equals(right: Value): Boolean {

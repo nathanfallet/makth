@@ -1,12 +1,13 @@
 package me.nathanfallet.makth.actions
 
-import me.nathanfallet.makth.interfaces.Action
+import me.nathanfallet.makth.exceptions.NotABooleanException
+import me.nathanfallet.makth.exceptions.UnknownVariablesException
 import me.nathanfallet.makth.lexers.AlgorithmLexer.IncorrectArgumentCountException
-import me.nathanfallet.makth.numbers.Integer
+import me.nathanfallet.makth.numbers.integers.IntegerFactory
 import me.nathanfallet.makth.operations.Equality
 import me.nathanfallet.makth.operations.Sum
 import me.nathanfallet.makth.resolvables.Context
-import me.nathanfallet.makth.resolvables.Variable
+import me.nathanfallet.makth.resolvables.variables.VariableFactory
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -17,13 +18,13 @@ class WhileActionTest {
 
     private val contextWithX = Context(
         mapOf(
-            "x" to Integer.instantiate(2)
+            "x" to IntegerFactory.instantiate(2)
         )
     )
 
     private val contextWithXIncremented = Context(
         mapOf(
-            "x" to Integer.instantiate(10)
+            "x" to IntegerFactory.instantiate(10)
         )
     )
 
@@ -33,8 +34,8 @@ class WhileActionTest {
             "while (x < 10) {\n}",
             WhileAction(
                 Equality(
-                    Variable.instantiate("x"),
-                    Integer.instantiate(10),
+                    VariableFactory.instantiate("x"),
+                    IntegerFactory.instantiate(10),
                     Equality.Operator.LessThan
                 ), listOf()
             ).algorithmString
@@ -46,8 +47,8 @@ class WhileActionTest {
         assertEquals(
             "while (x < 10) {\n    set(x, x + 1)\n}",
             WhileAction(
-                Equality(Variable.instantiate("x"), Integer.instantiate(10), Equality.Operator.LessThan),
-                listOf(SetAction("x", Sum(Variable.instantiate("x"), Integer.instantiate(1))))
+                Equality(VariableFactory.instantiate("x"), IntegerFactory.instantiate(10), Equality.Operator.LessThan),
+                listOf(SetAction("x", Sum(VariableFactory.instantiate("x"), IntegerFactory.instantiate(1))))
             ).algorithmString
         )
     }
@@ -56,10 +57,10 @@ class WhileActionTest {
     fun handler() {
         assertEquals(
             WhileAction(
-                Equality(Variable.instantiate("x"), Integer.instantiate(2)),
+                Equality(VariableFactory.instantiate("x"), IntegerFactory.instantiate(2)),
                 listOf()
             ),
-            WhileAction.handler(listOf(Equality(Variable.instantiate("x"), Integer.instantiate(2))))
+            WhileAction.handler(listOf(Equality(VariableFactory.instantiate("x"), IntegerFactory.instantiate(2))))
         )
     }
 
@@ -76,8 +77,12 @@ class WhileActionTest {
             contextWithXIncremented,
             contextWithX.execute(
                 WhileAction(
-                    Equality(Variable.instantiate("x"), Integer.instantiate(10), Equality.Operator.LessThan),
-                    listOf(SetAction("x", Sum(Variable.instantiate("x"), Integer.instantiate(1))))
+                    Equality(
+                        VariableFactory.instantiate("x"),
+                        IntegerFactory.instantiate(10),
+                        Equality.Operator.LessThan
+                    ),
+                    listOf(SetAction("x", Sum(VariableFactory.instantiate("x"), IntegerFactory.instantiate(1))))
                 )
             )
         )
@@ -85,10 +90,10 @@ class WhileActionTest {
 
     @Test
     fun whileWithVariableWithoutContext() {
-        assertFailsWith(Action.UnknownVariablesException::class) {
+        assertFailsWith(UnknownVariablesException::class) {
             context.execute(
                 WhileAction(
-                    Equality(Variable.instantiate("x"), Integer.instantiate(2)),
+                    Equality(VariableFactory.instantiate("x"), IntegerFactory.instantiate(2)),
                     listOf()
                 )
             )
@@ -97,10 +102,10 @@ class WhileActionTest {
 
     @Test
     fun whileWhenNotABoolean() {
-        assertFailsWith(Action.NotABooleanException::class) {
+        assertFailsWith(NotABooleanException::class) {
             contextWithX.execute(
                 WhileAction(
-                    Variable.instantiate("x"),
+                    VariableFactory.instantiate("x"),
                     listOf()
                 )
             )

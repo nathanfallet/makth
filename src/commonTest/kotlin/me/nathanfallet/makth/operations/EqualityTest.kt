@@ -1,10 +1,10 @@
 package me.nathanfallet.makth.operations
 
 import me.nathanfallet.makth.extensions.BooleanValue
-import me.nathanfallet.makth.numbers.Integer
+import me.nathanfallet.makth.numbers.integers.IntegerFactory
 import me.nathanfallet.makth.resolvables.Context
-import me.nathanfallet.makth.resolvables.Variable
-import me.nathanfallet.makth.sets.Matrix
+import me.nathanfallet.makth.resolvables.variables.VariableFactory
+import me.nathanfallet.makth.sets.matrixes.MatrixFactory
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -14,7 +14,7 @@ class EqualityTest {
 
     private val contextWithX = Context(
         mapOf(
-            "x" to Integer.instantiate(2)
+            "x" to IntegerFactory.instantiate(2)
         )
     )
 
@@ -23,8 +23,8 @@ class EqualityTest {
         assertEquals(
             BooleanValue(true),
             Equality(
-                Integer.instantiate(1),
-                Integer.instantiate(1),
+                IntegerFactory.instantiate(1),
+                IntegerFactory.instantiate(1),
                 Equality.Operator.Equals
             ).compute(context)
         )
@@ -35,8 +35,8 @@ class EqualityTest {
         assertEquals(
             BooleanValue(false),
             Equality(
-                Integer.instantiate(1),
-                Integer.instantiate(2),
+                IntegerFactory.instantiate(1),
+                IntegerFactory.instantiate(2),
                 Equality.Operator.Equals
             ).compute(context)
         )
@@ -46,7 +46,7 @@ class EqualityTest {
     fun testEqualsTrueWithVariable() {
         assertEquals(
             BooleanValue(true),
-            Equality(Variable.instantiate("x"), Integer.instantiate(2), Equality.Operator.Equals).compute(
+            Equality(VariableFactory.instantiate("x"), IntegerFactory.instantiate(2), Equality.Operator.Equals).compute(
                 contextWithX
             )
         )
@@ -57,13 +57,15 @@ class EqualityTest {
         assertEquals(
             BooleanValue(true),
             Equality(
-                Matrix.instantiate(listOf(
-                    listOf(Integer.instantiate(1), Integer.instantiate(2)),
-                    listOf(Integer.instantiate(3), Integer.instantiate(4))
+                MatrixFactory.instantiate(
+                    listOf(
+                        listOf(IntegerFactory.instantiate(1), IntegerFactory.instantiate(2)),
+                        listOf(IntegerFactory.instantiate(3), IntegerFactory.instantiate(4))
                 )),
-                Matrix.instantiate(listOf(
-                    listOf(Integer.instantiate(1), Integer.instantiate(2)),
-                    listOf(Integer.instantiate(3), Integer.instantiate(4))
+                MatrixFactory.instantiate(
+                    listOf(
+                        listOf(IntegerFactory.instantiate(1), IntegerFactory.instantiate(2)),
+                        listOf(IntegerFactory.instantiate(3), IntegerFactory.instantiate(4))
                 )),
                 Equality.Operator.Equals
             ).compute(context)
@@ -75,13 +77,15 @@ class EqualityTest {
         assertEquals(
             BooleanValue(false),
             Equality(
-                Matrix.instantiate(listOf(
-                    listOf(Integer.instantiate(1), Integer.instantiate(2)),
-                    listOf(Integer.instantiate(3), Integer.instantiate(4))
+                MatrixFactory.instantiate(
+                    listOf(
+                        listOf(IntegerFactory.instantiate(1), IntegerFactory.instantiate(2)),
+                        listOf(IntegerFactory.instantiate(3), IntegerFactory.instantiate(4))
                 )),
-                Matrix.instantiate(listOf(
-                    listOf(Integer.instantiate(1), Integer.instantiate(2)),
-                    listOf(Integer.instantiate(4), Integer.instantiate(3))
+                MatrixFactory.instantiate(
+                    listOf(
+                        listOf(IntegerFactory.instantiate(1), IntegerFactory.instantiate(2)),
+                        listOf(IntegerFactory.instantiate(4), IntegerFactory.instantiate(3))
                 )),
                 Equality.Operator.Equals
             ).compute(context)
@@ -92,7 +96,7 @@ class EqualityTest {
     fun equalsrawString() {
         assertEquals(
             "1 = 2",
-            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.Equals).rawString
+            Equality(IntegerFactory.instantiate(1), IntegerFactory.instantiate(2), Equality.Operator.Equals).rawString
         )
     }
 
@@ -100,7 +104,7 @@ class EqualityTest {
     fun equalslaTeXString() {
         assertEquals(
             "1 \\eq 2",
-            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.Equals).laTeXString
+            Equality(IntegerFactory.instantiate(1), IntegerFactory.instantiate(2), Equality.Operator.Equals).laTeXString
         )
     }
 
@@ -109,8 +113,8 @@ class EqualityTest {
         assertEquals(
             BooleanValue(true),
             Equality(
-                Integer.instantiate(1),
-                Integer.instantiate(2),
+                IntegerFactory.instantiate(1),
+                IntegerFactory.instantiate(2),
                 Equality.Operator.NotEquals
             ).compute(context)
         )
@@ -121,8 +125,8 @@ class EqualityTest {
         assertEquals(
             BooleanValue(false),
             Equality(
-                Integer.instantiate(1),
-                Integer.instantiate(1),
+                IntegerFactory.instantiate(1),
+                IntegerFactory.instantiate(1),
                 Equality.Operator.NotEquals
             ).compute(context)
         )
@@ -133,13 +137,15 @@ class EqualityTest {
         assertEquals(
             BooleanValue(true),
             Equality(
-                Matrix.instantiate(listOf(
-                    listOf(Integer.instantiate(1), Integer.instantiate(2)),
-                    listOf(Integer.instantiate(3), Integer.instantiate(4))
+                MatrixFactory.instantiate(
+                    listOf(
+                        listOf(IntegerFactory.instantiate(1), IntegerFactory.instantiate(2)),
+                        listOf(IntegerFactory.instantiate(3), IntegerFactory.instantiate(4))
                 )),
-                Matrix.instantiate(listOf(
-                    listOf(Integer.instantiate(1), Integer.instantiate(2)),
-                    listOf(Integer.instantiate(4), Integer.instantiate(3))
+                MatrixFactory.instantiate(
+                    listOf(
+                        listOf(IntegerFactory.instantiate(1), IntegerFactory.instantiate(2)),
+                        listOf(IntegerFactory.instantiate(4), IntegerFactory.instantiate(3))
                 )),
                 Equality.Operator.NotEquals
             ).compute(context)
@@ -151,13 +157,15 @@ class EqualityTest {
         assertEquals(
             BooleanValue(false),
             Equality(
-                Matrix.instantiate(listOf(
-                    listOf(Integer.instantiate(1), Integer.instantiate(2)),
-                    listOf(Integer.instantiate(3), Integer.instantiate(4))
+                MatrixFactory.instantiate(
+                    listOf(
+                        listOf(IntegerFactory.instantiate(1), IntegerFactory.instantiate(2)),
+                        listOf(IntegerFactory.instantiate(3), IntegerFactory.instantiate(4))
                 )),
-                Matrix.instantiate(listOf(
-                    listOf(Integer.instantiate(1), Integer.instantiate(2)),
-                    listOf(Integer.instantiate(3), Integer.instantiate(4))
+                MatrixFactory.instantiate(
+                    listOf(
+                        listOf(IntegerFactory.instantiate(1), IntegerFactory.instantiate(2)),
+                        listOf(IntegerFactory.instantiate(3), IntegerFactory.instantiate(4))
                 )),
                 Equality.Operator.NotEquals
             ).compute(context)
@@ -168,7 +176,11 @@ class EqualityTest {
     fun notEqualsRawString() {
         assertEquals(
             "1 != 2",
-            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.NotEquals).rawString
+            Equality(
+                IntegerFactory.instantiate(1),
+                IntegerFactory.instantiate(2),
+                Equality.Operator.NotEquals
+            ).rawString
         )
     }
 
@@ -176,7 +188,11 @@ class EqualityTest {
     fun notEqualsLaTeXString() {
         assertEquals(
             "1 \\ne 2",
-            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.NotEquals).laTeXString
+            Equality(
+                IntegerFactory.instantiate(1),
+                IntegerFactory.instantiate(2),
+                Equality.Operator.NotEquals
+            ).laTeXString
         )
     }
 
@@ -185,8 +201,8 @@ class EqualityTest {
         assertEquals(
             BooleanValue(true),
             Equality(
-                Integer.instantiate(1),
-                Integer.instantiate(2),
+                IntegerFactory.instantiate(1),
+                IntegerFactory.instantiate(2),
                 Equality.Operator.LessThan
             ).compute(context)
         )
@@ -197,8 +213,8 @@ class EqualityTest {
         assertEquals(
             BooleanValue(false),
             Equality(
-                Integer.instantiate(2),
-                Integer.instantiate(1),
+                IntegerFactory.instantiate(2),
+                IntegerFactory.instantiate(1),
                 Equality.Operator.LessThan
             ).compute(context)
         )
@@ -209,8 +225,8 @@ class EqualityTest {
         assertEquals(
             BooleanValue(false),
             Equality(
-                Integer.instantiate(2),
-                Integer.instantiate(2),
+                IntegerFactory.instantiate(2),
+                IntegerFactory.instantiate(2),
                 Equality.Operator.LessThan
             ).compute(context)
         )
@@ -220,7 +236,7 @@ class EqualityTest {
     fun lessThanRawString() {
         assertEquals(
             "1 < 2",
-            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.LessThan).rawString
+            Equality(IntegerFactory.instantiate(1), IntegerFactory.instantiate(2), Equality.Operator.LessThan).rawString
         )
     }
 
@@ -228,7 +244,11 @@ class EqualityTest {
     fun lessThanLaTeXString() {
         assertEquals(
             "1 \\lt 2",
-            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.LessThan).laTeXString
+            Equality(
+                IntegerFactory.instantiate(1),
+                IntegerFactory.instantiate(2),
+                Equality.Operator.LessThan
+            ).laTeXString
         )
     }
 
@@ -237,8 +257,8 @@ class EqualityTest {
         assertEquals(
             BooleanValue(true),
             Equality(
-                Integer.instantiate(2),
-                Integer.instantiate(1),
+                IntegerFactory.instantiate(2),
+                IntegerFactory.instantiate(1),
                 Equality.Operator.GreaterThan
             ).compute(context)
         )
@@ -249,8 +269,8 @@ class EqualityTest {
         assertEquals(
             BooleanValue(false),
             Equality(
-                Integer.instantiate(1),
-                Integer.instantiate(2),
+                IntegerFactory.instantiate(1),
+                IntegerFactory.instantiate(2),
                 Equality.Operator.GreaterThan
             ).compute(context)
         )
@@ -261,8 +281,8 @@ class EqualityTest {
         assertEquals(
             BooleanValue(false),
             Equality(
-                Integer.instantiate(2),
-                Integer.instantiate(2),
+                IntegerFactory.instantiate(2),
+                IntegerFactory.instantiate(2),
                 Equality.Operator.GreaterThan
             ).compute(context)
         )
@@ -272,7 +292,11 @@ class EqualityTest {
     fun greaterThanRawString() {
         assertEquals(
             "1 > 2",
-            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.GreaterThan).rawString
+            Equality(
+                IntegerFactory.instantiate(1),
+                IntegerFactory.instantiate(2),
+                Equality.Operator.GreaterThan
+            ).rawString
         )
     }
 
@@ -280,7 +304,11 @@ class EqualityTest {
     fun greaterThanLaTeXString() {
         assertEquals(
             "1 \\gt 2",
-            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.GreaterThan).laTeXString
+            Equality(
+                IntegerFactory.instantiate(1),
+                IntegerFactory.instantiate(2),
+                Equality.Operator.GreaterThan
+            ).laTeXString
         )
     }
 
@@ -289,8 +317,8 @@ class EqualityTest {
         assertEquals(
             BooleanValue(true),
             Equality(
-                Integer.instantiate(1),
-                Integer.instantiate(2),
+                IntegerFactory.instantiate(1),
+                IntegerFactory.instantiate(2),
                 Equality.Operator.LessThanOrEquals
             ).compute(context)
         )
@@ -301,8 +329,8 @@ class EqualityTest {
         assertEquals(
             BooleanValue(true),
             Equality(
-                Integer.instantiate(1),
-                Integer.instantiate(1),
+                IntegerFactory.instantiate(1),
+                IntegerFactory.instantiate(1),
                 Equality.Operator.LessThanOrEquals
             ).compute(context)
         )
@@ -313,8 +341,8 @@ class EqualityTest {
         assertEquals(
             BooleanValue(false),
             Equality(
-                Integer.instantiate(2),
-                Integer.instantiate(1),
+                IntegerFactory.instantiate(2),
+                IntegerFactory.instantiate(1),
                 Equality.Operator.LessThanOrEquals
             ).compute(context)
         )
@@ -324,7 +352,11 @@ class EqualityTest {
     fun lessThanOrEqualsRawString() {
         assertEquals(
             "1 <= 2",
-            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.LessThanOrEquals).rawString
+            Equality(
+                IntegerFactory.instantiate(1),
+                IntegerFactory.instantiate(2),
+                Equality.Operator.LessThanOrEquals
+            ).rawString
         )
     }
 
@@ -332,7 +364,11 @@ class EqualityTest {
     fun lessThanOrEqualsRaTeXString() {
         assertEquals(
             "1 \\le 2",
-            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.LessThanOrEquals).laTeXString
+            Equality(
+                IntegerFactory.instantiate(1),
+                IntegerFactory.instantiate(2),
+                Equality.Operator.LessThanOrEquals
+            ).laTeXString
         )
     }
 
@@ -341,8 +377,8 @@ class EqualityTest {
         assertEquals(
             BooleanValue(true),
             Equality(
-                Integer.instantiate(2),
-                Integer.instantiate(1),
+                IntegerFactory.instantiate(2),
+                IntegerFactory.instantiate(1),
                 Equality.Operator.GreaterThanOrEquals
             ).compute(context)
         )
@@ -353,8 +389,8 @@ class EqualityTest {
         assertEquals(
             BooleanValue(true),
             Equality(
-                Integer.instantiate(1),
-                Integer.instantiate(1),
+                IntegerFactory.instantiate(1),
+                IntegerFactory.instantiate(1),
                 Equality.Operator.GreaterThanOrEquals
             ).compute(context)
         )
@@ -365,8 +401,8 @@ class EqualityTest {
         assertEquals(
             BooleanValue(false),
             Equality(
-                Integer.instantiate(1),
-                Integer.instantiate(2),
+                IntegerFactory.instantiate(1),
+                IntegerFactory.instantiate(2),
                 Equality.Operator.GreaterThanOrEquals
             ).compute(context)
         )
@@ -376,7 +412,11 @@ class EqualityTest {
     fun greaterThanOrEqualsRawString() {
         assertEquals(
             "1 >= 2",
-            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.GreaterThanOrEquals).rawString
+            Equality(
+                IntegerFactory.instantiate(1),
+                IntegerFactory.instantiate(2),
+                Equality.Operator.GreaterThanOrEquals
+            ).rawString
         )
     }
 
@@ -384,7 +424,11 @@ class EqualityTest {
     fun greaterThanOrEqualsLaTeXString() {
         assertEquals(
             "1 \\ge 2",
-            Equality(Integer.instantiate(1), Integer.instantiate(2), Equality.Operator.GreaterThanOrEquals).laTeXString
+            Equality(
+                IntegerFactory.instantiate(1),
+                IntegerFactory.instantiate(2),
+                Equality.Operator.GreaterThanOrEquals
+            ).laTeXString
         )
     }
 

@@ -8,11 +8,11 @@ import me.nathanfallet.makth.extensions.StringValue
 import me.nathanfallet.makth.interfaces.Action
 import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.lexers.AlgorithmLexer.IncorrectArgumentCountException
-import me.nathanfallet.makth.numbers.Integer
+import me.nathanfallet.makth.numbers.integers.IntegerFactory
 import me.nathanfallet.makth.operations.Equality
 import me.nathanfallet.makth.operations.Sum
 import me.nathanfallet.makth.resolvables.Context
-import me.nathanfallet.makth.resolvables.Variable
+import me.nathanfallet.makth.resolvables.variables.VariableFactory
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -23,8 +23,8 @@ class AlgorithmLexerTest {
     fun parseSingleLineComment() {
         assertEquals(
             listOf(
-                PrintAction(listOf(Integer.instantiate(2))),
-                PrintAction(listOf(Integer.instantiate(3)))
+                PrintAction(listOf(IntegerFactory.instantiate(2))),
+                PrintAction(listOf(IntegerFactory.instantiate(3)))
             ),
             AlgorithmLexer("print(2) // Prints 2\nprint(3) // Prints 3").execute()
         )
@@ -34,8 +34,8 @@ class AlgorithmLexerTest {
     fun parseMultiLineComment() {
         assertEquals(
             listOf(
-                PrintAction(listOf(Integer.instantiate(2))),
-                PrintAction(listOf(Integer.instantiate(3)))
+                PrintAction(listOf(IntegerFactory.instantiate(2))),
+                PrintAction(listOf(IntegerFactory.instantiate(3)))
             ),
             AlgorithmLexer("print(2) /* Prints 2 */ print(3) /* Prints 3 */").execute()
         )
@@ -45,7 +45,7 @@ class AlgorithmLexerTest {
     fun parseIfAction() {
         assertEquals(
             listOf(
-                IfAction(Equality(Variable.instantiate("x"), Integer.instantiate(2)), listOf())
+                IfAction(Equality(VariableFactory.instantiate("x"), IntegerFactory.instantiate(2)), listOf())
             ),
             AlgorithmLexer("if (x = 2)").execute()
         )
@@ -56,7 +56,7 @@ class AlgorithmLexerTest {
         assertEquals(
             listOf(
                 IfAction(
-                    Equality(Variable.instantiate("x"), Integer.instantiate(2)),
+                    Equality(VariableFactory.instantiate("x"), IntegerFactory.instantiate(2)),
                     listOf(
                         PrintAction(listOf(StringValue("Test")))
                     )
@@ -71,10 +71,10 @@ class AlgorithmLexerTest {
         assertEquals(
             listOf(
                 IfAction(
-                    Equality(Variable.instantiate("x"), Integer.instantiate(2)),
+                    Equality(VariableFactory.instantiate("x"), IntegerFactory.instantiate(2)),
                     listOf(
                         IfAction(
-                            Equality(Variable.instantiate("y"), Integer.instantiate(3)),
+                            Equality(VariableFactory.instantiate("y"), IntegerFactory.instantiate(3)),
                             listOf(
                                 PrintAction(listOf(StringValue("Test")))
                             )
@@ -91,7 +91,7 @@ class AlgorithmLexerTest {
         assertEquals(
             listOf(
                 IfAction(
-                    Equality(Variable.instantiate("x"), Integer.instantiate(2)),
+                    Equality(VariableFactory.instantiate("x"), IntegerFactory.instantiate(2)),
                     listOf(
                         PrintAction(listOf(StringValue("Test")))
                     ),
@@ -108,7 +108,7 @@ class AlgorithmLexerTest {
     fun parsePrintAction() {
         assertEquals(
             listOf(
-                PrintAction(listOf(Integer.instantiate(2)))
+                PrintAction(listOf(IntegerFactory.instantiate(2)))
             ),
             AlgorithmLexer("print(2)").execute()
         )
@@ -118,7 +118,7 @@ class AlgorithmLexerTest {
     fun parsePrintActionWithTwoArguments() {
         assertEquals(
             listOf(
-                PrintAction(listOf(StringValue("x = "), Variable.instantiate("x")))
+                PrintAction(listOf(StringValue("x = "), VariableFactory.instantiate("x")))
             ),
             AlgorithmLexer("print(\"x = \", x)").execute()
         )
@@ -128,7 +128,7 @@ class AlgorithmLexerTest {
     fun parseSetAction() {
         assertEquals(
             listOf(
-                SetAction("x", Integer.instantiate(2))
+                SetAction("x", IntegerFactory.instantiate(2))
             ),
             AlgorithmLexer("set(x, 2)").execute()
         )
@@ -140,8 +140,8 @@ class AlgorithmLexerTest {
             listOf(
                 WhileAction(
                     Equality(
-                        Variable.instantiate("x"),
-                        Integer.instantiate(10),
+                        VariableFactory.instantiate("x"),
+                        IntegerFactory.instantiate(10),
                         Equality.Operator.LessThan
                     ), listOf()
                 )
@@ -155,8 +155,12 @@ class AlgorithmLexerTest {
         assertEquals(
             listOf(
                 WhileAction(
-                    Equality(Variable.instantiate("x"), Integer.instantiate(10), Equality.Operator.LessThan),
-                    listOf(SetAction("x", Sum(Variable.instantiate("x"), Integer.instantiate(1))))
+                    Equality(
+                        VariableFactory.instantiate("x"),
+                        IntegerFactory.instantiate(10),
+                        Equality.Operator.LessThan
+                    ),
+                    listOf(SetAction("x", Sum(VariableFactory.instantiate("x"), IntegerFactory.instantiate(1))))
                 )
             ),
             AlgorithmLexer("while (x < 10) { set(x, x + 1) }").execute()
@@ -170,10 +174,10 @@ class AlgorithmLexerTest {
         assertEquals(
             Context(
                 mapOf(
-                    "x" to Integer.instantiate(10)
+                    "x" to IntegerFactory.instantiate(10)
                 ),
                 listOf(
-                    StringValue("x = "), Integer.instantiate(10), StringValue("\n")
+                    StringValue("x = "), IntegerFactory.instantiate(10), StringValue("\n")
                 )
             ),
             Context().execute(actions)
@@ -185,7 +189,7 @@ class AlgorithmLexerTest {
     fun registerAndParseCustomAction() {
         assertEquals(
             listOf(
-                CustomAction(Integer.instantiate(2))
+                CustomAction(IntegerFactory.instantiate(2))
             ),
             AlgorithmLexer("custom(2)").registerKeyword("custom", CustomAction::handler).execute()
         )

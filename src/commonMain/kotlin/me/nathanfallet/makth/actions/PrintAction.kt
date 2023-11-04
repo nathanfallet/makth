@@ -1,14 +1,19 @@
 package me.nathanfallet.makth.actions
 
+import me.nathanfallet.makth.exceptions.ExecutionException
+import me.nathanfallet.makth.exceptions.UnknownVariablesException
 import me.nathanfallet.makth.extensions.StringValue
 import me.nathanfallet.makth.interfaces.Action
 import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.resolvables.Context
+import kotlin.js.JsExport
+import kotlin.jvm.JvmStatic
 
 /**
  * Action that prints values
  * @param values Values to print
  */
+@JsExport
 data class PrintAction(val values: List<Value>) : Action {
 
     companion object {
@@ -18,12 +23,13 @@ data class PrintAction(val values: List<Value>) : Action {
          * @param args Arguments of the action
          * @return Action created from the arguments
          */
+        @JvmStatic
         fun handler(args: List<Value>): Action {
             return PrintAction(args.toList())
         }
     }
 
-    @Throws(Action.ExecutionException::class)
+    @Throws(ExecutionException::class)
     override fun execute(context: Context): Context {
         // Generate output
         val output =
@@ -33,7 +39,7 @@ data class PrintAction(val values: List<Value>) : Action {
 
                     // Check for missing variables
                     computed.variables.takeIf { it.isNotEmpty() }?.let {
-                        throw Action.UnknownVariablesException(this, context, it)
+                        throw UnknownVariablesException(this, context, it)
                     }
 
                     // Return

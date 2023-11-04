@@ -1,8 +1,8 @@
 package me.nathanfallet.makth.operations
 
-import me.nathanfallet.makth.numbers.Integer
+import me.nathanfallet.makth.numbers.integers.IntegerFactory
 import me.nathanfallet.makth.resolvables.Context
-import me.nathanfallet.makth.resolvables.Variable
+import me.nathanfallet.makth.resolvables.variables.VariableFactory
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -14,7 +14,7 @@ class SumTest {
     fun rawString() {
         assertEquals(
             "1 + 2",
-            Sum(Integer.instantiate(1), Integer.instantiate(2)).rawString
+            Sum(IntegerFactory.instantiate(1), IntegerFactory.instantiate(2)).rawString
         )
     }
 
@@ -22,7 +22,7 @@ class SumTest {
     fun toRawStringWithMinus() {
         assertEquals(
             "1 - 2",
-            Sum(Integer.instantiate(1), Integer.instantiate(-2)).rawString
+            Sum(IntegerFactory.instantiate(1), IntegerFactory.instantiate(-2)).rawString
         )
     }
 
@@ -31,7 +31,10 @@ class SumTest {
         // This will technically never happen, but it's the only way to test it
         assertEquals(
             "(1 = 1) + (2 = 2)",
-            Sum(Equality(Integer.instantiate(1), Integer.instantiate(1)), Equality(Integer.instantiate(2), Integer.instantiate(2))).rawString
+            Sum(
+                Equality(IntegerFactory.instantiate(1), IntegerFactory.instantiate(1)),
+                Equality(IntegerFactory.instantiate(2), IntegerFactory.instantiate(2))
+            ).rawString
         )
     }
 
@@ -39,7 +42,7 @@ class SumTest {
     fun laTeXString() {
         assertEquals(
             "1 + 2",
-            Sum(Integer.instantiate(1), Integer.instantiate(2)).laTeXString
+            Sum(IntegerFactory.instantiate(1), IntegerFactory.instantiate(2)).laTeXString
         )
     }
 
@@ -47,7 +50,7 @@ class SumTest {
     fun toLaTeXStringWithMinus() {
         assertEquals(
             "1 - 2",
-            Sum(Integer.instantiate(1), Integer.instantiate(-2)).laTeXString
+            Sum(IntegerFactory.instantiate(1), IntegerFactory.instantiate(-2)).laTeXString
         )
     }
 
@@ -56,15 +59,18 @@ class SumTest {
         // This will technically never happen, but it's the only way to test it
         assertEquals(
             "(1 \\eq 1) + (2 \\eq 2)",
-            Sum(Equality(Integer.instantiate(1), Integer.instantiate(1)), Equality(Integer.instantiate(2), Integer.instantiate(2))).laTeXString
+            Sum(
+                Equality(IntegerFactory.instantiate(1), IntegerFactory.instantiate(1)),
+                Equality(IntegerFactory.instantiate(2), IntegerFactory.instantiate(2))
+            ).laTeXString
         )
     }
 
     @Test
     fun variables() {
         assertEquals(
-            setOf(Variable.instantiate("x"), Variable.instantiate("y")),
-            Sum(Variable.instantiate("x"), Variable.instantiate("y")).variables
+            setOf(VariableFactory.instantiate("x"), VariableFactory.instantiate("y")),
+            Sum(VariableFactory.instantiate("x"), VariableFactory.instantiate("y")).variables
         )
     }
 
@@ -72,8 +78,8 @@ class SumTest {
     fun sumNaturals() {
         // Check that a sum is computed correctly
         assertEquals(
-            Integer.instantiate(3),
-            Sum(Integer.instantiate(1), Integer.instantiate(2)).compute(context)
+            IntegerFactory.instantiate(3),
+            Sum(IntegerFactory.instantiate(1), IntegerFactory.instantiate(2)).compute(context)
         )
     }
 
@@ -81,8 +87,8 @@ class SumTest {
     fun testEqualsTrue() {
         assertEquals(
             true,
-            Sum(Variable.instantiate("x"), Integer.instantiate(2)).equals(
-                Sum(Variable.instantiate("x"), Integer.instantiate(2))
+            Sum(VariableFactory.instantiate("x"), IntegerFactory.instantiate(2)).equals(
+                Sum(VariableFactory.instantiate("x"), IntegerFactory.instantiate(2))
             )
         )
     }
@@ -91,8 +97,8 @@ class SumTest {
     fun testEqualsTrue2() {
         assertEquals(
             true,
-            Sum(Integer.instantiate(2), Variable.instantiate("x")).equals(
-                Sum(Variable.instantiate("x"), Integer.instantiate(2))
+            Sum(IntegerFactory.instantiate(2), VariableFactory.instantiate("x")).equals(
+                Sum(VariableFactory.instantiate("x"), IntegerFactory.instantiate(2))
             )
         )
     }
@@ -101,8 +107,8 @@ class SumTest {
     fun testEqualsFalse() {
         assertEquals(
             false,
-            Sum(Variable.instantiate("x"), Integer.instantiate(1)).equals(
-                Sum(Variable.instantiate("x"), Integer.instantiate(2))
+            Sum(VariableFactory.instantiate("x"), IntegerFactory.instantiate(1)).equals(
+                Sum(VariableFactory.instantiate("x"), IntegerFactory.instantiate(2))
             )
         )
     }
@@ -111,8 +117,8 @@ class SumTest {
     fun testLessThanTrue() {
         assertEquals(
             true,
-            Sum(Variable.instantiate("x"), Integer.instantiate(1)).lessThan(
-                Sum(Variable.instantiate("x"), Integer.instantiate(2))
+            Sum(VariableFactory.instantiate("x"), IntegerFactory.instantiate(1)).lessThan(
+                Sum(VariableFactory.instantiate("x"), IntegerFactory.instantiate(2))
             )
         )
     }
@@ -121,8 +127,8 @@ class SumTest {
     fun testLessThanTrue2() {
         assertEquals(
             true,
-            Sum(Variable.instantiate("x"), Integer.instantiate(1)).lessThan(
-                Sum(Integer.instantiate(2), Variable.instantiate("x"))
+            Sum(VariableFactory.instantiate("x"), IntegerFactory.instantiate(1)).lessThan(
+                Sum(IntegerFactory.instantiate(2), VariableFactory.instantiate("x"))
             )
         )
     }

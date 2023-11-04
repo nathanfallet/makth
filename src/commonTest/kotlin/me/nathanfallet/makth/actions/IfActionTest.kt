@@ -1,13 +1,14 @@
 package me.nathanfallet.makth.actions
 
+import me.nathanfallet.makth.exceptions.NotABooleanException
+import me.nathanfallet.makth.exceptions.UnknownVariablesException
 import me.nathanfallet.makth.extensions.BooleanValue
 import me.nathanfallet.makth.extensions.StringValue
-import me.nathanfallet.makth.interfaces.Action
 import me.nathanfallet.makth.lexers.AlgorithmLexer.IncorrectArgumentCountException
-import me.nathanfallet.makth.numbers.Integer
+import me.nathanfallet.makth.numbers.integers.IntegerFactory
 import me.nathanfallet.makth.operations.Equality
 import me.nathanfallet.makth.resolvables.Context
-import me.nathanfallet.makth.resolvables.Variable
+import me.nathanfallet.makth.resolvables.variables.VariableFactory
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -18,14 +19,14 @@ class IfActionTest {
 
     private val contextWithX = Context(
         mapOf(
-            "x" to Integer.instantiate(2)
+            "x" to IntegerFactory.instantiate(2)
         )
     )
 
     private val contextWithXAndY = Context(
         mapOf(
-            "x" to Integer.instantiate(2),
-            "y" to Integer.instantiate(4)
+            "x" to IntegerFactory.instantiate(2),
+            "y" to IntegerFactory.instantiate(4)
         )
     )
 
@@ -33,7 +34,10 @@ class IfActionTest {
     fun algorithmString() {
         assertEquals(
             "if (x = 2) {\n}",
-            IfAction(Equality(Variable.instantiate("x"), Integer.instantiate(2)), listOf()).algorithmString
+            IfAction(
+                Equality(VariableFactory.instantiate("x"), IntegerFactory.instantiate(2)),
+                listOf()
+            ).algorithmString
         )
     }
 
@@ -42,7 +46,7 @@ class IfActionTest {
         assertEquals(
             "if (x = 2) {\n    print(\"Test\")\n}",
             IfAction(
-                Equality(Variable.instantiate("x"), Integer.instantiate(2)),
+                Equality(VariableFactory.instantiate("x"), IntegerFactory.instantiate(2)),
                 listOf(PrintAction(listOf(StringValue("Test"))))
             ).algorithmString
         )
@@ -53,7 +57,7 @@ class IfActionTest {
         assertEquals(
             "if (x = 2) {\n    print(\"Test\")\n} else {\n    print(\"Test2\")\n}",
             IfAction(
-                Equality(Variable.instantiate("x"), Integer.instantiate(2)),
+                Equality(VariableFactory.instantiate("x"), IntegerFactory.instantiate(2)),
                 listOf(PrintAction(listOf(StringValue("Test")))),
                 listOf(PrintAction(listOf(StringValue("Test2"))))
             ).algorithmString
@@ -64,11 +68,11 @@ class IfActionTest {
     fun handler() {
         assertEquals(
             IfAction(
-                Equality(Variable.instantiate("x"), Integer.instantiate(2)),
+                Equality(VariableFactory.instantiate("x"), IntegerFactory.instantiate(2)),
                 listOf(),
                 listOf()
             ),
-            IfAction.handler(listOf(Equality(Variable.instantiate("x"), Integer.instantiate(2))))
+            IfAction.handler(listOf(Equality(VariableFactory.instantiate("x"), IntegerFactory.instantiate(2))))
         )
     }
 
@@ -86,7 +90,7 @@ class IfActionTest {
             context.execute(
                 IfAction(
                     BooleanValue(true),
-                    listOf(SetAction("x", Integer.instantiate(2))),
+                    listOf(SetAction("x", IntegerFactory.instantiate(2))),
                     listOf()
                 )
             )
@@ -101,7 +105,7 @@ class IfActionTest {
                 IfAction(
                     BooleanValue(false),
                     listOf(),
-                    listOf(SetAction("x", Integer.instantiate(2)))
+                    listOf(SetAction("x", IntegerFactory.instantiate(2)))
                 )
             )
         )
@@ -113,8 +117,8 @@ class IfActionTest {
             contextWithXAndY,
             contextWithX.execute(
                 IfAction(
-                    Equality(Variable.instantiate("x"), Integer.instantiate(2)),
-                    listOf(SetAction("y", Integer.instantiate(4))),
+                    Equality(VariableFactory.instantiate("x"), IntegerFactory.instantiate(2)),
+                    listOf(SetAction("y", IntegerFactory.instantiate(4))),
                     listOf()
                 )
             )
@@ -123,10 +127,10 @@ class IfActionTest {
 
     @Test
     fun ifWithVariableWithoutContext() {
-        assertFailsWith(Action.UnknownVariablesException::class) {
+        assertFailsWith(UnknownVariablesException::class) {
             context.execute(
                 IfAction(
-                    Equality(Variable.instantiate("x"), Integer.instantiate(2)),
+                    Equality(VariableFactory.instantiate("x"), IntegerFactory.instantiate(2)),
                     listOf(),
                     listOf()
                 )
@@ -136,10 +140,10 @@ class IfActionTest {
 
     @Test
     fun ifWhenNotABoolean() {
-        assertFailsWith(Action.NotABooleanException::class) {
+        assertFailsWith(NotABooleanException::class) {
             contextWithX.execute(
                 IfAction(
-                    Variable.instantiate("x"),
+                    VariableFactory.instantiate("x"),
                     listOf(),
                     listOf()
                 )

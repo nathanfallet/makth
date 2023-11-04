@@ -1,8 +1,8 @@
 package me.nathanfallet.makth.operations
 
-import me.nathanfallet.makth.numbers.Integer
+import me.nathanfallet.makth.numbers.integers.IntegerFactory
 import me.nathanfallet.makth.resolvables.Context
-import me.nathanfallet.makth.resolvables.Variable
+import me.nathanfallet.makth.resolvables.variables.VariableFactory
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -14,7 +14,7 @@ class RemainderTest {
     fun rawString() {
         assertEquals(
             "1 % 2",
-            Remainder(Integer.instantiate(1), Integer.instantiate(2)).rawString
+            Remainder(IntegerFactory.instantiate(1), IntegerFactory.instantiate(2)).rawString
         )
     }
 
@@ -22,7 +22,10 @@ class RemainderTest {
     fun toRawStringWithBraces() {
         assertEquals(
             "(1 + 2) % (3 + 4)",
-            Remainder(Sum(Integer.instantiate(1), Integer.instantiate(2)), Sum(Integer.instantiate(3), Integer.instantiate(4))).rawString
+            Remainder(
+                Sum(IntegerFactory.instantiate(1), IntegerFactory.instantiate(2)),
+                Sum(IntegerFactory.instantiate(3), IntegerFactory.instantiate(4))
+            ).rawString
         )
     }
 
@@ -30,7 +33,7 @@ class RemainderTest {
     fun laTeXString() {
         assertEquals(
             "1 % 2",
-            Remainder(Integer.instantiate(1), Integer.instantiate(2)).laTeXString
+            Remainder(IntegerFactory.instantiate(1), IntegerFactory.instantiate(2)).laTeXString
         )
     }
 
@@ -38,15 +41,18 @@ class RemainderTest {
     fun toLaTeXStringWithBraces() {
         assertEquals(
             "(1 + 2) % (3 + 4)",
-            Remainder(Sum(Integer.instantiate(1), Integer.instantiate(2)), Sum(Integer.instantiate(3), Integer.instantiate(4))).laTeXString
+            Remainder(
+                Sum(IntegerFactory.instantiate(1), IntegerFactory.instantiate(2)),
+                Sum(IntegerFactory.instantiate(3), IntegerFactory.instantiate(4))
+            ).laTeXString
         )
     }
 
     @Test
     fun variables() {
         assertEquals(
-            setOf(Variable.instantiate("x"), Variable.instantiate("y")),
-            Remainder(Variable.instantiate("x"), Variable.instantiate("y")).variables
+            setOf(VariableFactory.instantiate("x"), VariableFactory.instantiate("y")),
+            Remainder(VariableFactory.instantiate("x"), VariableFactory.instantiate("y")).variables
         )
     }
 
@@ -54,8 +60,8 @@ class RemainderTest {
     fun divideNaturals() {
         // Check that a remainder is computed correctly
         assertEquals(
-            Integer.instantiate(1),
-            Remainder(Integer.instantiate(3), Integer.instantiate(2)).compute(context)
+            IntegerFactory.instantiate(1),
+            Remainder(IntegerFactory.instantiate(3), IntegerFactory.instantiate(2)).compute(context)
         )
     }
 
