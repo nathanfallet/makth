@@ -8,7 +8,7 @@ Add the following to your `pom.xml` file;
 <dependency>
     <groupId>me.nathanfallet.makth</groupId>
     <artifactId>makth-jvm</artifactId>
-    <version>1.2.2</version>
+    <version>1.2.3</version>
 </dependency>
 ```
 
@@ -22,7 +22,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'me.nathanfallet.makth:makth:1.2.2'
+    implementation 'me.nathanfallet.makth:makth:1.2.3'
 }
 ```
 
