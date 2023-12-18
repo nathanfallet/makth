@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "me.nathanfallet.makth"
-version = "1.2.3"
+version = "1.2.4"
 
 repositories {
     mavenCentral()
@@ -61,7 +61,11 @@ kotlin {
                 optIn("kotlin.js.ExperimentalJsExport")
             }
         }
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                api("me.nathanfallet.usecases:usecases:1.5.5")
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))

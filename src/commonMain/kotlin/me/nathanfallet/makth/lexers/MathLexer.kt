@@ -14,7 +14,7 @@ import kotlin.js.JsExport
  * @param content Content to parse
  */
 @JsExport
-class MathLexer(private var content: String) {
+class MathLexer(private val content: String) {
 
     // Errors
 
@@ -28,14 +28,14 @@ class MathLexer(private var content: String) {
      * @param operator Unknown operator
      */
     open class UnknownOperatorException(val operator: String) :
-            SyntaxException("Unknown operator: $operator")
+        SyntaxException("Unknown operator: $operator")
 
     // Constants
 
     object Constants {
         const val NUMBERS = "0123456789"
         const val VARIABLES =
-                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZΑαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΣσςϹϲΤτΥυΦφΧχΨψΩω_" + NUMBERS
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZΑαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΣσςϹϲΤτΥυΦφΧχΨψΩω_" + NUMBERS
     }
 
     // Parsing vars
@@ -173,7 +173,7 @@ class MathLexer(private var content: String) {
 
     private fun parseVariable() {
         // Check name
-        var name = StringBuilder()
+        val name = StringBuilder()
         name.append(content[i])
         while (i < content.length - 1 && Constants.VARIABLES.contains(content[i + 1])) {
             // Add character to function name

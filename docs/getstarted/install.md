@@ -5,10 +5,11 @@
 Add the following to your `pom.xml` file;
 
 ```xml
+
 <dependency>
     <groupId>me.nathanfallet.makth</groupId>
     <artifactId>makth-jvm</artifactId>
-    <version>1.2.3</version>
+    <version>1.2.4</version>
 </dependency>
 ```
 
@@ -22,7 +23,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'me.nathanfallet.makth:makth:1.2.3'
+    implementation 'me.nathanfallet.makth:makth:1.2.4'
 }
 ```
 

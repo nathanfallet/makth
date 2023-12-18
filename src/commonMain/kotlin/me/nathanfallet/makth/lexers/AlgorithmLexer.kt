@@ -15,7 +15,7 @@ import kotlin.reflect.KClass
  * @param content Content of the algorithm
  */
 @JsExport
-class AlgorithmLexer(private var content: String) {
+class AlgorithmLexer(private val content: String) {
 
     // Errors
 
