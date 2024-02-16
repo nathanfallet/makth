@@ -1,43 +1,25 @@
 # Installation
 
-## Maven
+Add dependency to your `build.gradle(.kts)` or `pom.xml`:
 
-Add the following to your `pom.xml` file;
+```kotlin
+api("me.nathanfallet.makth:makth:1.2.5")
+```
 
 ```xml
 
 <dependency>
     <groupId>me.nathanfallet.makth</groupId>
     <artifactId>makth-jvm</artifactId>
-    <version>1.2.4</version>
+    <version>1.2.5</version>
 </dependency>
 ```
 
-## Gradle
-
-Add the following to your `build.gradle` file:
-
-```groovy
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation 'me.nathanfallet.makth:makth:1.2.4'
-}
-```
-
-## npm
-
-Install the package using npm:
+Or in a JS project with:
 
 ```bash
 npm install makth
 ```
-
-## yarn
-
-Install the package using yarn:
 
 ```bash
 yarn add makth

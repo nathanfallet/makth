@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "me.nathanfallet.makth"
-version = "1.2.4"
+version = "1.2.5"
 
 repositories {
     mavenCentral()
@@ -63,7 +63,7 @@ kotlin {
         }
         val commonMain by getting {
             dependencies {
-                api("me.nathanfallet.usecases:usecases:1.5.5")
+                api("me.nathanfallet.usecases:usecases:1.5.6")
             }
         }
         val commonTest by getting {
