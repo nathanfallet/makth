@@ -1,5 +1,7 @@
 .gradle
+.kotlin
 .idea
+.fleet
 build/
 target/
 !gradle/wrapper/gradle-wrapper.jar

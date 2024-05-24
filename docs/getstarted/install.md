@@ -3,7 +3,7 @@
 Add dependency to your `build.gradle(.kts)` or `pom.xml`:
 
 ```kotlin
-api("me.nathanfallet.makth:makth:1.2.5")
+api("me.nathanfallet.makth:makth:1.2.6")
 ```
 
 ```xml
@@ -11,7 +11,7 @@ api("me.nathanfallet.makth:makth:1.2.5")
 <dependency>
     <groupId>me.nathanfallet.makth</groupId>
     <artifactId>makth-jvm</artifactId>
-    <version>1.2.5</version>
+    <version>1.2.6</version>
 </dependency>
 ```
 

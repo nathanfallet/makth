@@ -1,13 +1,13 @@
 plugins {
-    kotlin("multiplatform") version "1.9.20"
+    kotlin("multiplatform") version "2.0.0"
     id("convention.publication")
-    id("org.jetbrains.kotlinx.kover") version "0.7.4"
-    id("com.google.devtools.ksp") version "1.9.20-1.0.13"
+    id("org.jetbrains.kotlinx.kover") version "0.8.0"
+    id("com.google.devtools.ksp") version "2.0.0-1.0.21"
     id("dev.petuska.npm.publish") version "3.4.1"
 }
 
 group = "me.nathanfallet.makth"
-version = "1.2.5"
+version = "1.2.6"
 
 repositories {
     mavenCentral()
@@ -38,8 +38,8 @@ kotlin {
     watchosDeviceArm64()
 
     // jvm & js
+    jvmToolchain(21)
     jvm {
-        jvmToolchain(19)
         withJava()
         testRuns.named("test") {
             executionTask.configure {
@@ -63,7 +63,7 @@ kotlin {
         }
         val commonMain by getting {
             dependencies {
-                api("me.nathanfallet.usecases:usecases:1.5.6")
+                api("me.nathanfallet.usecases:usecases:1.6.1")
             }
         }
         val commonTest by getting {
@@ -78,14 +78,6 @@ kotlin {
         val nativeMain by getting
         val nativeTest by getting
     }
-}
-
-dependencies {
-    configurations
-        .filter { it.name.startsWith("ksp") && it.name.contains("Test") }
-        .forEach {
-            add(it.name, "io.mockative:mockative-processor:2.0.1")
-        }
 }
 
 npmPublish {
