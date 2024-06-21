@@ -1,8 +1,8 @@
 package me.nathanfallet.makth.usecases
 
+import dev.kaccelero.usecases.IPairUseCase
 import me.nathanfallet.makth.interfaces.Value
 import me.nathanfallet.makth.resolvables.Context
-import me.nathanfallet.usecases.base.IPairUseCase
 import kotlin.js.JsExport
 
 @JsExport

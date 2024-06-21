@@ -10,4 +10,3 @@ plugins {
 }
 
 rootProject.name = "makth"
-includeBuild("convention-plugins")

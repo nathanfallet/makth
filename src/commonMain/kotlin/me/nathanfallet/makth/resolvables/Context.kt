@@ -1,10 +1,10 @@
 package me.nathanfallet.makth.resolvables
 
+import dev.kaccelero.models.IContext
 import me.nathanfallet.makth.exceptions.ExecutionException
 import me.nathanfallet.makth.interfaces.Action
 import me.nathanfallet.makth.interfaces.Output
 import me.nathanfallet.makth.interfaces.Value
-import me.nathanfallet.usecases.context.IContext
 import kotlin.js.JsExport
 import kotlin.js.JsName
 
