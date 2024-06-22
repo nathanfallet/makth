@@ -91,7 +91,7 @@ kotlin {
         }
         val commonMain by getting {
             dependencies {
-                api("dev.kaccelero:core:0.1.1")
+                api("dev.kaccelero:core:0.2.0")
             }
         }
         val commonTest by getting {
