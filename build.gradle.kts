@@ -1,13 +1,13 @@
 plugins {
-    kotlin("multiplatform") version "2.0.0"
-    id("org.jetbrains.kotlinx.kover") version "0.8.0"
-    id("com.google.devtools.ksp") version "2.0.0-1.0.21"
+    kotlin("multiplatform") version "2.0.20"
+    id("org.jetbrains.kotlinx.kover") version "0.8.3"
+    id("com.google.devtools.ksp") version "2.0.20-1.0.24"
     id("com.vanniktech.maven.publish") version "0.28.0"
     id("dev.petuska.npm.publish") version "3.4.1"
 }
 
 group = "me.nathanfallet.makth"
-version = "1.3.0"
+version = "1.3.1"
 
 repositories {
     mavenCentral()
@@ -91,7 +91,7 @@ kotlin {
         }
         val commonMain by getting {
             dependencies {
-                api("dev.kaccelero:core:0.2.0")
+                api("dev.kaccelero:core:0.3.0")
             }
         }
         val commonTest by getting {
